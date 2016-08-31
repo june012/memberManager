@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.guess.modules.test.mapper.MyBatiesTestDao">
+
+    <select id="list" resultType="MyBatiesTest">
+        SELECT * FROM MyBatiesTest WHERE loginId = #{obj.loginId}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO MyBatiesTest
+        (id,loginId,passwd,name,email,mobilePhone,address,status,remark,createDate)
+        VALUES
+        (#{id},#{loginId},#{passwd},#{name},#{email},#{mobilePhone},#{address},#{status},#{remark},#{createDate})
+    </insert>
+
+    <select id="findPage" resultType="MyBatiesTest" parameterType="Page">
+        SELECT * FROM MyBatiesTest
+    </select>
+
+    <select id="list1" resultType="MyBatiesTest">
+        SELECT * FROM MyBatiesTest
+    </select>
+</mapper>

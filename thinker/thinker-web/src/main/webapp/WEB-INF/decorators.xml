@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/layouts/">
+	<excludes>
+		<pattern>/cms/article/view/*</pattern>
+		<pattern>/upload/*</pattern>
+	</excludes>
+
+	<decorator name="default" page="/WEB-INF/content/common/layouts/default.jsp">
+		<pattern>/sys/*</pattern>
+		<pattern>/cms/*</pattern>
+		<pattern>/file/*</pattern>
+		<pattern>/finance/*</pattern>
+		<pattern>/mobile/*</pattern>
+		<pattern>/workflow/*</pattern>
+        <pattern>/chat/*</pattern>
+        <pattern>/qixiu/*</pattern>
+	</decorator>
+	
+	<!-- CMS博客主题 -->
+	<decorator name="cms_blog" page="/WEB-INF/content/front/blog/template/default.jsp" />
+</decorators>
