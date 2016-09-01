@@ -5,6 +5,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
        xmlns:jaxws = "http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
      		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         	http://www.springframework.org/schema/context
@@ -15,7 +16,8 @@
        		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
        		http://www.springframework.org/schema/util
        		http://www.springframework.org/schema/util/spring-util-4.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-       		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+       		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+       		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <context:annotation-config />
@@ -132,15 +134,27 @@
         </tx:attributes>
     </tx:advice>
 
-    <!--webservice-->
 
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+    <!-- 发布SOAP services -->
+    <!--<jaxws:endpoint id="demoServiceWS"-->
+                    <!--implementor="org.guess.sdk.service.impl.HelloWorldServiceImpl"-->
+                    <!--address="/HelloWorldWS" />-->
 
+    <!-- 发布RESTful services-->
+    <bean id="addressService" class="org.guess.sdk.service.impl.HelloWorldServiceImpl" />
+    <jaxrs:server id="demoService" address="/HelloWorld">
+        <jaxrs:extensionMappings>
+            <entry key="json" value="application/json" />
+            <entry key="xml" value="application/xml" />
+        </jaxrs:extensionMappings>
 
-    <jaxws:endpoint id="demoService"
-                    implementor="org.guess.sdk.service.impl.HelloWorldServiceImpl"
-                    address="/HelloWorld" />
+        <jaxrs:serviceBeans>
+            <ref bean="addressService" />
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
 
     <!-- 加载配置文件，可以直接注入到属性中 -->
     <util:properties id="app" location="classpath:application.properties" />
