@@ -13,6 +13,6 @@ public class HelloWorldServiceImpl implements HelloWorldService{
 
     public String getNewName(String userName) {
         System.out.println("22222222222222222"+userName);
-        return "Hello Spring!" + userName;
+        return "{'data':'Hello Spring! "+userName+"'}";
     }
 }

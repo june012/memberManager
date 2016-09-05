@@ -160,6 +160,5 @@
     <util:properties id="app" location="classpath:application.properties" />
 
     <import resource="shiro/spring-config-shiro.xml"/>
-    <import resource="workflow/spring-config-activiti.xml"/>
 
 </beans>
