@@ -2,8 +2,8 @@ package org.guess.sdk.service;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/userService")
 public interface HelloWorldService {
     @GET
-    @Path("getName/{username}")
+    @Path("getName")
     @Produces(MediaType.APPLICATION_XML)
-    String getNewName(@PathParam("username") String userName);
+    String getNewName(@QueryParam("userName")String userName);
 }

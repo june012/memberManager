@@ -76,6 +76,7 @@
         <property name="packagesToScan">
             <list>
                 <value>org.guess.sys.model</value>
+                <value>org.guess.member.model</value>
                 <value>org.guess.showcase.finance.model</value>
             </list>
         </property>
@@ -85,7 +86,7 @@
                     ${hibernate.dialect}
                 </prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.jdbc.fetch_size">50</prop>
                 <prop key="hibernate.cache.use_query_cache">true</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
