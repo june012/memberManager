@@ -76,8 +76,10 @@
         <property name="packagesToScan">
             <list>
                 <value>org.guess.sys.model</value>
-                <value>org.guess.member.model</value>
+                <value>org.guess.showcase.consume.model</value>
                 <value>org.guess.showcase.finance.model</value>
+                <value>org.guess.showcase.interest.model</value>
+                <value>org.guess.showcase.member.model</value>
             </list>
         </property>
         <property name="hibernateProperties">
