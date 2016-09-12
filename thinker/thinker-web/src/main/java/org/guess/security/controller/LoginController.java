@@ -1,8 +1,5 @@
 package org.guess.security.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -25,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/")
 public class LoginController {
@@ -40,7 +40,7 @@ public class LoginController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String index() {
-		return "/front/blog/index";
+		return "/index";
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value="/index")
