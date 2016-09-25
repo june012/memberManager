@@ -1,4 +1,4 @@
-package org.guess.showcase.interest.model;
+package org.guess.showcase.consume.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

@@ -45,28 +45,6 @@
           </div> -->
 			<!-- BEGIN TOP NAVIGATION MENU -->
 			<ul class="nav pull-right">
-				<!-- BEGIN NOTIFICATION DROPDOWN -->
-				<li class="dropdown" id="header_notification_bar">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
-						<i class="diy_icon_02_44"></i>
-					</a>
-					<ul class="dropdown-menu extended notification">
-						<li>
-							<p>当前站点:(点击菜单切换)</p>
-						</li>
-						<li class="active" data-sitename="blog">
-							<a href="javascript:Header.changeSite('blog');">
-								个人博客
-							</a>
-						</li>
-						<li data-sitename="news">
-							<a href="javascript:Header.changeSite('news');">
-								门户网站
-							</a>
-						</li>
-					</ul>
-				</li>
-				<!-- END TODO DROPDOWN -->
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">

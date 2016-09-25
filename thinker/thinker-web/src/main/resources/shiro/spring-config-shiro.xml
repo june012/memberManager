@@ -59,7 +59,6 @@
                 /login=anon
                 /logout=logout
                 /blog/**=anon
-                /=anon
                 /services/**=anon
                 /**=kickout,user,userSetting
             </value>
