@@ -4,17 +4,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.guess.core.Constants;
 import org.guess.core.orm.IdEntity;
-import org.guess.core.utils.DateUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "SYS_USER")
@@ -32,33 +40,29 @@ public class User extends IdEntity {
     @NotEmpty
     @Length(min = 2,max = 10)
 	private String name;
-	/** 电子邮件 */
-    @NotEmpty
-    @Email
-	private String email;
-	/** 手机号 */
-    @NotEmpty
-    @Pattern(regexp = "^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\\d{8})$")
-	private String mobilePhone;
-	/** 地址 */
-	private String address;
-	/** 状态 0 无效 1 有效 */
-	private int status = Constants.USER_STATUS_UNLOCK;
-	/** 备注 */
-    @NotEmpty(message = "{user.remark.null}")
-	private String remark;
 
-	/** 创建时间 */
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	private Date createDate = DateUtil.parseFormat("yyyy-MM-dd");
+	/** 性别 */
+	private String gender;
+	/** 所属门店 */
+	@Column(name = "store_name")
+	private String storeName;
+	@Column(name = "store_id")
+	private Long storeId;
 
-	public Date getCreateDate() {
-		return createDate;
+	public String getStoreName() {
+		return storeName;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
 	}
 
 	/** 拥有角色 */
@@ -91,52 +95,20 @@ public class User extends IdEntity {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getMobilePhone() {
-		return mobilePhone;
-	}
-
-	public void setMobilePhone(String mobilePhone) {
-		this.mobilePhone = mobilePhone;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
 	public Set<Role> getRoles() {
 		return roles;
 	}
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public User() {

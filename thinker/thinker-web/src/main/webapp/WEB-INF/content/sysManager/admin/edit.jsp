@@ -25,16 +25,10 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/sys/user/edit" class="form-horizontal form_sync"
+							<form action="${ctx }/sysManager/admin/edit" class="form-horizontal form_sync"
 								method="post" id="form1">
 								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
-								<!-- 用户创建日期 -->
-								<c:if test="${not empty obj }">
-									<!-- 用户状态 -->
-									<input type="hidden" value="${obj.status }" name="status">
-									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createDate }'/>" name="createDate">
-								</c:if>
 								<div class="control-group">
 									<label class="control-label">姓名:</label>
 									<div class="controls">
@@ -75,33 +69,17 @@
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">邮箱:</label>
+									<label class="control-label">性别:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,email:true}" name="email"
-											value="${obj.email }" />
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">手机:</label>
-									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											validate="{required:true,isMobile:true}" name="mobilePhone"
-											value="${obj.mobilePhone }" />
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">地址:</label>
-									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											validate="{required:true}" name="address"
-											value="${obj.address }" />
+											validate="{required:true}" name="gender"
+											value="${obj.gender }" />
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">分配角色:</label>
 									<div class="controls">
-										<select data-placeholder=" " class="span6 chosen" multiple="multiple" tabindex="6" name="roleIds">
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="roleId">
 											<c:forEach items="${roles }" var="role">
 												<option value="${role.id }"
 													<c:forEach items="${obj.roles }" var="userRole">
@@ -115,9 +93,23 @@
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">备注:</label>
+									<label class="control-label">所属门店:</label>
 									<div class="controls">
-										<textarea rows="3" cols="6" class="span6 m-wrap" name="remark">${obj.remark }</textarea>
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
+
+											<option value="0"
+												<c:if test="${obj.storeId eq 0 }">
+														selected="selected"
+												</c:if>
+											>总店</option>
+											<c:forEach items="${stores }" var="store">
+												<option value="${store.id }"
+													<c:if test="${store.id eq obj.storeId }">
+														selected="selected"
+													</c:if>
+												>${store.storeName }</option>
+											</c:forEach>
+										</select>
 									</div>
 								</div>
 								<div class="form-actions">
@@ -134,7 +126,7 @@
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
 <script type="text/javascript">
 	$(function(){
-		App.activeMenu("sys/user/list");
+		App.activeMenu("sysManager/admin/list");
 	});
 </script>
 </body>

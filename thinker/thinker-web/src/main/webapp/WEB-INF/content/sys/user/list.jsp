@@ -93,24 +93,8 @@ $(document).ready(function() {
 		},
 		null,
 		[{cName:"name",cValue:"姓名"},
-		 {cName:"email",cValue:"邮箱"},
-		 {cName:"loginId",cValue:"登录名"},
-		 {cName:"mobilePhone",cValue:"手机",noSort:true},
-		 {cName:"address",cValue:"地址"},
-		 {cName:"createDate",cValue:"创建时间"},
-		 {cName:"status",cValue:"状态",format:function(i,value,item){
-			 <shiro:hasPermission name="sys:user:changeUserStatus">
-				 var $a = $('<a href="javascript:void(0)" data-id="'+item.id+'" data-placement="right" class="btn mini tooltips" onclick="javascript:changeUserStatus(this)"></a>');
-				 if(value === 1){
-					 return $a.clone().attr("data-original-title","点击禁用").addClass("green").html('<i class="icon-unlock"></i>启用');
-				 }
-				 return $a.attr("data-original-title","点击启用").addClass("grey").html('<i class="icon-lock"></i>禁用');
-			 </shiro:hasPermission>
-				 if(value == 1){
-				 	return "<span class='label label-success'>启用</span>";
-				 }
-			 	return "<span class='label label-danger'>禁用</span>";
-		 }}
+		 {cName:"gender",cValue:"性别"},
+		 {cName:"loginId",cValue:"登录名"}
 		 ]
 	);
 });

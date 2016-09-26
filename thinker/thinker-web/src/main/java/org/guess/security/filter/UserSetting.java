@@ -1,16 +1,16 @@
 package org.guess.security.filter;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.guess.core.Constants;
 import org.guess.sys.model.User;
 import org.guess.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class UserSetting extends AccessControlFilter {
 	
@@ -29,7 +29,7 @@ public class UserSetting extends AccessControlFilter {
         if(current_user == null || recs == null){
         	String username = (String) subject.getPrincipal();
         	User user = userService.findByLoginId(username);
-        	if(user == null || user.getStatus() == Constants.USER_STATUS_LOCK){
+        	if(user == null ){
         		setLoginUrl(Constants.LOGIN_URL);
         		redirectToLogin(request, response);
         		return false;

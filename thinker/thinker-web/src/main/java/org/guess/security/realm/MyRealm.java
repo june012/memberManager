@@ -74,9 +74,6 @@ public class MyRealm extends AuthorizingRealm {
 				+ ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));
 		User user = userService.findUniqueBy("loginId", token.getUsername());
 		if (null != user) {
-			if(user.getStatus() == Constants.USER_STATUS_LOCK){
-				throw new LockedAccountException();
-			}
 			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getLoginId(), user.getPasswd(),
 					user.getName());
 			return authcInfo;

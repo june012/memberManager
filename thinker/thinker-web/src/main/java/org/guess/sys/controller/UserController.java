@@ -1,7 +1,5 @@
 package org.guess.sys.controller;
 
-import java.util.List;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.guess.core.web.BaseController;
 import org.guess.sys.model.Role;
@@ -12,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/sys/user")
@@ -67,15 +66,6 @@ public class UserController extends BaseController<User> {
 		User obj = userService.get(id);
 		mav.addObject("obj", obj);
 		return mav;
-	}
-	
-	/**
-	 * 更改用户状态
-	 */
-	@RequestMapping(value="changeUserStatus",method=RequestMethod.POST)
-	@ResponseBody
-	public int changeUserStatus(@RequestParam("id") Long id){
-		return userService.changeUserStatus(id);
 	}
 	
 	/**

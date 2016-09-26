@@ -67,7 +67,7 @@
 									</div>
 								</div>
 							</form>
-							<tool:operBtns modelKey="user"></tool:operBtns>
+							<tool:userOperBtns modelKey="admin"></tool:userOperBtns>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -93,11 +93,9 @@
 				},
 				null,
 				[{cName:"name",cValue:"姓名"},
-					{cName:"email",cValue:"邮箱"},
 					{cName:"loginId",cValue:"登录名"},
-					{cName:"mobilePhone",cValue:"手机",noSort:true},
-					{cName:"address",cValue:"地址"},
-					{cName:"createDate",cValue:"创建时间"}
+					{cName:"gender",cValue:"性别"},
+					{cName:"storeName",cValue:"所属门店"}
 				]
 		);
 	});

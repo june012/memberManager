@@ -29,12 +29,6 @@
 								method="post" id="form1">
 								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
-								<!-- 用户创建日期 -->
-								<c:if test="${not empty obj }">
-									<!-- 用户状态 -->
-									<input type="hidden" value="${obj.status }" name="status">
-									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createDate }'/>" name="createDate">
-								</c:if>
 								<div class="control-group">
 									<label class="control-label">姓名:</label>
 									<div class="controls">
@@ -72,22 +66,6 @@
 										<input type="password" class="span6 m-wrap"
 											validate="{required:true,isPasswd:true,equalTo:'#passwd'}"
 											name="repasswd" value="${obj.passwd }" />
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">邮箱:</label>
-									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											validate="{required:true,email:true}" name="email"
-											value="${obj.email }" />
-									</div>
-								</div>
-								<div class="control-group">
-									<label class="control-label">手机:</label>
-									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											validate="{required:true,isMobile:true}" name="mobilePhone"
-											value="${obj.mobilePhone }" />
 									</div>
 								</div>
 								<div class="control-group">
