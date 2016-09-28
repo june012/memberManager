@@ -2,6 +2,8 @@ package org.guess.showcase.consume.controller;
 
 import org.guess.core.web.BaseController;
 import org.guess.showcase.consume.model.InterestRecord;
+import org.guess.showcase.consume.service.InterestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,4 +18,7 @@ public class InterestController extends BaseController<InterestRecord>{
         listView = "/consume/interest/list";
         showView = "/consume/interest/show";
     }
+
+    @Autowired
+    private InterestService interestService;
 }

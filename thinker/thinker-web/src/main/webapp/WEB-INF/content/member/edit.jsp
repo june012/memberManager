@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/content/common/common.jsp"%>
-<c:set var="pageTitle" value="${empty obj ? '添加门店':'修改门店' }" scope="page" />
+<c:set var="pageTitle" value="${empty obj ? '添加会员':'修改会员信息' }" scope="page" />
 <html>
 <head>
 <title>${pageTitle }</title>
@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<!-- 页面导航 -->
 			<tool:navBar pageTitle="${pageTitle }"
-				pageTitleContent="系统管理-门店管理-${pageTitle }" titleIcon="icon-home" />
+				pageTitleContent="会员管理-会员管理-${pageTitle }" titleIcon="icon-home" />
 			<!-- 主体内容 -->
 			<div class="row-fluid">
 				<div class="span12">
@@ -25,7 +25,7 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/sysManager/store//edit" class="form-horizontal form_sync"
+							<form action="${ctx }/member//edit" class="form-horizontal form_sync"
 								method="post" id="form1">
 								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
@@ -64,7 +64,7 @@
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
 <script type="text/javascript">
 	$(function(){
-		App.activeMenu("sys/user/list");
+		App.activeMenu("member/list");
 	});
 </script>
 </body>

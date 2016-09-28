@@ -1,5 +1,6 @@
 package org.guess.showcase.member.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -68,6 +69,12 @@ public class Member {
      * 级别
      */
     private String level;
+
+    /**
+     * 门店编号
+     */
+    @Column(name = "store_id")
+    private Long storeId;
     /**
      * 状态(是否激活、是否已删除)
      */
@@ -76,6 +83,14 @@ public class Member {
      * 备注
      */
     private String remark;
+
+    public Long getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
+    }
 
     public long getId() {
         return id;

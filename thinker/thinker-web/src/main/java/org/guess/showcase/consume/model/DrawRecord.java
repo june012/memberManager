@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * Created by wan.peng on 2016/9/11.
+ * 提现记录
  */
 @Entity
 @Table(name = "draw_record")

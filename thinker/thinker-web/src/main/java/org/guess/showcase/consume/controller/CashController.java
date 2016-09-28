@@ -2,6 +2,8 @@ package org.guess.showcase.consume.controller;
 
 import org.guess.core.web.BaseController;
 import org.guess.showcase.consume.model.CashRecord;
+import org.guess.showcase.consume.service.CashService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,4 +18,6 @@ public class CashController extends BaseController<CashRecord>{
         listView = "/consume/cash/list";
         showView = "/consume/cash/show";
     }
+    @Autowired
+    private CashService cashService;
 }

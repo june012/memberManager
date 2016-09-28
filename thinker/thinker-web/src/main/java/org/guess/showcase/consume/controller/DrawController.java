@@ -2,6 +2,8 @@ package org.guess.showcase.consume.controller;
 
 import org.guess.core.web.BaseController;
 import org.guess.showcase.consume.model.DrawRecord;
+import org.guess.showcase.consume.service.DrawService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,4 +18,7 @@ public class DrawController extends BaseController<DrawRecord>{
         listView = "/consume/draw/list";
         showView = "/consume/draw/show";
     }
+
+    @Autowired
+    private DrawService drawService;
 }

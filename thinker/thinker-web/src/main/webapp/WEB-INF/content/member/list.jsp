@@ -60,7 +60,7 @@
 									</div>
 								</div>
 							</form>
-							<tool:storeOperBtns modelKey="store"></tool:storeOperBtns>
+							<tool:memberOperBtns modelKey="member"></tool:memberOperBtns>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -85,9 +85,13 @@
 					pageSize : 10
 				},
 				null,
-				[{cName:"storeName",cValue:"门店名"},
-					{cName:"createTime",cValue:"创建时间"}
-
+				[{cName:"name",cValue:"姓名"},
+					{cName:"age",cValue:"年龄"},
+					{cName:"phone",cValue:"手机号"},
+					{cName:"account",cValue:"钱包余额"},
+					{cName:"principal",cValue:"本金"},
+					{cName:"award",cValue:"钱包奖金"},
+					{cName:"storeId",cValue:"门店编号"}
 				]
 		);
 	});

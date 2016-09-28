@@ -8,7 +8,7 @@
 <div class="page-content">
 	<div class="container-fluid">
 		<!-- 页面导航 -->
-		<tool:navBar pageTitle="门店列表" pageTitleContent="系统管理-门店管理-门店列表" titleIcon="icon-home"/>
+		<tool:navBar pageTitle="门店列表" pageTitleContent="消费管理-奖励管理-奖励记录" titleIcon="icon-home"/>
 		<!-- 主体内容 -->
 		<div class="row-fluid">
 			<div class="span12">
@@ -84,10 +84,10 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//高亮左侧菜单
-		App.activeMenu("sysManager/store/list");
+		App.activeMenu("consume/award/list");
 		Page.initData(
 				{
-					url:"${ctx}/sysManager/store/page",
+					url:"${ctx}/consume/award/page",
 					tableId : "#sample_1",
 					pageSize : 10
 				},
