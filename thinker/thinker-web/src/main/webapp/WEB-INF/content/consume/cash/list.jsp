@@ -8,7 +8,7 @@
 <div class="page-content">
 	<div class="container-fluid">
 		<!-- 页面导航 -->
-		<tool:navBar pageTitle="门店列表" pageTitleContent="系统管理-门店管理-门店列表" titleIcon="icon-home"/>
+		<tool:navBar pageTitle="消费记录" pageTitleContent="消费管理-消费管理-消费记录" titleIcon="icon-home"/>
 		<!-- 主体内容 -->
 		<div class="row-fluid">
 			<div class="span12">
@@ -67,7 +67,7 @@
 									</div>
 								</div>
 							</form>
-							<tool:storeOperBtns modelKey="store"></tool:storeOperBtns>
+							<tool:consumeOperBtns modelKey="cash"></tool:consumeOperBtns>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -84,17 +84,22 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//高亮左侧菜单
-		App.activeMenu("sysManager/store/list");
+		App.activeMenu("consume/cash/list");
 		Page.initData(
 				{
-					url:"${ctx}/sysManager/store/page",
+					url:"${ctx}/consume/cash/page",
 					tableId : "#sample_1",
 					pageSize : 10
 				},
 				null,
-				[{cName:"storeName",cValue:"门店名"},
+				[{cName:"userid",cValue:"会员编号"},
+					{cName:"productName",cValue:"产品名称"},
+					{cName:"productType",cValue:"产品类别"},
+					{cName:"productPrice",cValue:"产品价格"},
+					{cName:"count",cValue:"购买数量"},
+					{cName:"discount",cValue:"折扣"},
+					{cName:"money",cValue:"消费金额"},
 					{cName:"createTime",cValue:"创建时间"}
-
 				]
 		);
 	});

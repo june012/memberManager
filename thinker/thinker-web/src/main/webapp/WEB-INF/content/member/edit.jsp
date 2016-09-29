@@ -27,29 +27,128 @@
 						<div class="portlet-body form">
 							<form action="${ctx }/member//edit" class="form-horizontal form_sync"
 								method="post" id="form1">
-								<!-- 用户ID -->
+								<!-- 会员ID -->
 								<input type="hidden" value="${obj.id }" name="id">
 								<!-- 用户创建日期 -->
 								<c:if test="${not empty obj }">
-									<!-- 用户状态 -->
-									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">
+									<!-- 会员钱包 -->
+									<input type="hidden" value="${obj.principal }" name="principal">
+									<input type="hidden" value="${obj.account }" name="account">
+									<input type="hidden" value="${obj.award }" name="award">
+									<input type="hidden" value="${obj.level }" name="level">
 								</c:if>
 								<div class="control-group">
-									<label class="control-label">门店名:</label>
+									<label class="control-label">登录账号(手机号):</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   validate="{required:true,isMobile:true}" name="phone"
+											   value="${obj.phone }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">密码:</label>
+									<div class="controls">
+										<input type="hidden" value="${obj.password }" name="oldpwd">
+										<input type="password" id="passwd" class="span6 m-wrap"
+											   validate="{required:true,isPasswd:true}" name="password"
+											   value="${obj.password}" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">重复密码:</label>
+									<div class="controls">
+										<input type="password" class="span6 m-wrap"
+											   validate="{required:true,isPasswd:true,equalTo:'#passwd'}"
+											   name="repasswd" value="${obj.password}" />
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label">姓名:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
 											validate="{required:true,minlength:2,maxlength:10}"
-											name="storeName" value="${obj.storeName }" />
+											name="name" value="${obj.name }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">性别:</label>
+									<select data-placeholder=" " class="span6 chosen" tabindex="6" name="gender">
+										<option value="male"
+												<c:if test="${obj.gender eq male }">
+													selected="selected"
+												</c:if>
+										>男</option>
+										<option value="female"
+												<c:if test="${obj.storeId eq female }">
+													selected="selected"
+												</c:if>
+										>女</option>
+									</select>
+								</div>
+								<div class="control-group">
+									<label class="control-label">年龄:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   validate="{required:true,minlength:1,maxlength:3}"
+											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
+											   name="age" value="${obj.age }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">头像:</label>
+									<div class="controls">
+										<input type="file" class="span6 m-wrap"
+											   name="avater" value="${obj.avater}" />
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">地址:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="address"
+											   validate="{required:true}" name="age"
 											   value="${obj.address }" />
 									</div>
 								</div>
+								<div class="control-group">
+									<label class="control-label">所属门店:</label>
+									<div class="controls">
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
+
+											<option value="0"
+													<c:if test="${obj.storeId eq 0 }">
+														selected="selected"
+													</c:if>
+											>总店</option>
+											<c:forEach items="${stores}" var="store">
+												<option value="${store.id }"
+														<c:if test="${store.id eq obj.storeId }">
+															selected="selected"
+														</c:if>
+												>${store.storeName }</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label">状态:</label>
+									<select data-placeholder=" " class="span6 chosen" tabindex="6" name="status">
+										<option value="male"
+												<c:if test="${obj.status eq A }">
+													selected="selected"
+												</c:if>
+										>已激活</option>
+										<option value="female"
+												<c:if test="${obj.status eq N }">
+													selected="selected"
+												</c:if>
+										>未激活</option>
+									</select>
+								</div>
+
+
+
 								<div class="form-actions">
 									<button type="submit" class="btn blue">提交</button>
 									<a class='btn' href="${header.Referer }">返回</a>

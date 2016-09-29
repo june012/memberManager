@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<!-- 页面导航 -->
 			<tool:navBar pageTitle="${pageTitle }"
-				pageTitleContent="系统管理-门店管理-${pageTitle }" titleIcon="icon-home" />
+				pageTitleContent="消费管理-充值管理-${pageTitle }" titleIcon="icon-home" />
 			<!-- 主体内容 -->
 			<div class="row-fluid">
 				<div class="span12">
@@ -25,21 +25,50 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/sysManager/store//edit" class="form-horizontal form_sync"
+							<form action="${ctx }/consume/fill//edit" class="form-horizontal form_sync"
 								method="post" id="form1">
 								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
 								<!-- 用户创建日期 -->
 								<c:if test="${not empty obj }">
 									<!-- 用户状态 -->
+									<input type="hidden" value="${obj.accountAfter }" name="accountAfter">
+									<input type="hidden" value="${obj.principalAfter }" name="principalAfter">
 									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">
+									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.drawTime }'/>" name="drawTime">
 								</c:if>
 								<div class="control-group">
-									<label class="control-label">门店名:</label>
+									<label class="control-label">会员编号:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:2,maxlength:10}"
-											name="storeName" value="${obj.storeName }" />
+											validate="{required:true}"
+											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
+											name="userid" value="${obj.userid }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">充值金额:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
+											   validate="{required:true}" name="money"
+											   value="${obj.money }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">地址:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   validate="{required:true}" name="address"
+											   value="${obj.address }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">地址:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   validate="{required:true}" name="address"
+											   value="${obj.address }" />
 									</div>
 								</div>
 								<div class="control-group">
@@ -64,7 +93,7 @@
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
 <script type="text/javascript">
 	$(function(){
-		App.activeMenu("sys/user/list");
+		App.activeMenu("consume/fill/list");
 	});
 </script>
 </body>

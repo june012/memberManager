@@ -25,29 +25,38 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/sysManager/store//edit" class="form-horizontal form_sync"
+							<form action="${ctx }/consume/draw//edit" class="form-horizontal form_sync"
 								method="post" id="form1">
 								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
 								<!-- 用户创建日期 -->
 								<c:if test="${not empty obj }">
 									<!-- 用户状态 -->
+									<input type="hidden" value="${obj.account_after }" name="account_after">
 									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">
 								</c:if>
 								<div class="control-group">
-									<label class="control-label">门店名:</label>
+									<label class="control-label">会员编号:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
 											validate="{required:true,minlength:2,maxlength:10}"
-											name="storeName" value="${obj.storeName }" />
+											name="userid" value="${obj.userid }" />
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">地址:</label>
+									<label class="control-label">提现金额:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="address"
-											   value="${obj.address }" />
+											   validate="{required:true}" name="money"
+											   value="${obj.money }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">提现原因:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   validate="{required:false}" name="reson"
+											   value="${obj.reson }" />
 									</div>
 								</div>
 								<div class="form-actions">
@@ -64,7 +73,7 @@
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
 <script type="text/javascript">
 	$(function(){
-		App.activeMenu("sys/user/list");
+		App.activeMenu("consume/draw/list");
 	});
 </script>
 </body>

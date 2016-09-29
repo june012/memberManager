@@ -8,7 +8,7 @@
 <div class="page-content">
 	<div class="container-fluid">
 		<!-- 页面导航 -->
-		<tool:navBar pageTitle="门店列表" pageTitleContent="系统管理-门店管理-门店列表" titleIcon="icon-home"/>
+		<tool:navBar pageTitle="提现记录" pageTitleContent="消费管理-提现管理-提现记录" titleIcon="icon-home"/>
 		<!-- 主体内容 -->
 		<div class="row-fluid">
 			<div class="span12">
@@ -67,7 +67,7 @@
 									</div>
 								</div>
 							</form>
-							<tool:storeOperBtns modelKey="store"></tool:storeOperBtns>
+							<tool:consumeOperBtns modelKey="store"></tool:consumeOperBtns>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -84,17 +84,19 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//高亮左侧菜单
-		App.activeMenu("sysManager/store/list");
+		App.activeMenu("consume/draw/list");
 		Page.initData(
 				{
-					url:"${ctx}/sysManager/store/page",
+					url:"${ctx}/consume/draw/page",
 					tableId : "#sample_1",
 					pageSize : 10
 				},
 				null,
-				[{cName:"storeName",cValue:"门店名"},
+				[{cName:"userid",cValue:"会员编号"},
+					{cName:"money",cValue:"提现金额"},
+					{cName:"account_after",cValue:"提现后钱包金额"},
+					{cName:"reson",cValue:"提现原因"},
 					{cName:"createTime",cValue:"创建时间"}
-
 				]
 		);
 	});

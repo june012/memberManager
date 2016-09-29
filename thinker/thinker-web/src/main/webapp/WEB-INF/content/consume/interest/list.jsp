@@ -8,7 +8,7 @@
 <div class="page-content">
 	<div class="container-fluid">
 		<!-- 页面导航 -->
-		<tool:navBar pageTitle="门店列表" pageTitleContent="系统管理-门店管理-门店列表" titleIcon="icon-home"/>
+		<tool:navBar pageTitle="利息记录" pageTitleContent="消费管理-利息管理-利息记录" titleIcon="icon-home"/>
 		<!-- 主体内容 -->
 		<div class="row-fluid">
 			<div class="span12">
@@ -67,7 +67,7 @@
 									</div>
 								</div>
 							</form>
-							<tool:storeOperBtns modelKey="store"></tool:storeOperBtns>
+							<tool:consumeOperBtns modelKey="interest"></tool:consumeOperBtns>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -84,16 +84,21 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//高亮左侧菜单
-		App.activeMenu("sysManager/store/list");
+		App.activeMenu("consume/interest/list");
 		Page.initData(
 				{
-					url:"${ctx}/sysManager/store/page",
+					url:"${ctx}/consume/interest/page",
 					tableId : "#sample_1",
 					pageSize : 10
 				},
 				null,
-				[{cName:"storeName",cValue:"门店名"},
-					{cName:"createTime",cValue:"创建时间"}
+				[{cName:"userId",cValue:"用户编号"},
+					{cName:"principal",cValue:"本金金额"},
+					{cName:"createTime",cValue:"创建时间"},
+					{cName:"rate",cValue:"利息比例"},
+					{cName:"interestAdd",cValue:"增加利息"},
+					{cName:"accountAfter",cValue:"增加后钱包金额"},
+					{cName:"date",cValue:"创建时间"}
 
 				]
 		);

@@ -8,7 +8,7 @@
 <div class="page-content">
 	<div class="container-fluid">
 		<!-- 页面导航 -->
-		<tool:navBar pageTitle="门店列表" pageTitleContent="消费管理-奖励管理-奖励记录" titleIcon="icon-home"/>
+		<tool:navBar pageTitle="奖励记录" pageTitleContent="消费管理-奖励管理-奖励记录" titleIcon="icon-home"/>
 		<!-- 主体内容 -->
 		<div class="row-fluid">
 			<div class="span12">
@@ -67,7 +67,7 @@
 									</div>
 								</div>
 							</form>
-							<tool:storeOperBtns modelKey="store"></tool:storeOperBtns>
+							<tool:consumeOperBtns modelKey="award"></tool:consumeOperBtns>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -92,8 +92,11 @@
 					pageSize : 10
 				},
 				null,
-				[{cName:"storeName",cValue:"门店名"},
-					{cName:"createTime",cValue:"创建时间"}
+				[{cName:"userid",cValue:"会员编号"},,
+					{cName:"date",cValue:"日期"},
+					{cName:"awardMoney",cValue:"奖励金额"},
+					{cName:"awardType",cValue:"奖励类型"},
+					{cName:"awardAfter",cValue:"奖励后钱包金额"}
 
 				]
 		);

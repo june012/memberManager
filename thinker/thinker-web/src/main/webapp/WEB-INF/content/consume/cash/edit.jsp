@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<!-- 页面导航 -->
 			<tool:navBar pageTitle="${pageTitle }"
-				pageTitleContent="系统管理-门店管理-${pageTitle }" titleIcon="icon-home" />
+				pageTitleContent="消费管理-消费管理-${pageTitle }" titleIcon="icon-home" />
 			<!-- 主体内容 -->
 			<div class="row-fluid">
 				<div class="span12">
@@ -25,7 +25,7 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/sysManager/store//edit" class="form-horizontal form_sync"
+							<form action="${ctx }/consume/cash//edit" class="form-horizontal form_sync"
 								method="post" id="form1">
 								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
@@ -35,19 +35,60 @@
 									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">
 								</c:if>
 								<div class="control-group">
-									<label class="control-label">门店名:</label>
+									<label class="control-label">会员id:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:2,maxlength:10}"
-											name="storeName" value="${obj.storeName }" />
+											   validate="{required:true,minlength:2,maxlength:10}"
+											   name="userid" value="${obj.userid }" />
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">地址:</label>
+									<label class="control-label">产品名称:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="address"
-											   value="${obj.address }" />
+											validate="{required:true,minlength:2,maxlength:10}"
+											name="productName" value="${obj.productName }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">产品类别:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   validate="{required:true,minlength:2,maxlength:10}"
+											   name="productType" value="${obj.productType }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">产品价格:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   validate="{required:true,minlength:2,maxlength:10}" id="productPrice"
+											   name="productPrice" value="${obj.productPrice }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">数量:</label>
+									<div class="controls">
+										<input type="number" class="span6 m-wrap" min="1" max="999" id="count"
+											   validate="{required:true}" name="count"
+											   value="${obj.count }" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">消费总金额:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap" readonly="readonly" id="money"
+											   validate="{required:true}" name="money"
+											   value="${obj.money }" />
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label">折扣:</label>
+									<div class="controls">
+										<input type="number" class="span6 m-wrap" min="0.0" step="0.1" max="1"
+											   validate="{required:true}" name="count"
+											   value="${obj.count }" />
 									</div>
 								</div>
 								<div class="form-actions">
@@ -64,7 +105,12 @@
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
 <script type="text/javascript">
 	$(function(){
-		App.activeMenu("sys/user/list");
+		App.activeMenu("consume/cash/list");
+		$('body').on('change', '#count', function(){
+			var productPrice =$('#productPrice').val();
+			var count = this.val();
+			$('#money').val(productPrice*count);
+		});
 	});
 </script>
 </body>

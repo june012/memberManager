@@ -100,4 +100,14 @@ public interface Constants {
      */
     String TEMP_FOLDER_NAME = "temp";
 
+
+    //会员状态
+    /**已激活**/
+    String MEMBER_STATUS_ACTIVATION="A";
+    /**未激活**/
+    String MEMBER_STATUS_UNACTIVATED ="N";
+    /**已删除**/
+    String MEMBER_STATUS_DELETE="D";
+
+
 }

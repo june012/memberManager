@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<!-- 页面导航 -->
 			<tool:navBar pageTitle="${pageTitle }"
-				pageTitleContent="系统管理-门店管理-${pageTitle }" titleIcon="icon-home" />
+				pageTitleContent="消费管理-奖励管理-${pageTitle }" titleIcon="icon-home" />
 			<!-- 主体内容 -->
 			<div class="row-fluid">
 				<div class="span12">
@@ -25,31 +25,34 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/sysManager/store//edit" class="form-horizontal form_sync"
+							<form action="${ctx }/consume/award//edit" class="form-horizontal form_sync"
 								method="post" id="form1">
 								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
 								<!-- 用户创建日期 -->
 								<c:if test="${not empty obj }">
-									<!-- 用户状态 -->
-									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">
+									<!-- 消费时间 -->
+									<input type="hidden" id="date" value="<fmt:formatDate value='${obj.date }'/>" name="date">
+									<input type="hidden" id="awardAfter" value="${obj.awardAfter}" name="awardAfter">
 								</c:if>
 								<div class="control-group">
-									<label class="control-label">门店名:</label>
+									<label class="control-label">奖励金额:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:2,maxlength:10}"
-											name="storeName" value="${obj.storeName }" />
+											validate="{required:true,minlength:0,maxlength:10}"
+											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
+											name="awardMoney" value="${obj.awardMoney }" />
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">地址:</label>
+									<label class="control-label">奖励类型:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="address"
-											   value="${obj.address }" />
+											   validate="{required:true}" name="awardType"
+											   value="${obj.awardType}" />
 									</div>
 								</div>
+
 								<div class="form-actions">
 									<button type="submit" class="btn blue">提交</button>
 									<a class='btn' href="${header.Referer }">返回</a>
@@ -64,7 +67,7 @@
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
 <script type="text/javascript">
 	$(function(){
-		App.activeMenu("sys/user/list");
+		App.activeMenu("consume/award/list");
 	});
 </script>
 </body>
