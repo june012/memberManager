@@ -92,8 +92,13 @@
 					pageSize : 10
 				},
 				null,
-				[{cName:"userid",cValue:"会员编号"},,
-					{cName:"date",cValue:"日期"},
+				[{cName:"memberId",cValue:"会员编号"},
+					{cName:"date",cValue:"日期",format:function(i,value,item){
+						if(App.isNundef(value)){
+							return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+						}
+						return value;
+					}},
 					{cName:"awardMoney",cValue:"奖励金额"},
 					{cName:"awardType",cValue:"奖励类型"},
 					{cName:"awardAfter",cValue:"奖励后钱包金额"}

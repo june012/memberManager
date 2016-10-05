@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/content/common/common.jsp"%>
-<c:set var="pageTitle" value="${empty obj ? '添加门店':'修改门店' }" scope="page" />
+<c:set var="pageTitle" value="${empty obj ? '添加利息记录':'修改利息记录' }" scope="page" />
 <html>
 <head>
 <title>${pageTitle }</title>
@@ -27,16 +27,16 @@
 						<div class="portlet-body form">
 							<form action="${ctx }/consume/interest//edit" class="form-horizontal form_sync"
 								method="post" id="form1">
-								<!-- 用户ID -->
-								<input type="hidden" value="${obj.id }" name="id">
 								<!-- 用户创建日期 -->
 								<c:if test="${not empty obj }">
+									<!-- 用户ID -->
+									<input type="hidden" value="${obj.id }" name="id">
 									<!-- 用户状态 -->
 									<input type="hidden" value="${obj.principal }" name="principal">
 									<input type="hidden" value="${obj.rate }" name="rate">
 									<input type="hidden" value="${obj.interestAdd }" name="interestAdd">
 									<input type="hidden" value="${obj.accountAfter }" name="accountAfter">
-									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.date }'/>" name="date">
+									<%--<input type="hidden" id="time" value="<fmt:formatDate value='${obj.date }'/>" name="date">--%>
 								</c:if>
 								<div class="control-group">
 									<label class="control-label">用户编号:</label>

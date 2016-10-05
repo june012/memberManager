@@ -94,11 +94,15 @@
 				null,
 				[{cName:"userId",cValue:"用户编号"},
 					{cName:"principal",cValue:"本金金额"},
-					{cName:"createTime",cValue:"创建时间"},
 					{cName:"rate",cValue:"利息比例"},
 					{cName:"interestAdd",cValue:"增加利息"},
 					{cName:"accountAfter",cValue:"增加后钱包金额"},
-					{cName:"date",cValue:"创建时间"}
+					{cName:"date",cValue:"创建时间",format:function(i,value,item){
+						if(App.isNundef(value)){
+							return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+						}
+						return value;
+					}}
 
 				]
 		);

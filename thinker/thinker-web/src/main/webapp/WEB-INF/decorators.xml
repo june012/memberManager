@@ -8,9 +8,8 @@
 	<decorator name="default" page="/WEB-INF/content/common/layouts/default.jsp">
 		<pattern>/sys/*</pattern>
 		<pattern>/sysManager/*</pattern>
-		<pattern>/finance/*</pattern>
 		<pattern>/member/*</pattern>
-
+		<pattern>/consume/*</pattern>
 	</decorator>
 	
 	<!-- CMS博客主题 -->

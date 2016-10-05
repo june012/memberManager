@@ -25,17 +25,17 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/member//edit" class="form-horizontal form_sync"
+							<form action="${ctx }/member/edit" class="form-horizontal form_sync"
 								method="post" id="form1">
-								<!-- 会员ID -->
-								<input type="hidden" value="${obj.id }" name="id">
-								<!-- 用户创建日期 -->
+								<%--<!-- 用户创建日期 -->--%>
 								<c:if test="${not empty obj }">
 									<!-- 会员钱包 -->
-									<input type="hidden" value="${obj.principal }" name="principal">
+									<input type="hidden" value="${obj.principal }"   name="principal">
 									<input type="hidden" value="${obj.account }" name="account">
 									<input type="hidden" value="${obj.award }" name="award">
 									<input type="hidden" value="${obj.level }" name="level">
+									<!-- 会员ID -->
+									<input type="hidden" value="${obj.id }" name="id">
 								</c:if>
 								<div class="control-group">
 									<label class="control-label">登录账号(手机号):</label>
@@ -59,7 +59,7 @@
 									<div class="controls">
 										<input type="password" class="span6 m-wrap"
 											   validate="{required:true,isPasswd:true,equalTo:'#passwd'}"
-											   name="repasswd" value="${obj.password}" />
+											   value="${obj.password}" />
 									</div>
 								</div>
 
@@ -73,26 +73,36 @@
 								</div>
 								<div class="control-group">
 									<label class="control-label">性别:</label>
-									<select data-placeholder=" " class="span6 chosen" tabindex="6" name="gender">
-										<option value="male"
-												<c:if test="${obj.gender eq male }">
-													selected="selected"
-												</c:if>
-										>男</option>
-										<option value="female"
-												<c:if test="${obj.storeId eq female }">
-													selected="selected"
-												</c:if>
-										>女</option>
-									</select>
+									<div class="controls">
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="gender">
+											<option value="male"
+													<c:if test="${obj.gender eq male }">
+														selected="selected"
+													</c:if>
+											>男</option>
+											<option value="female"
+													<c:if test="${obj.storeId eq female }">
+														selected="selected"
+													</c:if>
+											>女</option>
+										</select>
+									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">年龄:</label>
+								<label class="control-label">年龄:</label>
+								<div class="controls">
+									<input type="text" class="span6 m-wrap"
+										   validate="{required:true,minlength:1,maxlength:3}"
+										   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
+										   name="age" value="${obj.age }" />
+								</div>
+							</div>
+								<div class="control-group">
+									<label class="control-label">微信号:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true,minlength:1,maxlength:3}"
-											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
-											   name="age" value="${obj.age }" />
+											   validate="{required:true}" name="openid"
+											   value="${obj.openid }" />
 									</div>
 								</div>
 								<div class="control-group">
@@ -106,7 +116,7 @@
 									<label class="control-label">地址:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="age"
+											   validate="{required:true}" name="address"
 											   value="${obj.address }" />
 									</div>
 								</div>
@@ -133,18 +143,28 @@
 
 								<div class="control-group">
 									<label class="control-label">状态:</label>
-									<select data-placeholder=" " class="span6 chosen" tabindex="6" name="status">
-										<option value="male"
-												<c:if test="${obj.status eq A }">
-													selected="selected"
-												</c:if>
-										>已激活</option>
-										<option value="female"
-												<c:if test="${obj.status eq N }">
-													selected="selected"
-												</c:if>
-										>未激活</option>
-									</select>
+									<div class="controls">
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="status">
+											<option value="C"
+													<c:if test="${obj.status eq A }">
+														selected="selected"
+													</c:if>
+											>已激活</option>
+											<option value="W"
+													<c:if test="${obj.status eq N }">
+														selected="selected"
+													</c:if>
+											>未激活</option>
+										</select>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">备注:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   validate="{required:true}" name="remark"
+											   value="${obj.remark }" />
+									</div>
 								</div>
 
 

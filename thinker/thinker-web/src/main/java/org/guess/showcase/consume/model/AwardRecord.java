@@ -24,7 +24,8 @@ public class AwardRecord {
     /**
      * 会员编号
      */
-    private long userid;
+    @Column(name = "member_id")
+    private long memberId;
     /**
      * 日期
      */
@@ -53,12 +54,12 @@ public class AwardRecord {
         this.id = id;
     }
 
-    public long getUserid() {
-        return userid;
+    public long getMemberId() {
+        return memberId;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
     }
 
     public Date getDate() {

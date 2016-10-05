@@ -96,8 +96,18 @@
 					{cName:"money",cValue:"充值金额"},
 					{cName:"accountAfter",cValue:"充值后钱包余额"},
 					{cName:"principalAfter",cValue:"充值后本金余额"},
-					{cName:"drawTime",cValue:"提现时间"},
-					{cName:"createTime",cValue:"创建时间"}
+					{cName:"drawTime",cValue:"提现时间",format:function(i,value,item){
+						if(App.isNundef(value)){
+							return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+						}
+						return value;
+					}},
+					{cName:"createTime",cValue:"创建时间",format:function(i,value,item){
+						if(App.isNundef(value)){
+							return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+						}
+						return value;
+					}}
 				]
 		);
 	});

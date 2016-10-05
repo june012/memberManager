@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/content/common/common.jsp"%>
-<c:set var="pageTitle" value="${empty obj ? '添加门店':'修改门店' }" scope="page" />
+<c:set var="pageTitle" value="${empty obj ? '添加奖励记录':'修改奖励记录' }" scope="page" />
 <html>
 <head>
 <title>${pageTitle }</title>
@@ -25,14 +25,14 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/consume/award//edit" class="form-horizontal form_sync"
+							<form action="${ctx }/consume/award/edit" class="form-horizontal form_sync"
 								method="post" id="form1">
-								<!-- 用户ID -->
-								<input type="hidden" value="${obj.id }" name="id">
 								<!-- 用户创建日期 -->
 								<c:if test="${not empty obj }">
-									<!-- 消费时间 -->
-									<input type="hidden" id="date" value="<fmt:formatDate value='${obj.date }'/>" name="date">
+									<!-- 用户ID -->
+									<input type="hidden" value="${obj.id }" name="id">
+									<%--<!-- 消费时间 -->--%>
+									<%--<input type="hidden" value="${obj.date}" name="date">--%>
 									<input type="hidden" id="awardAfter" value="${obj.awardAfter}" name="awardAfter">
 								</c:if>
 								<div class="control-group">

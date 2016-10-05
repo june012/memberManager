@@ -99,7 +99,12 @@
 					{cName:"count",cValue:"购买数量"},
 					{cName:"discount",cValue:"折扣"},
 					{cName:"money",cValue:"消费金额"},
-					{cName:"createTime",cValue:"创建时间"}
+					{cName:"createTime",cValue:"创建时间",format:function(i,value,item){
+						if(App.isNundef(value)){
+							return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+						}
+						return value;
+					}}
 				]
 		);
 	});

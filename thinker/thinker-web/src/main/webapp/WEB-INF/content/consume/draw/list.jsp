@@ -67,7 +67,7 @@
 									</div>
 								</div>
 							</form>
-							<tool:consumeOperBtns modelKey="store"></tool:consumeOperBtns>
+							<tool:consumeOperBtns modelKey="draw"></tool:consumeOperBtns>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -96,7 +96,12 @@
 					{cName:"money",cValue:"提现金额"},
 					{cName:"account_after",cValue:"提现后钱包金额"},
 					{cName:"reson",cValue:"提现原因"},
-					{cName:"createTime",cValue:"创建时间"}
+					{cName:"createTime",cValue:"创建时间",format:function(i,value,item){
+						if(App.isNundef(value)){
+							return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+						}
+						return value;
+					}}
 				]
 		);
 	});

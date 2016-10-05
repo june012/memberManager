@@ -22,6 +22,4 @@ public class MemberController extends BaseController<Member> {
     @Autowired
     private MemberService memberService;
 
-
-
 }

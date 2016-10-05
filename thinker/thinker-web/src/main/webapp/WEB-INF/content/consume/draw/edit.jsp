@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/content/common/common.jsp"%>
-<c:set var="pageTitle" value="${empty obj ? '添加门店':'修改门店' }" scope="page" />
+<c:set var="pageTitle" value="${empty obj ? '添加提现记录':'修改提现记录' }" scope="page" />
 <html>
 <head>
 <title>${pageTitle }</title>
@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<!-- 页面导航 -->
 			<tool:navBar pageTitle="${pageTitle }"
-				pageTitleContent="系统管理-门店管理-${pageTitle }" titleIcon="icon-home" />
+				pageTitleContent="消费管理-提现管理-${pageTitle }" titleIcon="icon-home" />
 			<!-- 主体内容 -->
 			<div class="row-fluid">
 				<div class="span12">
@@ -27,13 +27,13 @@
 						<div class="portlet-body form">
 							<form action="${ctx }/consume/draw//edit" class="form-horizontal form_sync"
 								method="post" id="form1">
-								<!-- 用户ID -->
-								<input type="hidden" value="${obj.id }" name="id">
 								<!-- 用户创建日期 -->
 								<c:if test="${not empty obj }">
+									<!-- 用户ID -->
+									<input type="hidden" value="${obj.id }" name="id">
 									<!-- 用户状态 -->
 									<input type="hidden" value="${obj.account_after }" name="account_after">
-									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">
+									<%--<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">--%>
 								</c:if>
 								<div class="control-group">
 									<label class="control-label">会员编号:</label>
