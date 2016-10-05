@@ -10,10 +10,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.guess.core.Constants;
 import org.guess.core.utils.security.Coder;
-import org.guess.core.utils.web.ServletUtils;
-import org.guess.sys.model.Log;
 import org.guess.sys.model.User;
-import org.guess.sys.service.LogService;
 import org.guess.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,9 +28,6 @@ public class LoginController {
 	
 	@Autowired
 	private HttpSession session;
-	
-	@Autowired
-	private LogService logService;
 	
 	@Autowired
 	private UserService userService;
@@ -82,12 +76,6 @@ public class LoginController {
 		}
 		// 验证是否登录成功
 		if (currentUser.isAuthenticated()) {
-			try {
-				User curUser = userService.findByLoginId(userName);
-				logService.save(new Log("系统登录", 1, "登录系统", curUser,ServletUtils.getIpAddr(request)));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			return "redirect:/index";
 		} else {
 			token.clear();
@@ -102,11 +90,6 @@ public class LoginController {
 	public String logout(HttpServletRequest request) {
 		User curUser = (User) session.getAttribute(Constants.CURRENT_USER);
 		SecurityUtils.getSubject().logout();
-		try {
-			logService.save(new Log("系统登出", 1, "退出系统", curUser,ServletUtils.getIpAddr(request)));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/login";
 	}
 }

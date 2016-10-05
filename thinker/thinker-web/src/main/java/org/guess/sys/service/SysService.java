@@ -1,4 +1,4 @@
-package org.guess.showcase.sys.service;
+package org.guess.sys.service;
 
 import org.guess.sys.model.User;
 

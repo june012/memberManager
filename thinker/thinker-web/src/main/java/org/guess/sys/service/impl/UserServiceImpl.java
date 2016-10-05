@@ -2,9 +2,9 @@ package org.guess.sys.service.impl;
 
 import org.guess.core.service.BaseServiceImpl;
 import org.guess.core.utils.security.Coder;
-import org.guess.showcase.sys.dao.StoreDao;
-import org.guess.showcase.sys.model.Store;
-import org.guess.showcase.sys.model.StoreUserRelation;
+import org.guess.sys.dao.StoreDao;
+import org.guess.sys.model.Store;
+import org.guess.sys.model.StoreUserRelation;
 import org.guess.sys.dao.UserDao;
 import org.guess.sys.model.Role;
 import org.guess.sys.model.User;

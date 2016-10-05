@@ -1,8 +1,8 @@
-package org.guess.showcase.sys.controller;
+package org.guess.sys.controller;
 
 import org.guess.core.web.BaseController;
-import org.guess.showcase.sys.model.Store;
-import org.guess.showcase.sys.service.StoreService;
+import org.guess.sys.model.Store;
+import org.guess.sys.service.StoreService;
 import org.guess.sys.model.Role;
 import org.guess.sys.model.User;
 import org.guess.sys.service.RoleService;
@@ -19,12 +19,12 @@ import java.util.List;
  * Created by wan.peng on 2016/9/22.
  */
 @Controller
-@RequestMapping("/sysManager/admin/")
+@RequestMapping("/sys/admin/")
 public class SysManagerController extends BaseController<User> {
     {
-        editView = "/sysManager/admin/edit";
-        listView = "/sysManager/admin/list";
-        showView = "/sysManager/admin/show";
+        editView = "/sys/admin/edit";
+        listView = "/sys/admin/list";
+        showView = "/sys/admin/show";
     }
 
 

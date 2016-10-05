@@ -1,4 +1,4 @@
-package org.guess.showcase.sys.model;
+package org.guess.sys.model;
 
 import org.guess.core.orm.IdEntity;
 

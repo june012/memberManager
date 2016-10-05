@@ -67,7 +67,7 @@
 									</div>
 								</div>
 							</form>
-							<tool:userOperBtns modelKey="admin"></tool:userOperBtns>
+							<tool:operBtns modelKey="admin"></tool:operBtns>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -84,10 +84,10 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//高亮左侧菜单
-		App.activeMenu("sysManager/admin/list");
+		App.activeMenu("sys/admin/list");
 		Page.initData(
 				{
-					url:"${ctx}/sysManager/admin/page",
+					url:"${ctx}/sys/admin/page",
 					tableId : "#sample_1",
 					pageSize : 10
 				},

@@ -1,8 +1,8 @@
-package org.guess.showcase.sys.dao.impl;
+package org.guess.sys.dao.impl;
 
 import org.guess.core.orm.hibernate.HibernateDao;
-import org.guess.showcase.sys.dao.StoreDao;
-import org.guess.showcase.sys.model.Store;
+import org.guess.sys.dao.StoreDao;
+import org.guess.sys.model.Store;
 import org.springframework.stereotype.Repository;
 
 /**

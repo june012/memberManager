@@ -25,7 +25,7 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/sysManager/admin/edit" class="form-horizontal form_sync"
+							<form action="${ctx }/sys/admin/edit" class="form-horizontal form_sync"
 								method="post" id="form1">
 								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
@@ -126,7 +126,7 @@
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
 <script type="text/javascript">
 	$(function(){
-		App.activeMenu("sysManager/admin/list");
+		App.activeMenu("sys/admin/list");
 	});
 </script>
 </body>

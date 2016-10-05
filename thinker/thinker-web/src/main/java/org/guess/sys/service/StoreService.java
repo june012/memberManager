@@ -1,7 +1,7 @@
-package org.guess.showcase.sys.service;
+package org.guess.sys.service;
 
 import org.guess.core.service.BaseService;
-import org.guess.showcase.sys.model.Store;
+import org.guess.sys.model.Store;
 
 /**
  * Created by wan.peng on 2016/9/25.
