@@ -152,12 +152,12 @@
 									<label class="control-label">状态:</label>
 									<div class="controls">
 										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="status">
-											<option value="C"
+											<option value="A"
 													<c:if test="${obj.status eq A }">
 														selected="selected"
 													</c:if>
 											>已激活</option>
-											<option value="W"
+											<option value="N"
 													<c:if test="${obj.status eq N }">
 														selected="selected"
 													</c:if>

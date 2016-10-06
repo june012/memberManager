@@ -92,7 +92,9 @@
 					pageSize : 10
 				},
 				null,
-				[{cName:"storeName",cValue:"门店名"},
+				[{cName:"id",cValue:"门店编号"},
+					{cName:"storeName",cValue:"门店名"},
+					{cName:"address",cValue:"门店地址"},
 					{cName:"createTime",cValue:"创建时间"}
 
 				]
