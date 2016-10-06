@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +68,21 @@ public class MemberController extends BaseController<Member> {
         User currentUser = UserUtil.getCurrentUser();
         modelAndView.addObject("currentUser",currentUser);
         return modelAndView;
+    }
+
+    @Override
+    public String create(@Valid Member object) throws Exception {
+        if(object.getAccount() == null){
+            object.setAccount(new BigDecimal("0"));
+        }
+        if(object.getAward() == null){
+            object.setAward(new BigDecimal("0"));
+        }
+        if(object.getPrincipal()==null){
+            object.setPrincipal(new BigDecimal("0"));
+        }
+
+        return super.create(object);
     }
 
     @RequestMapping("isAvailable")

@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -37,21 +37,21 @@ public class InterestRecord {
     /**
      * 本金金额
      */
-    private BigInteger principal;
+    private BigDecimal principal;
     /**
      *利息比例
      */
-    private BigInteger rate;
+    private double rate;
     /**
      * 增加利息
      */
     @Column(name = "interest_add")
-    private BigInteger interestAdd;
+    private BigDecimal interestAdd;
     /**
      * 增加后钱包金额
      */
     @Column(name = "account_after")
-    private BigInteger accountAfter;
+    private BigDecimal accountAfter;
 
     public long getId() {
         return id;
@@ -77,35 +77,35 @@ public class InterestRecord {
         this.date = date;
     }
 
-    public BigInteger getPrincipal() {
-        return principal;
-    }
-
-    public void setPrincipal(BigInteger principal) {
-        this.principal = principal;
-    }
-
-    public BigInteger getRate() {
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(BigInteger rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 
-    public BigInteger getInterestAdd() {
+    public BigDecimal getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(BigDecimal principal) {
+        this.principal = principal;
+    }
+
+    public BigDecimal getInterestAdd() {
         return interestAdd;
     }
 
-    public void setInterestAdd(BigInteger interestAdd) {
+    public void setInterestAdd(BigDecimal interestAdd) {
         this.interestAdd = interestAdd;
     }
 
-    public BigInteger getAccountAfter() {
+    public BigDecimal getAccountAfter() {
         return accountAfter;
     }
 
-    public void setAccountAfter(BigInteger accountAfter) {
+    public void setAccountAfter(BigDecimal accountAfter) {
         this.accountAfter = accountAfter;
     }
 }

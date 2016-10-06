@@ -39,7 +39,7 @@
 									<label class="control-label">会员编号:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:2,maxlength:10}"
+											validate="{required:true,minlength:1,maxlength:10}"
 											name="userid" value="${obj.userid }" />
 									</div>
 								</div>

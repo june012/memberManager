@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -57,7 +57,7 @@ public class CashRecord {
     /**
      * 消费金额
      */
-    private BigInteger money;
+    private BigDecimal money;
 
     public long getId() {
         return id;
@@ -123,11 +123,11 @@ public class CashRecord {
         this.createTime = createTime;
     }
 
-    public BigInteger getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
-    public void setMoney(BigInteger money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 }

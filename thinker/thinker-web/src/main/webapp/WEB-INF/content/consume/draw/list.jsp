@@ -94,7 +94,7 @@
 				null,
 				[{cName:"userid",cValue:"会员编号"},
 					{cName:"money",cValue:"提现金额"},
-					{cName:"account_after",cValue:"提现后钱包金额"},
+					{cName:"AccountAfter",cValue:"提现后钱包金额"},
 					{cName:"reson",cValue:"提现原因"},
 					{cName:"createTime",cValue:"创建时间",format:function(i,value,item){
 						if(App.isNundef(value)){

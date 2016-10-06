@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -34,7 +34,7 @@ public class AwardRecord {
      * 奖励金额
      */
     @Column(name = "award_money")
-    private BigInteger awardMoney;
+    private BigDecimal awardMoney;
     /**
      * 奖励类型
      */
@@ -44,7 +44,7 @@ public class AwardRecord {
      * 奖励后钱包金额
      */
     @Column(name = "award_after")
-    private BigInteger awardAfter;
+    private BigDecimal awardAfter;
 
     public long getId() {
         return id;
@@ -70,12 +70,20 @@ public class AwardRecord {
         this.date = date;
     }
 
-    public BigInteger getAwardMoney() {
+    public BigDecimal getAwardMoney() {
         return awardMoney;
     }
 
-    public void setAwardMoney(BigInteger awardMoney) {
+    public void setAwardMoney(BigDecimal awardMoney) {
         this.awardMoney = awardMoney;
+    }
+
+    public BigDecimal getAwardAfter() {
+        return awardAfter;
+    }
+
+    public void setAwardAfter(BigDecimal awardAfter) {
+        this.awardAfter = awardAfter;
     }
 
     public String getAwardType() {
@@ -84,13 +92,5 @@ public class AwardRecord {
 
     public void setAwardType(String awardType) {
         this.awardType = awardType;
-    }
-
-    public BigInteger getAwardAfter() {
-        return awardAfter;
-    }
-
-    public void setAwardAfter(BigInteger awardAfter) {
-        this.awardAfter = awardAfter;
     }
 }

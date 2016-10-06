@@ -39,7 +39,7 @@
 									<%--<input type="hidden" id="time" value="<fmt:formatDate value='${obj.date }'/>" name="date">--%>
 								</c:if>
 								<div class="control-group">
-									<label class="control-label">用户编号:</label>
+									<label class="control-label">会员编号:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
 											validate="{required:true}"

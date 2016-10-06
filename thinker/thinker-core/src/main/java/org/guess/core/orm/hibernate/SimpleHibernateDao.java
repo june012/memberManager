@@ -7,11 +7,6 @@
  */
 package org.guess.core.orm.hibernate;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import org.guess.core.utils.AssertUtils;
 import org.guess.core.utils.ReflectionUtils;
 import org.hibernate.Criteria;
@@ -27,6 +22,11 @@ import org.hibernate.metadata.ClassMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 封装Hibernate原生API的DAO泛型基类.
@@ -87,6 +87,7 @@ public class SimpleHibernateDao<T, ID extends Serializable> {
 	 */
 	public void save(final T entity) {
 		AssertUtils.notNull(entity, "entity不能为空");
+		getSession().clear();
 		getSession().saveOrUpdate(entity);
 		logger.debug("save entity: {}", entity);
 	}

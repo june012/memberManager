@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -34,11 +34,12 @@ public class DrawRecord {
     /**
      * 提现金额
      */
-    private BigInteger money;
+    private BigDecimal money;
     /**
      * 提现后钱包余额
      */
-    private BigInteger account_after;
+    @Column(name = "account_after")
+    private BigDecimal accountAfter;
     /**
      * 提现原因
      */
@@ -68,21 +69,6 @@ public class DrawRecord {
         this.createTime = createTime;
     }
 
-    public BigInteger getMoney() {
-        return money;
-    }
-
-    public void setMoney(BigInteger money) {
-        this.money = money;
-    }
-
-    public BigInteger getAccount_after() {
-        return account_after;
-    }
-
-    public void setAccount_after(BigInteger account_after) {
-        this.account_after = account_after;
-    }
 
     public String getReson() {
         return reson;
@@ -90,5 +76,21 @@ public class DrawRecord {
 
     public void setReson(String reson) {
         this.reson = reson;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    public BigDecimal getAccountAfter() {
+        return accountAfter;
+    }
+
+    public void setAccountAfter(BigDecimal accountAfter) {
+        this.accountAfter = accountAfter;
     }
 }

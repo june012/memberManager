@@ -25,20 +25,18 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/consume/cash//edit" class="form-horizontal form_sync"
+							<form action="${ctx }/consume/cash/edit" class="form-horizontal form_sync"
 								method="post" id="form1">
 								<!-- 用户创建日期 -->
 								<c:if test="${not empty obj }">
 									<!-- 用户ID -->
 									<input type="hidden" value="${obj.id }" name="id">
-									<!-- 用户状态 -->
-									<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">
-								</c:if>
+                                </c:if>
 								<div class="control-group">
 									<label class="control-label">会员id:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true,minlength:2,maxlength:10}"
+											   validate="{required:true,minlength:1,maxlength:10}"
 											   name="userid" value="${obj.userid }" />
 									</div>
 								</div>
@@ -46,7 +44,7 @@
 									<label class="control-label">产品名称:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:2,maxlength:10}"
+											validate="{required:true,minlength:1,maxlength:20}"
 											name="productName" value="${obj.productName }" />
 									</div>
 								</div>
@@ -54,7 +52,7 @@
 									<label class="control-label">产品类别:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true,minlength:2,maxlength:10}"
+											   validate="{required:true,minlength:1,maxlength:10}"
 											   name="productType" value="${obj.productType }" />
 									</div>
 								</div>
@@ -82,10 +80,15 @@
 									<div class="controls">
 										<input type="number" class="span6 m-wrap" min="0.1" step="0.1" max="1"
 											   validate="{required:true}" name="discount" id="discount"
-										<c:if test="${obj.discount eq null}">
-											value="1"
-										</c:if>
-											   value="${obj.discount }" />
+                                            <c:choose>
+                                                <c:when test="${obj.discount eq null}">
+                                                    value="1"
+                                                </c:when>
+                                                <c:otherwise>
+                                                    value="${obj.discount }"
+                                                </c:otherwise>
+                                            </c:choose>
+                                                />
 									</div>
 								</div>
 								<div class="control-group">

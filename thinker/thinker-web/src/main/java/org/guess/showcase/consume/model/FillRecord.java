@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -37,17 +37,17 @@ public class FillRecord {
     /**
      * 充值金额
      */
-    private BigInteger money;
+    private BigDecimal money;
     /**
      * 充值后钱包余额
      */
     @Column(name = "account_after")
-    private BigInteger accountAfter;
+    private BigDecimal accountAfter;
     /**
      * 充值后本金余额
      */
     @Column(name = "principal_after")
-    private BigInteger principalAfter;
+    private BigDecimal principalAfter;
     /**
      * 提现时间
      */
@@ -78,27 +78,27 @@ public class FillRecord {
         this.createTime = createTime;
     }
 
-    public BigInteger getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
-    public void setMoney(BigInteger money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 
-    public BigInteger getAccountAfter() {
+    public BigDecimal getAccountAfter() {
         return accountAfter;
     }
 
-    public void setAccountAfter(BigInteger accountAfter) {
+    public void setAccountAfter(BigDecimal accountAfter) {
         this.accountAfter = accountAfter;
     }
 
-    public BigInteger getPrincipalAfter() {
+    public BigDecimal getPrincipalAfter() {
         return principalAfter;
     }
 
-    public void setPrincipalAfter(BigInteger principalAfter) {
+    public void setPrincipalAfter(BigDecimal principalAfter) {
         this.principalAfter = principalAfter;
     }
 

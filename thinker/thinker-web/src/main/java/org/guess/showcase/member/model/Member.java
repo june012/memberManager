@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 /**
  * Created by wan.peng on 2016/9/11.
@@ -56,15 +56,15 @@ public class Member {
     /**
      * 本金(用于计算利息)
      */
-    private BigInteger principal;
+    private BigDecimal principal;
     /**
      * 钱包余额
      */
-    private BigInteger account;
+    private BigDecimal account;
     /**
      * 钱包奖金
      */
-    private BigInteger award;
+    private BigDecimal award;
     /**
      * 级别
      */
@@ -164,27 +164,27 @@ public class Member {
         this.address = address;
     }
 
-    public BigInteger getPrincipal() {
+    public BigDecimal getPrincipal() {
         return principal;
     }
 
-    public void setPrincipal(BigInteger principal) {
+    public void setPrincipal(BigDecimal principal) {
         this.principal = principal;
     }
 
-    public BigInteger getAccount() {
+    public BigDecimal getAccount() {
         return account;
     }
 
-    public void setAccount(BigInteger account) {
+    public void setAccount(BigDecimal account) {
         this.account = account;
     }
 
-    public BigInteger getAward() {
+    public BigDecimal getAward() {
         return award;
     }
 
-    public void setAward(BigInteger award) {
+    public void setAward(BigDecimal award) {
         this.award = award;
     }
 
@@ -211,4 +211,6 @@ public class Member {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+
 }
