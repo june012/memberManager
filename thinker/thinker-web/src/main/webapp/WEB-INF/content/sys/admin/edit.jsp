@@ -105,7 +105,7 @@
 										<shiro:lacksRole name="administrator">
 											<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
 												<c:forEach items="${roles }" var="role">
-													<c:if test="${role.name eq userRole.id }">
+													<c:if test="${role.name ne 'administrator'}">
 														<option value="${role.id }"
 																<c:forEach items="${obj.roles }" var="userRole">
 																	<c:if test="${role.id eq userRole.id }">
