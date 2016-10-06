@@ -123,6 +123,7 @@
 								<div class="control-group">
 									<label class="control-label">所属门店:</label>
 									<div class="controls">
+										<shiro:hasRole name="administrator">
 										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
 
 											<option value="0"
@@ -138,6 +139,12 @@
 												>${store.storeName }</option>
 											</c:forEach>
 										</select>
+										</shiro:hasRole>
+										<shiro:lacksRole name="administrator">
+											<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
+												<option value="${currentUser.storeId}" selected>${currentUser.storeName}</option>
+											</select>
+										</shiro:lacksRole>
 									</div>
 								</div>
 

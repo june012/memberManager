@@ -44,10 +44,11 @@ public class User extends IdEntity {
 	/** 性别 */
 	private String gender;
 	/** 所属门店 */
-	@Column(name = "store_name")
-	private String storeName;
 	@Column(name = "store_id")
 	private Long storeId;
+
+	@Column(name = "store_name")
+	private String storeName;
 
 	public String getStoreName() {
 		return storeName;

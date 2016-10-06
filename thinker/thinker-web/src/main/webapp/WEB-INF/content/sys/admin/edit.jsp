@@ -44,7 +44,7 @@
 											validate="{required:true,
 													   isLoginName:true,
 													   remote:{type:'POST',
-													   		   url:'${ctx }/sys/user/isAvailable',
+													   		   url:'${ctx }/sys/admin/isAvailable',
 													   		   data:{oldValue:'${obj.loginId }'}},
 													   messages:{remote:'该登录名已存在'}}"
 											name="loginId" value="${obj.loginId }"
@@ -68,35 +68,63 @@
 											name="repasswd" value="${obj.passwd }" />
 									</div>
 								</div>
+
 								<div class="control-group">
 									<label class="control-label">性别:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											validate="{required:true}" name="gender"
-											value="${obj.gender }" />
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="gender">
+											<option value="male"
+													<c:if test="${obj.gender eq male }">
+														selected="selected"
+													</c:if>
+											>男</option>
+											<option value="female"
+													<c:if test="${obj.gender eq female }">
+														selected="selected"
+													</c:if>
+											>女</option>
+										</select>
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">分配角色:</label>
 									<div class="controls">
-										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="roleId">
-											<c:forEach items="${roles }" var="role">
-												<option value="${role.id }"
-													<c:forEach items="${obj.roles }" var="userRole">
-														<c:if test="${role.id eq userRole.id }">
-															selected="selected"
-														</c:if>
-													</c:forEach>
-												>${role.name }(${role.realName })</option>
-											</c:forEach>
-										</select>
+										<shiro:hasRole name="administrator">
+											<select data-placeholder=" " class="span6 chosen" tabindex="6" name="roleId">
+												<c:forEach items="${roles }" var="role">
+													<option value="${role.id }"
+														<c:forEach items="${obj.roles }" var="userRole">
+															<c:if test="${role.id eq userRole.id }">
+																selected="selected"
+															</c:if>
+														</c:forEach>
+													>${role.name }(${role.realName })</option>
+												</c:forEach>
+											</select>
+										</shiro:hasRole>
+										<shiro:lacksRole name="administrator">
+											<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
+												<c:forEach items="${roles }" var="role">
+													<c:if test="${role.name eq userRole.id }">
+														<option value="${role.id }"
+																<c:forEach items="${obj.roles }" var="userRole">
+																	<c:if test="${role.id eq userRole.id }">
+																		selected="selected"
+																	</c:if>
+																</c:forEach>
+														>${role.name }(${role.realName })</option>
+													</c:if>
+												</c:forEach>
+
+											</select>
+										</shiro:lacksRole>
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">所属门店:</label>
 									<div class="controls">
+										<shiro:hasRole name="administrator">
 										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
-
 											<option value="0"
 												<c:if test="${obj.storeId eq 0 }">
 														selected="selected"
@@ -110,6 +138,12 @@
 												>${store.storeName }</option>
 											</c:forEach>
 										</select>
+										</shiro:hasRole>
+										<shiro:lacksRole name="administrator">
+											<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
+												<option value="${currentUser.storeId}" selected>${currentUser.storeName}</option>
+											</select>
+										</shiro:lacksRole>
 									</div>
 								</div>
 								<div class="form-actions">

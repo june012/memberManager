@@ -77,8 +77,6 @@
             <list>
                 <value>org.guess.sys.model</value>
                 <value>org.guess.showcase.consume.model</value>
-                <value>org.guess.showcase.finance.model</value>
-                <value>org.guess.showcase.sys.model</value>
                 <value>org.guess.showcase.member.model</value>
             </list>
         </property>
@@ -91,6 +89,7 @@
                 <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
                 <prop key="hibernate.jdbc.fetch_size">50</prop>
                 <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
                 <prop key="net.sf.ehcache.configurationResourceName">hibernate/ehcache-hibernate-local.xml</prop>

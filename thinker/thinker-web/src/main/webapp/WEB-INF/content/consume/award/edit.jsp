@@ -36,6 +36,13 @@
 									<input type="hidden" id="awardAfter" value="${obj.awardAfter}" name="awardAfter">
 								</c:if>
 								<div class="control-group">
+									<label class="control-label">会员ID:</label>
+									<div class="controls">
+										<input type="text" class="span6 m-wrap"
+											   name="memberId" value="${obj.memberId }" />
+									</div>
+								</div>
+								<div class="control-group">
 									<label class="control-label">奖励金额:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"

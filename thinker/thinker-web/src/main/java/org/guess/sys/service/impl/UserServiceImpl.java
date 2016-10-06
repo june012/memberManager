@@ -3,10 +3,9 @@ package org.guess.sys.service.impl;
 import org.guess.core.service.BaseServiceImpl;
 import org.guess.core.utils.security.Coder;
 import org.guess.sys.dao.StoreDao;
-import org.guess.sys.model.Store;
-import org.guess.sys.model.StoreUserRelation;
 import org.guess.sys.dao.UserDao;
 import org.guess.sys.model.Role;
+import org.guess.sys.model.Store;
 import org.guess.sys.model.User;
 import org.guess.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,9 +81,5 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 			}
 			user.setStoreName(store.getStoreName());
 		}
-		//门店-管理员关系
-		StoreUserRelation storeUserRelation = new StoreUserRelation();
-		storeUserRelation.setLoginId(user.getLoginId());
-		storeUserRelation.setStoreId(Long.valueOf(storeId));
 	}
 }
