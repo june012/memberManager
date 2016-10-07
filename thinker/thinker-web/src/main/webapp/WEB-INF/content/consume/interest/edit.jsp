@@ -41,7 +41,10 @@
 								<div class="control-group">
 									<label class="control-label">会员编号:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap" readonly
+										<input type="text" class="span6 m-wrap"
+												<c:if test="${not empty obj }">
+													readonly
+												</c:if>
 											validate="{required:true}"
 											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
 											name="userId" value="${obj.userId }" />

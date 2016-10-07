@@ -8,6 +8,8 @@ import org.guess.sys.model.Store;
 import org.guess.sys.model.User;
 import org.guess.sys.service.StoreService;
 import org.guess.sys.util.UserUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +41,8 @@ public class MemberController extends BaseController<Member> {
 
     @Autowired
     private StoreService storeService;
+
+    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Override
     public Map<String, Object> page(Page<Member> page, HttpServletRequest request) {
@@ -87,6 +91,11 @@ public class MemberController extends BaseController<Member> {
 
     @Override
     public String create(@Valid Member object) throws Exception {
+        List<Member> members = memberService.findBy("phone", object.getPhone());
+        if(members.size()>0){
+            logger.info("该手机号{}已被注册"+object.getPhone());
+            return null;
+        }
         if(object.getAccount() == null){
             object.setAccount(new BigDecimal("0"));
         }
@@ -102,10 +111,11 @@ public class MemberController extends BaseController<Member> {
 
     @RequestMapping("isAvailable")
     public @ResponseBody
-    boolean isLoginIdAvailable(@RequestParam("oldValue") String old) {
-        Member member = memberService.findUniqueBy("phone", old);
-
-        System.out.println("-----------------"+old+"---------------");
-        return member == null;
+    boolean isLoginIdAvailable(@RequestParam("phone") String phone) {
+        List<Member> members = memberService.findBy("phone", phone);
+        if(members.size()==0||members == null){
+            return true;
+        }
+        return false;
     }
 }

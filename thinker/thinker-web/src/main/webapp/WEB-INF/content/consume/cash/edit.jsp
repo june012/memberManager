@@ -35,7 +35,10 @@
 								<div class="control-group">
 									<label class="control-label">会员id:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap" readonly
+										<input type="text" class="span6 m-wrap"
+												<c:if test="${not empty obj }">
+													readonly
+												</c:if>
 											   validate="{required:true,minlength:1,maxlength:10}"
 											   name="userid" value="${obj.userid }" />
 									</div>

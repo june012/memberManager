@@ -40,8 +40,18 @@
 								<div class="control-group">
 									<label class="control-label">登录账号(手机号):</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap" readonly
-											   validate="{required:true,isMobile:true}" name="phone"
+										<input type="text" class="span6 m-wrap"
+											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
+												<c:if test="${not empty obj }">
+											   		readonly
+												</c:if>
+											   validate="{required:true,
+											   			       isMobile:true,
+													   		   remote:{type:'POST',
+													   		   url:'${ctx }/member/isAvailable',
+													   		   data:{}},
+													   messages:{remote:'该手机号已被注册'}}"
+											   name="phone"
 											   value="${obj.phone }" />
 									</div>
 								</div>
