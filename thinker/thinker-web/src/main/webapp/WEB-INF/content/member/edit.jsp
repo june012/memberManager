@@ -45,12 +45,21 @@
 												<c:if test="${not empty obj }">
 											   		readonly
 												</c:if>
-											   validate="{required:true,
-											   			       isMobile:true,
-													   		   remote:{type:'POST',
-													   		   url:'${ctx }/member/isAvailable',
-													   		   data:{}},
-													   messages:{remote:'该手机号已被注册'}}"
+												<c:choose>
+													<c:when test="${not empty obj }">
+														readonly
+														validate="{required:true,
+														isMobile:true,}"
+													</c:when>
+													<c:otherwise>
+														validate="{required:true,
+														isMobile:true,
+														remote:{type:'POST',
+														url:'${ctx }/member/isAvailable',
+														data:{}},
+														messages:{remote:'该手机号已被注册'}}"
+													</c:otherwise>
+												</c:choose>
 											   name="phone"
 											   value="${obj.phone }" />
 									</div>

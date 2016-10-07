@@ -1,7 +1,10 @@
 package org.guess.showcase.member.controller;
 
+import com.google.gson.Gson;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
+import org.guess.showcase.member.dto.MemberDto;
+import org.guess.showcase.member.dto.StoreMemberDto;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
 import org.guess.sys.model.Store;
@@ -10,6 +13,7 @@ import org.guess.sys.service.StoreService;
 import org.guess.sys.util.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -117,5 +122,49 @@ public class MemberController extends BaseController<Member> {
             return true;
         }
         return false;
+    }
+
+    @ResponseBody
+    @RequestMapping("/getStoreAndMember")
+    public String getStoreAndMember() throws Exception {
+        User currentUser = UserUtil.getCurrentUser();
+        List<StoreMemberDto> storeMemberDtos = new ArrayList<StoreMemberDto>();
+        if(currentUser.getStoreId() == 0){
+            List<Store> stores = storeService.getAll();
+            for(Store store :stores){
+                StoreMemberDto storeMemberDto = new StoreMemberDto();
+                storeMemberDto.setId(store.getId());
+                storeMemberDto.setName(store.getStoreName());
+                List<Member> members = memberService.findBy("storeId", store.getId());
+                List<MemberDto> memberDtos = new ArrayList<MemberDto>();
+                for(Member m:members){
+                    MemberDto memberDto = new MemberDto();
+                    BeanUtils.copyProperties(m,memberDto);
+                    memberDtos.add(memberDto);
+                }
+                storeMemberDto.setMemberDtos(memberDtos);
+                storeMemberDtos.add(storeMemberDto);
+            }
+            Gson gson = new Gson();
+            return gson.toJson(storeMemberDtos);
+        }else{
+            StoreMemberDto storeMemberDto = new StoreMemberDto();
+            storeMemberDto.setId(currentUser.getStoreId());
+            Store store = storeService.findUniqueBy("id", currentUser.getStoreId());
+            storeMemberDto.setName(store.getStoreName());
+            System.out.println(store.getStoreName());
+
+            List<Member> members = memberService.findBy("storeId", currentUser.getStoreId());
+            List<MemberDto> memberDtos = new ArrayList<MemberDto>();
+            for(Member m:members){
+                MemberDto memberDto = new MemberDto();
+                BeanUtils.copyProperties(m,memberDto);
+                memberDtos.add(memberDto);
+            }
+            storeMemberDto.setMemberDtos(memberDtos);
+            storeMemberDtos.add(storeMemberDto);
+            Gson gson = new Gson();
+            return gson.toJson(storeMemberDtos);
+        }
     }
 }
