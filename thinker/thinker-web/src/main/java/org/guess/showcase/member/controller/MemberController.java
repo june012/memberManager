@@ -1,18 +1,7 @@
 package org.guess.showcase.member.controller;
 
-import org.guess.core.Constants;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
-import org.guess.showcase.consume.model.AwardRecord;
-import org.guess.showcase.consume.model.CashRecord;
-import org.guess.showcase.consume.model.DrawRecord;
-import org.guess.showcase.consume.model.FillRecord;
-import org.guess.showcase.consume.model.InterestRecord;
-import org.guess.showcase.consume.service.AwardService;
-import org.guess.showcase.consume.service.CashService;
-import org.guess.showcase.consume.service.DrawService;
-import org.guess.showcase.consume.service.FillService;
-import org.guess.showcase.consume.service.InterestService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
 import org.guess.sys.model.Store;
@@ -51,21 +40,6 @@ public class MemberController extends BaseController<Member> {
     @Autowired
     private StoreService storeService;
 
-    @Autowired
-    private AwardService awardService;
-
-    @Autowired
-    private CashService cashService;
-
-    @Autowired
-    private FillService fillService;
-
-    @Autowired
-    private InterestService interestService;
-
-    @Autowired
-    private DrawService drawService;
-
     @Override
     public Map<String, Object> page(Page<Member> page, HttpServletRequest request) {
         User currentUser = UserUtil.getCurrentUser();
@@ -89,57 +63,7 @@ public class MemberController extends BaseController<Member> {
 
     @Override
     public String delete(@PathVariable("id") Long id) throws Exception {
-        Member member = memberService.findUniqueBy("id", id);
-        member.setStatus(Constants.MEMBER_STATUS_DELETE);
-        memberService.save(member);
-
-        List<AwardRecord> awardRecords = awardService.findBy("memberId", id);
-        if(awardRecords!=null&&awardRecords.size()!=0){
-            Long[] ids = new Long[awardRecords.size()];
-            for(int i=0;i<awardRecords.size();i++){
-                ids[i]=awardRecords.get(i).getId();
-            }
-            awardService.removeByIds(ids);
-        }
-
-        List<CashRecord> cashRecords = cashService.findBy("userid", id);
-        if(cashRecords!=null&&cashRecords.size()!=0) {
-            Long[] ids1 = new Long[cashRecords.size()];
-            System.out.println(ids1.length + "-" + cashRecords.size());
-            for (int i = 0; i < cashRecords.size(); i++) {
-                ids1[i] = cashRecords.get(i).getId();
-            }
-            cashService.removeByIds(ids1);
-        }
-
-        List<FillRecord> fillRecords = fillService.findBy("userid", id);
-        if(fillRecords!=null&&fillRecords.size()!=0) {
-            Long[] ids2 = new Long[fillRecords.size()];
-            for (int i = 0; i < fillRecords.size(); i++) {
-                ids2[i] = fillRecords.get(i).getId();
-            }
-            fillService.removeByIds(ids2);
-        }
-
-        List<InterestRecord> interestRecords = interestService.findBy("userId", id);
-        if(interestRecords!=null&&interestRecords.size()!=0) {
-            Long[] ids3 = new Long[interestRecords.size()];
-            for(int i=0;i<interestRecords.size();i++){
-                ids3[i]=interestRecords.get(i).getId();
-            }
-            interestService.removeByIds(ids3);
-        }
-
-
-        List<DrawRecord> drawRecords = drawService.findBy("userid", id);
-        if(drawRecords!=null&&drawRecords.size()!=0) {
-            Long[] ids4 = new Long[drawRecords.size()];
-            for (int i = 0; i < drawRecords.size(); i++) {
-                ids4[i] = drawRecords.get(i).getId();
-            }
-            drawService.removeByIds(ids4);
-        }
-
+        memberService.deleteMember(id);
         return "redirect:/member/list";
     }
 

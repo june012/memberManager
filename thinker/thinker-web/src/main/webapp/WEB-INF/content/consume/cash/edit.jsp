@@ -35,7 +35,7 @@
 								<div class="control-group">
 									<label class="control-label">会员id:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap"
+										<input type="text" class="span6 m-wrap" readonly
 											   validate="{required:true,minlength:1,maxlength:10}"
 											   name="userid" value="${obj.userid }" />
 									</div>

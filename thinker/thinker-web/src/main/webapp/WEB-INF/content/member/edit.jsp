@@ -40,7 +40,7 @@
 								<div class="control-group">
 									<label class="control-label">登录账号(手机号):</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap"
+										<input type="text" class="span6 m-wrap" readonly
 											   validate="{required:true,isMobile:true}" name="phone"
 											   value="${obj.phone }" />
 									</div>

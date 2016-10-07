@@ -38,7 +38,7 @@
 								<div class="control-group">
 									<label class="control-label">会员ID:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap"
+										<input type="text" class="span6 m-wrap" readonly
 											   name="memberId" value="${obj.memberId }" />
 									</div>
 								</div>

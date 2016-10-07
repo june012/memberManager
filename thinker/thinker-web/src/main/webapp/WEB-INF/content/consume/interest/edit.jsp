@@ -41,7 +41,7 @@
 								<div class="control-group">
 									<label class="control-label">会员编号:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap"
+										<input type="text" class="span6 m-wrap" readonly
 											validate="{required:true}"
 											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
 											name="userId" value="${obj.userId }" />
