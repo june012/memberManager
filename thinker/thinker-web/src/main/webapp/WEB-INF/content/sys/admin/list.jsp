@@ -42,13 +42,10 @@
 										</div>
 									</div>
 
-									<div class="span4">
+									<div class="span2">
 										<div class="control-group">
-											<div class="controls input-append date form_date"
-												 data-date-format="yyyy-mm-dd"
-												 id="time">
-												<input id="createDate" class="span10 m-wrap" type="text" readonly="readonly" placeholder="时间">
-												<span class="add-on"><i class="icon-th"></i></span>
+											<div class="controls">
+												<input type="text" id="storeName" class="m-wrap span12" placeholder="所属门店">
 											</div>
 										</div>
 									</div>
@@ -100,36 +97,11 @@
 		);
 	});
 
-	//更改用户状态
-	function changeUserStatus(obj){
-		var callback = function(result){
-			if(!result){
-				return;
-			}
-			blockUI();
-			$.ajax({
-				type : "POST",
-				dataType : "json",
-				url : Page.subUrl()+"/changeUserStatus",
-				data : {"id":$(obj).attr("data-id")},
-				success : function(data){
-					if(data == 1){
-						$(obj).removeAttr("data-original-title").attr("data-original-title","点击禁用").removeClass("grey").addClass("green").html('<i class="icon-unlock"></i>启用');
-					}else{
-						$(obj).removeAttr("data-original-title").attr("data-original-title","点击启用").removeClass("green").addClass("grey").html('<i class="icon-lock"></i>禁用');
-					}
-					unBlockUI();
-				}
-			});
-		};
-		App.confirm(callback);
-	}
-
 	function doQuery(){
 		var queryObj = {
-			search_LIKES_email : App.isEqPlacehoder($("#email")),
 			search_LIKES_name : App.isEqPlacehoder($("#name")),
-			search_EQD_createDate : App.isEqPlacehoder($("#createDate"))
+			search_LIKES_storeName : App.isEqPlacehoder($("#storeName")),
+
 		};
 		Page.doQuery(queryObj);
 	}

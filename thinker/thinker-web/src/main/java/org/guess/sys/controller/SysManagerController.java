@@ -33,9 +33,6 @@ public class SysManagerController extends BaseController<User> {
         showView = "/sys/admin/show";
     }
 
-    private String ADMIN_ID = "11";
-
-
     @Autowired
     private RoleService roleService;
 
@@ -63,6 +60,7 @@ public class SysManagerController extends BaseController<User> {
         String oldpwd = request.getParameter("oldpwd");
         String roleId = request.getParameter("roleId");
         String storeId = request.getParameter("storeId");
+        System.out.println(roleId+"-"+oldpwd+"-"+storeId);
         userService.save(user,roleId,oldpwd,storeId);
         return REDIRECT + listView;
     }
@@ -101,11 +99,20 @@ public class SysManagerController extends BaseController<User> {
     @Override
     public Map<String, Object> page(Page<User> page, HttpServletRequest request) {
         User currentUser = UserUtil.getCurrentUser();
-        boolean id = currentUser.getRoles().contains(roleService.findUniqueBy("id", Long.valueOf(ADMIN_ID)));
-        if(id){
+        request.getSession().setAttribute("currentUser", currentUser);
+        if(currentUser.getStoreId()==0){
             return super.page(page, request);
         }
-        Page<User> page1 = userService.findPage(page, "from User user where user.storeId = " + currentUser.getStoreId());
+        String name = request.getParameter("search_LIKES_name");
+        String storeName = request.getParameter("search_LIKES_storeName");
+        String hql = "from User user where user.storeId =" + currentUser.getStoreId();
+        if(name != null){
+            hql+=" and user.name like '%"+name+"%'";
+        }
+        if(storeName!=null){
+            hql+= " and user.storeName like'%"+storeName+"%'";
+        }
+        Page<User> page1 = userService.findPage(page, hql);
         return page1.returnMap();
     }
 

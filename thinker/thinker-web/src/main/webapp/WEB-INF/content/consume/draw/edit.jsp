@@ -55,6 +55,7 @@
 									<label class="control-label">提现金额:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
+											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
 											   validate="{required:true}" name="money"
 											   value="${obj.money }" />
 									</div>

@@ -38,7 +38,7 @@ public class User extends IdEntity {
 	private String passwd;
 	/** 用户姓名 */
     @NotEmpty
-    @Length(min = 2,max = 10)
+    @Length(min = 1,max = 10)
 	private String name;
 
 	/** 性别 */

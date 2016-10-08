@@ -9,6 +9,15 @@ public class StoreMemberDto {
     private Long id;
     private List<MemberDto> memberDtos;
     private String name;
+    private Long storeId;
+
+    public Long getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
+    }
 
     public Long getId() {
         return id;

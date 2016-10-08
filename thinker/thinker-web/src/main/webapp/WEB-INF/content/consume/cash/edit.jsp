@@ -69,6 +69,7 @@
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
 											   validate="{required:true,minlength:1,maxlength:10}" id="productPrice"
+											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
 											   name="productPrice" value="${obj.productPrice }" />
 									</div>
 								</div>

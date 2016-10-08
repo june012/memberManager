@@ -1,6 +1,7 @@
 package org.guess.showcase.member.service.impl;
 
 import org.guess.core.Constants;
+import org.guess.core.orm.PropertyFilter;
 import org.guess.core.service.BaseServiceImpl;
 import org.guess.showcase.consume.model.AwardRecord;
 import org.guess.showcase.consume.model.CashRecord;
@@ -17,6 +18,7 @@ import org.guess.showcase.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,5 +94,30 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
             }
             drawService.removeByIds(ids4);
     }
+    }
+
+    @Override
+    public List<Member> findMembers(String property, String value) {
+        List<PropertyFilter> propertyFilters = new ArrayList<PropertyFilter>();
+        PropertyFilter propertyFilter1 = new PropertyFilter("EQS_status", "A");
+        PropertyFilter propertyFilter2 = new PropertyFilter(property, value);
+        propertyFilters.add(propertyFilter1);
+        propertyFilters.add(propertyFilter2);
+        return find(propertyFilters);
+    }
+
+    @Override
+    public List<Member> findMembers(String property1, String value1, String property2, String value2) {
+        List<PropertyFilter> propertyFilters = new ArrayList<PropertyFilter>();
+        PropertyFilter propertyFilter1 = new PropertyFilter("EQS_status", "A");
+        PropertyFilter propertyFilter2 = new PropertyFilter(property1, value1);
+        PropertyFilter propertyFilter3 = new PropertyFilter(property2, value2);
+        propertyFilters.add(propertyFilter1);
+        if(value1 !=null){
+            propertyFilters.add(propertyFilter2);
+        }if(value2!= null){
+            propertyFilters.add(propertyFilter3);
+        }
+        return find(propertyFilters);
     }
 }

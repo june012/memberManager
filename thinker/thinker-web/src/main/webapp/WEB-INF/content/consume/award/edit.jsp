@@ -83,7 +83,7 @@
 		<div id="choose-box-wrapper">
 			<div id="choose-box">
 				<div id="choose-box-title">
-					<span>选择学校</span>
+					<span>选择会员</span>
 				</div>
 				<div id="choose-a-province">
 				</div>

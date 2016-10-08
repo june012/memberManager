@@ -131,11 +131,20 @@ public class MemberController extends BaseController<Member> {
         List<StoreMemberDto> storeMemberDtos = new ArrayList<StoreMemberDto>();
         if(currentUser.getStoreId() == 0){
             List<Store> stores = storeService.getAll();
+            Store store1 = new Store();
+            store1.setId(Long.valueOf("0"));
+            stores.add(store1);
+            long id = 1;
             for(Store store :stores){
                 StoreMemberDto storeMemberDto = new StoreMemberDto();
-                storeMemberDto.setId(store.getId());
-                storeMemberDto.setName(store.getStoreName());
-                List<Member> members = memberService.findBy("storeId", store.getId());
+                storeMemberDto.setId(id++);
+                storeMemberDto.setStoreId(store.getId());
+                if(store.getId()==0){
+                    storeMemberDto.setName("总店");
+                }else{
+                    storeMemberDto.setName(store.getStoreName());
+                }
+                List<Member> members = memberService.findMembers("EQL_storeId", store.getId().toString());
                 List<MemberDto> memberDtos = new ArrayList<MemberDto>();
                 for(Member m:members){
                     MemberDto memberDto = new MemberDto();
@@ -152,9 +161,8 @@ public class MemberController extends BaseController<Member> {
             storeMemberDto.setId(currentUser.getStoreId());
             Store store = storeService.findUniqueBy("id", currentUser.getStoreId());
             storeMemberDto.setName(store.getStoreName());
-            System.out.println(store.getStoreName());
 
-            List<Member> members = memberService.findBy("storeId", currentUser.getStoreId());
+            List<Member> members = memberService.findMembers("EQL_storeId", store.getId().toString());
             List<MemberDto> memberDtos = new ArrayList<MemberDto>();
             for(Member m:members){
                 MemberDto memberDto = new MemberDto();
@@ -164,7 +172,39 @@ public class MemberController extends BaseController<Member> {
             storeMemberDto.setMemberDtos(memberDtos);
             storeMemberDtos.add(storeMemberDto);
             Gson gson = new Gson();
+            System.out.println("--"+gson.toJson(storeMemberDtos));
             return gson.toJson(storeMemberDtos);
         }
+    }
+
+    @ResponseBody
+    @RequestMapping("/queryMemberByPhone")
+    public String queryMemberByPhone(@RequestParam("phone") String phone){
+        System.out.println(phone);
+        Gson gson = new Gson();
+        List<Member> members;
+        User currentUser = UserUtil.getCurrentUser();
+        if(currentUser.getStoreId() == 0){
+            members = memberService.findMembers("EQS_phone",phone);
+        }else{
+            members = memberService.findMembers("EQS_phone",phone,"EQL_storeId", currentUser.getStoreId().toString());
+        }
+        System.out.println(gson.toJson(members));
+        if(members.size()>1){
+            logger.info("用户信息错误 出现一个以上相同手机号会员");
+        }
+        List<StoreMemberDto> storeMemberDtos = new ArrayList<StoreMemberDto>();
+        if(members.size()>1||members == null||members.size()==0){
+            return gson.toJson(storeMemberDtos);
+        }
+        Member member = members.get(0);
+        StoreMemberDto storeMemberDto = new StoreMemberDto();
+        storeMemberDto.setId(Long.valueOf("1"));
+        List<MemberDto> memberDtos = new ArrayList<MemberDto>();
+        MemberDto memberDto = new MemberDto();
+        BeanUtils.copyProperties(member,memberDto);
+        memberDtos.add(memberDto);
+        storeMemberDto.setMemberDtos(memberDtos);
+        return gson.toJson(storeMemberDto);
     }
 }
