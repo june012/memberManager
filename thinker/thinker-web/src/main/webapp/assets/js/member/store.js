@@ -6,21 +6,20 @@ var schoolList;
 		$.ajax({
 			type: 'POST',
 			url: '/member/getStoreAndMember',
-			dataType:'String',
+			dataType:'json',
 			success: function(data){
-				schoolList=eval(data);
+				schoolList=data;
+				//初始化省份列表
+				initProvince();
+				//默认情况下, 给第一个省份添加choosen样式
+				$('[province-id="1"]').addClass('choosen');
+				//初始化大学列表
+				initSchool(1);
 			}
 		});
 
 
-		//初始化省份列表
-		initProvince();
 
-		//默认情况下, 给第一个省份添加choosen样式
-		$('[province-id="1"]').addClass('choosen');
-
-		//初始化大学列表
-		initSchool(1);
 	}
 	//隐藏窗口
 	function hide()
