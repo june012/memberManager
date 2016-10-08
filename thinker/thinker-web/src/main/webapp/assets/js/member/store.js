@@ -34,10 +34,45 @@ var schoolList;
 		var appendStr = '<select>';
 		for(i=0;i<schoolList.length;i++)
 		{
-			appendStr+='<option class="province-item" province-id="'+schoolList[i].id+'">'+schoolList[i].name+'</option>';
+			appendStr+='<option class="province-item" value="'+schoolList[i].id+'" province-id="'+schoolList[i].id+'">'+schoolList[i].name+'</option>';
 		}
 		appendStr+='</select>'
+		appendStr+='&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="school" id="phone" value="手机号查询" /><button id="find"">查询</button>';
 		$('#choose-a-province').append(appendStr);
+
+		//查询事件
+		$('#find').bind('click', function(){
+				var province = $('#phone').val();
+				var storeId = $('.province-item:selected').val();
+				$.ajax({
+					type: 'POST',
+					url: '/member',
+					dataType:'json',
+					data: { "phone": province ,
+						"storeId":storeId
+					},
+					success: function(data){
+						$('#choose-a-school').html('');
+						for(var i=0;i<data.length;i++)
+						{
+							$('#choose-a-school').append('<a class="school-item" school-id="'+data[i].id+'">'+data[i].name+'</a>');
+						}
+						//添加大学列表项的click事件
+						$('.school-item').bind('click', function(){
+								var item=$(this);
+								var school = item.attr('school-id');
+
+								//更新选择大学文本框中的值
+								$('#member-name').val(item.text());
+								//关闭弹窗
+								hide();
+							}
+						);
+					}
+				});
+
+			}
+		);
 		//添加省份列表项的click事件
 		$('#choose-a-province').bind('change', function(){
 				var item=$($('.province-item:selected'));
