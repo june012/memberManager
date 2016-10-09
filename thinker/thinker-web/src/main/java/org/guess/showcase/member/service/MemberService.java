@@ -15,4 +15,6 @@ public interface MemberService extends BaseService<Member,Long> {
     List<Member> findMembers(String property,String value);
 
     List<Member> findMembers(String property1,String value1,String property2,String value2);
+
+    String findMemberIds(String storeId);
 }

@@ -37,7 +37,15 @@
 									<div class="span2">
 										<div class="control-group">
 											<div class="controls">
-												<input type="text" id="name" class="m-wrap span12" placeholder="姓名">
+												<input type="text" id="userid" class="m-wrap span12" placeholder="会员编号">
+											</div>
+										</div>
+									</div>
+
+									<div class="span2">
+										<div class="control-group">
+											<div class="controls">
+												<input type="text" id="phone" class="m-wrap span12" placeholder="手机号">
 											</div>
 										</div>
 									</div>
@@ -47,10 +55,16 @@
 											<div class="controls input-append date form_date"
 												 data-date-format="yyyy-mm-dd"
 												 id="time">
-												<input id="createDate" class="span10 m-wrap" type="text" readonly="readonly" placeholder="时间">
+												<input id="createTime" class="span10 m-wrap" type="text" readonly="readonly" placeholder="时间">
 												<span class="add-on"><i class="icon-th"></i></span>
 											</div>
 										</div>
+									</div>
+
+									<div class="span4">
+										<select id="storeId" class="span4" >
+											<option value="">全部</option>
+										</select>
 									</div>
 
 									<div class="span5">
@@ -85,6 +99,18 @@
 	$(document).ready(function() {
 		//高亮左侧菜单
 		App.activeMenu("consume/draw/list");
+
+		$.ajax({
+			type: 'POST',
+			url: '/sys/store/getStores',
+			dataType:'json',
+			success: function(data){
+				for(i=0;i<data.length;i++){
+					$('#storeId').append('<option value="'+data[i].id+'">'+data[i].storeName+'</option>');
+				}
+
+			}
+		});
 		Page.initData(
 				{
 					url:"${ctx}/consume/draw/page",
@@ -107,9 +133,10 @@
 	});
 	function doQuery(){
 		var queryObj = {
-			search_LIKES_email : App.isEqPlacehoder($("#email")),
-			search_LIKES_name : App.isEqPlacehoder($("#name")),
-			search_EQD_createDate : App.isEqPlacehoder($("#createDate"))
+			search_EQL_userid : App.isEqPlacehoder($("#userid")),
+			search_EQS_phone:App.isEqPlacehoder($("#phone")),
+			search_EQD_createTime : App.isEqPlacehoder($("#createTime")),
+			search_EQL_storeId: App.isEqPlacehoder($("#storeId"))
 		};
 		Page.doQuery(queryObj);
 	}

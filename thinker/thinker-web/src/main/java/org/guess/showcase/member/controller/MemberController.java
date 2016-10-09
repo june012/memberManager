@@ -52,11 +52,40 @@ public class MemberController extends BaseController<Member> {
     @Override
     public Map<String, Object> page(Page<Member> page, HttpServletRequest request) {
         User currentUser = UserUtil.getCurrentUser();
+        String hql = "from Member m where m.status = 'A'";
+        String search_eqs_phone = request.getParameter("search_EQS_phone");
+        String search_likes_name = request.getParameter("search_LIKES_name");
+        if(search_eqs_phone != null){
+            hql += " and m.phone = '"+search_eqs_phone+"'";
+        }
+        if(search_likes_name != null){
+            hql += " and m.name like '%"+search_likes_name+"%'";
+        }
         if(currentUser.getStoreId() == 0){
-            Page<Member> page0 = memberService.findPage(page, "from Member m where m.status<>'D'");
+            List<Store> stores = null;
+            try {
+                stores = storeService.getAll();
+            } catch (Exception e) {
+                logger.error("不存在门店");
+                e.printStackTrace();
+            }
+            Store store = new Store();
+            store.setId(Long.valueOf("0"));
+            store.setStoreName("总店");
+            stores.add(store);
+            request.getSession().setAttribute("stores",stores);
+
+            String search_eql_storeId = request.getParameter("search_EQL_storeId");
+            if(search_eql_storeId != null){
+                hql += " and m.storeId = "+search_eql_storeId;
+            }
+            Page<Member> page0 = memberService.findPage(page, hql);
             return page0.returnMap();
         }
-        Page<Member> page1 = memberService.findPage(page,"from Member m where m.storeId=" + currentUser.getStoreId()+" and m.status='A'");
+        List<Store> stores = storeService.findBy("id", currentUser.getStoreId());
+        request.getSession().setAttribute("stores",stores);
+        hql +=" and m.storeId=" + currentUser.getStoreId();
+        Page<Member> page1 = memberService.findPage(page,hql);
         return page1.returnMap();
     }
 

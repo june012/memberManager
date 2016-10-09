@@ -120,4 +120,20 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
         }
         return find(propertyFilters);
     }
+
+    @Override
+    public String findMemberIds(String storeId) {
+        List<Member> members = findBy("storeId", Long.valueOf(storeId));
+        String memberIds="";
+        for(Member m :members){
+            memberIds+=m.getId()+",";
+        }
+        if(members.size()>0) {
+            String substring = memberIds.substring(0, memberIds.length() - 1);
+            return substring;
+        }else{
+            return null;
+        }
+
+    }
 }

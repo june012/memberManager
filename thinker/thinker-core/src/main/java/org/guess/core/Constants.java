@@ -109,5 +109,8 @@ public interface Constants {
     /**已删除**/
     String MEMBER_STATUS_DELETE="D";
 
+    //奖金类型
+    String AWARD_TYPR_RECOMMEND = "M";
+
 
 }

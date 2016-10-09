@@ -60,7 +60,6 @@ public class SysManagerController extends BaseController<User> {
         String oldpwd = request.getParameter("oldpwd");
         String roleId = request.getParameter("roleId");
         String storeId = request.getParameter("storeId");
-        System.out.println(roleId+"-"+oldpwd+"-"+storeId);
         userService.save(user,roleId,oldpwd,storeId);
         return REDIRECT + listView;
     }

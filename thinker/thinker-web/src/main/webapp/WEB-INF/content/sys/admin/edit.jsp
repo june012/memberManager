@@ -103,7 +103,7 @@
 											</select>
 										</shiro:hasRole>
 										<shiro:lacksRole name="administrator">
-											<select data-placeholder=" " class="span6 chosen" tabindex="6" name="storeId">
+											<select data-placeholder=" " class="span6 chosen" tabindex="6" name="roleId">
 												<c:forEach items="${roles }" var="role">
 													<c:if test="${role.name ne 'administrator'}">
 														<option value="${role.id }"

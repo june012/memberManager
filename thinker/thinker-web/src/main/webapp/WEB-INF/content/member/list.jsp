@@ -34,17 +34,19 @@
 											</div>
 										</div>
 									</div>
-
-									<div class="span4">
+									<div class="span2">
 										<div class="control-group">
-											<div class="controls input-append date form_date"
-												 data-date-format="yyyy-mm-dd"
-												 id="time">
-												<input id="createDate" class="span10 m-wrap" type="text" readonly="readonly" placeholder="时间">
-												<span class="add-on"><i class="icon-th"></i></span>
+											<div class="controls">
+												<input type="text" id="phone" class="m-wrap span12" placeholder="手机号">
 											</div>
 										</div>
 									</div>
+									<div class="span4">
+										<select id="storeId" class="span4">
+											<option value="">全部</option>
+										</select>
+									</div>
+
 
 									<div class="span5">
 										<div class="control-group">
@@ -74,8 +76,24 @@
 <%@ include file="/WEB-INF/content/common/plugins/datepicker.jsp"%>
 <%@ include file="/WEB-INF/content/common/plugins/page.jsp"%>
 
+
 <script type="text/javascript">
 	$(document).ready(function() {
+		$(function(){
+
+			$.ajax({
+				type: 'POST',
+				url: '/sys/store/getStores',
+				dataType:'json',
+				success: function(data){
+					for(i=0;i<data.length;i++){
+						$('#storeId').append('<option value="'+data[i].id+'">'+data[i].storeName+'</option>');
+					}
+
+				}
+			});
+
+		});
 		//高亮左侧菜单
 		App.activeMenu("member/list");
 		Page.initData(
@@ -85,7 +103,8 @@
 					pageSize : 10
 				},
 				null,
-				[{cName:"name",cValue:"姓名"},
+				[{cName:"id",cValue:"会员编号"},
+					{cName:"name",cValue:"姓名"},
 					{cName:"age",cValue:"年龄"},
 					{cName:"phone",cValue:"手机号"},
 					{cName:"account",cValue:"钱包余额"},
@@ -97,9 +116,9 @@
 	});
 	function doQuery(){
 		var queryObj = {
-			search_LIKES_email : App.isEqPlacehoder($("#email")),
+			search_EQS_phone : App.isEqPlacehoder($("#phone")),
 			search_LIKES_name : App.isEqPlacehoder($("#name")),
-			search_EQD_createDate : App.isEqPlacehoder($("#createDate"))
+			search_EQL_storeId : App.isEqPlacehoder($("#storeId"))
 		};
 		Page.doQuery(queryObj);
 	}

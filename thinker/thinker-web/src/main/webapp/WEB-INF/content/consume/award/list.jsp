@@ -37,23 +37,40 @@
 									<div class="span2">
 										<div class="control-group">
 											<div class="controls">
-												<input type="text" id="name" class="m-wrap span12" placeholder="姓名">
+												<input type="text" id="memberId" class="m-wrap span12" placeholder="会员编号">
 											</div>
 										</div>
 									</div>
-
+									<div class="span2">
+										<div class="control-group">
+											<div class="controls">
+												<input type="text" id="phone" class="m-wrap span12" placeholder="手机号">
+											</div>
+										</div>
+									</div>
 									<div class="span4">
+											奖金类型:<select id="awardType" class="span4">
+												<option value="M">推荐奖</option>
+											</select>
+									</div>
+									<div class="span4">
+										<select id="storeId" class="span4" >
+											<option value="">全部</option>
+										</select>
+									</div>
+
+									<div class="span2">
 										<div class="control-group">
 											<div class="controls input-append date form_date"
 												 data-date-format="yyyy-mm-dd"
 												 id="time">
-												<input id="createDate" class="span10 m-wrap" type="text" readonly="readonly" placeholder="时间">
+												<input id="date" class="span10 m-wrap" type="text" readonly="readonly" placeholder="时间">
 												<span class="add-on"><i class="icon-th"></i></span>
 											</div>
 										</div>
 									</div>
 
-									<div class="span5">
+									<div class="span4">
 										<div class="control-group">
 											<div class="controls">
 												<a class="btn blue" href="javascript:void(0)" onclick="javascript:doQuery();">
@@ -85,6 +102,18 @@
 	$(document).ready(function() {
 		//高亮左侧菜单
 		App.activeMenu("consume/award/list");
+
+		$.ajax({
+			type: 'POST',
+			url: '/sys/store/getStores',
+			dataType:'json',
+			success: function(data){
+				for(i=0;i<data.length;i++){
+					$('#storeId').append('<option value="'+data[i].id+'">'+data[i].storeName+'</option>');
+				}
+
+			}
+		});
 		Page.initData(
 				{
 					url:"${ctx}/consume/award/page",
@@ -108,9 +137,11 @@
 	});
 	function doQuery(){
 		var queryObj = {
-			search_LIKES_email : App.isEqPlacehoder($("#email")),
-			search_LIKES_name : App.isEqPlacehoder($("#name")),
-			search_EQD_createDate : App.isEqPlacehoder($("#createDate"))
+			search_EQL_memberId : App.isEqPlacehoder($("#memberId")),
+			search_EQS_awardType : App.isEqPlacehoder($("#awardType")),
+			search_EQS_phone:App.isEqPlacehoder($("#phone")),
+			search_EQD_date : App.isEqPlacehoder($("#date")),
+			search_EQL_storeId: App.isEqPlacehoder($("#storeId"))
 		};
 		Page.doQuery(queryObj);
 	}

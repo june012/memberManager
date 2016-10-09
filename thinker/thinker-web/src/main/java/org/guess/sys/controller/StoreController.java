@@ -1,5 +1,6 @@
 package org.guess.sys.controller;
 
+import com.google.gson.Gson;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
 import org.guess.showcase.member.model.Member;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -63,4 +65,28 @@ public class StoreController extends BaseController<Store>{
         }
         return "redirect:/sys/store/list";
     }
+
+    @ResponseBody
+    @RequestMapping("/getStores")
+    public String getStores(){
+        User currentUser = UserUtil.getCurrentUser();
+        List<Store> stores = null;
+        if(currentUser.getStoreId() == 0){
+            Store store0 = new Store();
+            store0.setId(Long.valueOf("0"));
+            store0.setStoreName("总店");
+            try {
+                stores = storeService.getAll();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            stores.add(store0);
+        }else{
+            Store store = storeService.findUniqueBy("id", currentUser.getStoreId());
+            stores.add(store);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(stores);
+    }
+
 }
