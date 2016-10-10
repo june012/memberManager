@@ -2,13 +2,13 @@
 <%@ include file="/WEB-INF/content/common/common.jsp"%>
 <html>
 <head>
-	<title>用户列表</title>
+	<title>产品列表</title>
 </head>
 <body>
 <div class="page-content">
 	<div class="container-fluid">
 		<!-- 页面导航 -->
-		<tool:navBar pageTitle="门店列表" pageTitleContent="系统管理-门店管理-门店列表" titleIcon="icon-home"/>
+		<tool:navBar pageTitle="产品列表" pageTitleContent="系统管理-产品管理-产品列表" titleIcon="icon-home"/>
 		<!-- 主体内容 -->
 		<div class="row-fluid">
 			<div class="span12">
@@ -85,19 +85,18 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		//高亮左侧菜单
-		App.activeMenu("sys/store/list");
+		App.activeMenu("/sys/product/list");
 		Page.initData(
 				{
-					url:"${ctx}/sys/store/page",
+					url:"${ctx}/sys/product/page",
 					tableId : "#sample_1",
 					pageSize : 10
 				},
 				null,
-				[{cName:"id",cValue:"门店编号"},
-					{cName:"storeName",cValue:"门店名"},
-					{cName:"address",cValue:"门店地址"},
-					{cName:"createTime",cValue:"创建时间"}
-
+				[{cName:"id",cValue:"产品编号"},
+					{cName:"productName",cValue:"产品名"},
+					{cName:"type_name",cValue:"产品类型"},
+					{cName:"price",cValue:"产品价格"}
 				]
 		);
 	});
