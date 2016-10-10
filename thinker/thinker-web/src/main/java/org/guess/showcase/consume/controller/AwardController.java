@@ -47,10 +47,12 @@ public class AwardController extends BaseController<AwardRecord>{
         }
         if(object.getId() == 0){
             member.setAward(member.getAward().add(awardMoney));
+            member.setAccount(member.getAccount().add(awardMoney));
             object.setDate(new Date());
         }else{
             AwardRecord awardRecord = awardService.findUniqueBy("id", object.getId());
             member.setAward(member.getAward().subtract(awardRecord.getAwardMoney()).add(awardMoney));
+            member.setAccount(member.getAccount().subtract(awardRecord.getAwardMoney()).add(awardMoney));
             object.setDate(awardRecord.getDate());
         }
         memberService.save(member);

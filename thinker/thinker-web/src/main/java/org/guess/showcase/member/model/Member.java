@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 
 /**
@@ -58,6 +59,19 @@ public class Member {
      */
     private BigDecimal principal;
     /**
+     * 利息
+     */
+    private BigDecimal interest;
+    /**
+     * 可被消费金额
+     */
+    @Column(name = "can_be_consumed")
+    private BigDecimal canBeConsumed;
+    /**
+     * 积分
+     */
+    private Long credit;
+    /**
      * 钱包余额
      */
     private BigDecimal account;
@@ -69,6 +83,17 @@ public class Member {
      * 级别
      */
     private String level;
+
+    @Column(name = "last_login_time")
+    private Data lastLoginTime;
+
+    public Data getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Data lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
     /**
      * 门店编号
@@ -212,5 +237,27 @@ public class Member {
         this.remark = remark;
     }
 
+    public BigDecimal getInterest() {
+        return interest;
+    }
 
+    public void setInterest(BigDecimal interest) {
+        this.interest = interest;
+    }
+
+    public BigDecimal getCanBeConsumed() {
+        return canBeConsumed;
+    }
+
+    public void setCanBeConsumed(BigDecimal canBeConsumed) {
+        this.canBeConsumed = canBeConsumed;
+    }
+
+    public Long getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Long credit) {
+        this.credit = credit;
+    }
 }

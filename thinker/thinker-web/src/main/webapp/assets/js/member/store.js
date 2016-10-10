@@ -110,6 +110,8 @@ var schoolList;
 				$('#member-name').val(school);
 				//关闭弹窗
 				hide();
+				item.fireEvent('onchange');
+				//delay(item);
 			}
 		);
 	}
@@ -121,3 +123,17 @@ var schoolList;
 		$('#choose-box-wrapper').css("top", Math.max(0, (($(window).height() - $('#choose-box-wrapper').outerHeight()) / 2) + $(window).scrollTop()) + "px");
 		$('#choose-box-wrapper').css("left", Math.max(0, (($(window).width() - $('#choose-box-wrapper').outerWidth()) / 2) + $(window).scrollLeft()) + "px");
 	}
+
+
+var delay = function(el){
+	if(!isNaN(el.val())){
+		if (el.fireEvent) {
+			el.fireEvent('onchange');
+		}
+		else {
+			el.onchange();
+		}
+		return;
+	}
+	else{setTimeout(function(){delay(callback,el)}, 100)}
+}

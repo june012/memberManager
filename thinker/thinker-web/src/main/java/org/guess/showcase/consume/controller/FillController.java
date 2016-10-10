@@ -1,5 +1,7 @@
 package org.guess.showcase.consume.controller;
 
+import org.apache.cxf.common.i18n.Exception;
+import org.guess.core.Constants;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
 import org.guess.showcase.consume.model.FillRecord;
@@ -8,9 +10,13 @@ import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
 import org.guess.sys.model.User;
 import org.guess.sys.util.UserUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -42,6 +48,8 @@ public class FillController extends BaseController<FillRecord>{
      */
     private final int circle= 2;
 
+    private static final Logger logger = LoggerFactory.getLogger(FillController.class);
+
 
     @Override
     public String create(@Valid FillRecord object) throws Exception {
@@ -50,6 +58,10 @@ public class FillController extends BaseController<FillRecord>{
         if(member == null){
             System.out.println("无此会员");
         }
+        if(object.getIsHandled()==null){
+            object.setIsHandled(Constants.FILL_HANDLE_NO);
+        }
+
         if(object.getId() == 0){
             member.setAccount(member.getAccount().add(money));
             member.setPrincipal(member.getPrincipal().add(money));
@@ -65,10 +77,16 @@ public class FillController extends BaseController<FillRecord>{
             object.setDrawTime(fillRecord.getDrawTime());
             object.setCreateTime(fillRecord.getCreateTime());
         }
-        memberService.save(member);
-        object.setAccountAfter(member.getAccount());
-        object.setPrincipalAfter(member.getPrincipal());
-        return super.create(object);
+        String returnUrl = null;
+        try {
+            memberService.save(member);
+            object.setAccountAfter(member.getAccount());
+            object.setPrincipalAfter(member.getPrincipal());
+            returnUrl = super.create(object);
+        } catch (java.lang.Exception e) {
+            e.printStackTrace();
+        }
+        return returnUrl;
     }
 
     @Override
@@ -104,5 +122,19 @@ public class FillController extends BaseController<FillRecord>{
             }
         }
         return fillService.findPage(page,hql).returnMap();
+    }
+
+    @RequestMapping("isAvailable")
+    public @ResponseBody
+    boolean isLoginIdAvailable(@RequestParam("userid") String userid) {
+        Member member = memberService.findUniqueBy("id", Long.valueOf(userid));
+        if(member==null){
+            logger.info("该会员不存在:"+userid);
+            return false;
+        }
+        if(member.getPrincipal()==new BigDecimal("0")){
+            return true;
+        }
+        return false;
     }
 }

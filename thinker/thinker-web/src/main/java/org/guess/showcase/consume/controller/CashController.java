@@ -53,21 +53,13 @@ public class CashController extends BaseController<CashRecord>{
             return null;
         }
         if(object.getId() == 0){
-            if(member.getAccount().subtract(member.getPrincipal()).compareTo(money)>=0){
-                member.setAccount(member.getAccount().subtract(money));
-            }else{
-                member.setAccount(member.getAccount().subtract(money));
-                member.setPrincipal(member.getAccount());
-            }
+            member.setAccount(member.getAccount().subtract(money));
+            member.setCanBeConsumed(member.getCanBeConsumed().subtract(money));
             object.setCreateTime(new Date());
         }else{
-            CashRecord cashRecord = cashService.findUniqueBy("id", object.getId());
-            if(member.getAccount().add(cashRecord.getMoney()).compareTo(object.getMoney()) == -1){
-                logger.info("余额不足");
-                return null;
-            }
-            object.setCreateTime(cashRecord.getCreateTime());
+            CashRecord cashRecord = cashService.findUniqueBy("id",object.getId());
             member.setAccount(member.getAccount().add(cashRecord.getMoney()).subtract(money));
+            member.setAccount(member.getCanBeConsumed().add(cashRecord.getMoney()).subtract(money));
         }
         memberService.save(member);
         return super.create(object);

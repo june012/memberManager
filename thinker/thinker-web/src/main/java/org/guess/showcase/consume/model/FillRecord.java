@@ -54,6 +54,17 @@ public class FillRecord {
     @Column(name = "draw_time")
     private Date drawTime;
 
+    @Column(name = "is_handled")
+    private String isHandled;
+
+    public String getIsHandled() {
+        return isHandled;
+    }
+
+    public void setIsHandled(String isHandled) {
+        this.isHandled = isHandled;
+    }
+
     public long getId() {
         return id;
     }

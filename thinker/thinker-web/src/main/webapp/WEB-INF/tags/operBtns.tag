@@ -25,4 +25,9 @@
 			详细<i class="icon-search"></i>
 	</a>
 	</shiro:hasPermission>
+	<shiro:hasPermission name="sys:product:add">
+		<a class="btn blue" href="javascript:void(0);" onclick="Page.viewObj();">
+			添加产品类型<i class="icon-search"></i>
+		</a>
+	</shiro:hasPermission>
 </div>

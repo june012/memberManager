@@ -30,12 +30,23 @@
 								<%--<!-- 用户创建日期 -->--%>
 								<c:if test="${not empty obj }">
 									<!-- 会员钱包 -->
+									<%--本金--%>
 									<input type="hidden" value="${obj.principal }"   name="principal">
+									<%--余额--%>
 									<input type="hidden" value="${obj.account }" name="account">
+									<%--奖金--%>
 									<input type="hidden" value="${obj.award }" name="award">
+									<%--积分--%>
+									<input type="hidden" value="${obj.credit }" name="credit">
+									<%--等级--%>
 									<input type="hidden" value="${obj.level }" name="level">
+									<%--可被消费金额--%>
+									<input type="hidden" value="${obj.canBeConsumed }" name="canBeConsumed">
+									<%--利息--%>
+									<input type="hidden" value="${obj.interest }" name="interest">
 									<!-- 会员ID -->
 									<input type="hidden" value="${obj.id }" name="id">
+									<input type="hidden" value="${obj.status }" name="status">
 								</c:if>
 								<div class="control-group">
 									<label class="control-label">登录账号(手机号):</label>
@@ -167,23 +178,23 @@
 									</div>
 								</div>
 
-								<div class="control-group" type="hidden">
-									<label class="control-label">状态:</label>
-									<div class="controls">
-										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="status">
-											<option value="A"
-													<%--<c:if test="${obj.status eq A }">--%>
-														selected="selected"
-													<%--</c:if>--%>
-											>已激活</option>
-											<option value="N"
-													<%--<c:if test="${obj.status eq N }">--%>
+								<%--<div class="control-group" type="hidden">--%>
+									<%--<label class="control-label">状态:</label>--%>
+									<%--<div class="controls">--%>
+										<%--<select data-placeholder=" " class="span6 chosen" tabindex="6" name="status">--%>
+											<%--<option value="A"--%>
+													<%--&lt;%&ndash;<c:if test="${obj.status eq A }">&ndash;%&gt;--%>
 														<%--selected="selected"--%>
-													<%--</c:if>--%>
-											>未激活</option>
-										</select>
-									</div>
-								</div>
+													<%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+											<%-->已激活</option>--%>
+											<%--&lt;%&ndash;<option value="N"&ndash;%&gt;--%>
+													<%--&lt;%&ndash;&lt;%&ndash;<c:if test="${obj.status eq N }">&ndash;%&gt;&ndash;%&gt;--%>
+														<%--&lt;%&ndash;&lt;%&ndash;selected="selected"&ndash;%&gt;&ndash;%&gt;--%>
+													<%--&lt;%&ndash;&lt;%&ndash;</c:if>&ndash;%&gt;&ndash;%&gt;--%>
+											<%--&lt;%&ndash;>未激活</option>&ndash;%&gt;--%>
+										<%--</select>--%>
+									<%--</div>--%>
+								<%--</div>--%>
 								<div class="control-group">
 									<label class="control-label">备注:</label>
 									<div class="controls">

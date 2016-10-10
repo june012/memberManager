@@ -33,6 +33,7 @@
 									<input type="hidden" value="${obj.id }" name="id">
 									<!-- 用户状态 -->
 									<input type="hidden" value="${obj.accountAfter }" name="accountAfter">
+									<input type="hidden" value="${obj.isHandled }" name="isHandled">
 									<input type="hidden" value="${obj.principalAfter }" name="principalAfter">
 									<%--<input type="hidden" id="time" value="<fmt:formatDate value='${obj.createTime }'/>" name="createTime">--%>
 									<%--<input type="hidden" id="time" value="<fmt:formatDate value='${obj.drawTime }'/>" name="drawTime">--%>
@@ -47,7 +48,12 @@
 														value="${obj.userid }"
 													</c:when>
 													<c:otherwise>
-														value="请选择会员" onclick="pop()"
+														placeholder="请选择会员" onclick="pop()"
+														validate="{required:true,
+														remote:{type:'POST',
+														url:'${ctx }/consume/fill/isAvailable',
+														data:{}},
+														messages:{remote:'该用户充值金额未到期'}}"
 													</c:otherwise>
 												</c:choose>
 										/>
