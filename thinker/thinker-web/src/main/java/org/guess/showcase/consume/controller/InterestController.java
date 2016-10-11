@@ -72,4 +72,11 @@ public class InterestController extends BaseController<InterestRecord>{
         }
         return interestService.findPage(page,hql).returnMap();
     }
+
+
+    public String updateRate(double rate){
+
+        return null;
+    }
+
 }

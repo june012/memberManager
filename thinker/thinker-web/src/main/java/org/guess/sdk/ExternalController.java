@@ -1,5 +1,6 @@
 package org.guess.sdk;
 
+import org.guess.core.utils.FileUtils;
 import org.guess.showcase.consume.service.CashService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
@@ -8,8 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by wan.peng on 2016/10/11.
@@ -23,6 +28,8 @@ public class ExternalController {
 
     @Autowired
     private CashService cashService;
+
+    private final String localFileUrl="thinker/avater/";
 
 
 
@@ -94,8 +101,9 @@ public class ExternalController {
     }
 
     @RequestMapping("/editAvater")
-    public String editAvater(File avater){
-
+    @ResponseBody
+    public String editAvater(@RequestParam(value = "file", required = false) MultipartFile file,String phone,String token) throws IOException {
+        FileUtils.copyInputStreamToFile(file.getInputStream(),new File(localFileUrl+"phone"));
         return  null;
     }
 

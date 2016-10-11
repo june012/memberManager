@@ -20,11 +20,6 @@
             删除<i class="icon-trash"></i>
         </a>
     </shiro:hasPermission>
-    <shiro:hasPermission name="consume:${modelKey }:show">
-        <a class="btn blue" href="javascript:void(0);" onclick="Page.viewObj();">
-            详细<i class="icon-search"></i>
-        </a>
-    </shiro:hasPermission>
 
     <shiro:hasPermission name="consume:interest:show">
         <shiro:hasRole name="administrator">

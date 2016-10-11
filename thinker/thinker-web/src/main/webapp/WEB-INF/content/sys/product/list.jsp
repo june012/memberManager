@@ -28,29 +28,20 @@
 							<shiro:hasPermission name="sys:store:add">
 							<form class="queryForm span8">
 								<div class="row-fluid">
-									<!-- <div class="span3">
-                                        <div class="control-group">
-                                           <div class="controls">
-                                              <input type="text" id="email" class="m-wrap span12" placeholder="邮箱">
-                                           </div>
-                                        </div>
-                                     </div> -->
 
 										<div class="span2">
 											<div class="control-group">
 												<div class="controls">
-													<input type="text" id="storeId" class="m-wrap span12" placeholder="门店编号">
+													<input type="text" id="productName" class="m-wrap span12" placeholder="产品名称">
 												</div>
 											</div>
 										</div>
 
-										<div class="span2">
-											<div class="control-group">
-												<div class="controls">
-													<input type="text" id="storeName" class="m-wrap span12" placeholder="门店名">
-												</div>
-											</div>
-										</div>
+									<div class="span4">
+										<select id="typeId" class="span4" >
+											<option value="">全部</option>
+										</select>
+									</div>
 
 									<div class="span5">
 										<div class="control-group">
@@ -86,6 +77,18 @@
 	$(document).ready(function() {
 		//高亮左侧菜单
 		App.activeMenu("/sys/product/list");
+		$.ajax({
+			type: 'POST',
+			url: '/sys/product/getTypes',
+			dataType:'json',
+			success: function(data){
+				for(i=0;i<data.length;i++){
+					$('#typeId').append('<option value="'+data[i].id+'">'+data[i].typeName+'</option>');
+				}
+
+			}
+		});
+
 		Page.initData(
 				{
 					url:"${ctx}/sys/product/page",
@@ -102,8 +105,8 @@
 	});
 	function doQuery(){
 		var queryObj = {
-			search_LIKES_storeName : App.isEqPlacehoder($("#storeName")),
-			search_EQL_id : App.isEqPlacehoder($("#storeId"))
+			search_LIKES_productName : App.isEqPlacehoder($("#productName")),
+			search_EQL_typeId : App.isEqPlacehoder($("#typeId"))
 		};
 		Page.doQuery(queryObj);
 	}

@@ -15,6 +15,17 @@ public class ProductType extends IdEntity {
     @Column(name = "type_name")
     private String typeName;
 
+    @Column(name = "oa_id")
+    private long oaId;
+
+    public long getOaId() {
+        return oaId;
+    }
+
+    public void setOaId(long oaId) {
+        this.oaId = oaId;
+    }
+
     public String getTypeName() {
         return typeName;
     }
