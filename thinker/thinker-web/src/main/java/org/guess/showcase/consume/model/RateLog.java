@@ -32,6 +32,17 @@ public class RateLog {
     @Column(name = "create_time")
     private Date createTime;
 
+    @Column(name = "create_id")
+    private  long createId;
+
+    public long getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(long createId) {
+        this.createId = createId;
+    }
+
     public long getId() {
         return id;
     }

@@ -82,6 +82,13 @@
 								</div>
 							</form>
 							<tool:consumeOperBtns modelKey="interest"></tool:consumeOperBtns>
+							<div class="span4 pull-right">
+								<shiro:hasRole name="administrator">
+									<a class="btn green" href="${ctx }/consume/interest/updatePage">
+										修改利率 <i class="icon-plus"></i>
+									</a>
+								</shiro:hasRole>
+							</div>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 

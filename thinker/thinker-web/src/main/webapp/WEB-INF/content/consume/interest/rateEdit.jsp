@@ -25,47 +25,18 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/sys/product/edit" class="form-horizontal form_sync"
+							<form action="${ctx }/consume/interest/updateRate" class="form-horizontal form_sync"
 								method="post" id="form1">
-								<!-- 产品id -->
+								<!-- 用户ID -->
 								<input type="hidden" value="${obj.id }" name="id">
 
-								<c:if test="${not empty obj }">
-									<input type="hidden" value="${obj.oaId }" name="oaId">
-									<input type="hidden" value="${obj.typeName }" name="typeName">
-								</c:if>
-
 								<div class="control-group">
-									<label class="control-label">产品名:</label>
+									<label class="control-label">利率::</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:1,maxlength:20}"
-											name="productName" value="${obj.productName }" />
-									</div>
-								</div>
-
-								<div class="control-group">
-									<label class="control-label">产品类型:</label>
-									<div class="controls">
-										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="typeId">
-											<c:forEach items="${types}" var="type">
-												<option value="${type.id }"
-														<c:if test="${obj.typeId eq type.id }">
-															selected="selected"
-														</c:if>
-												>${store.typeName}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</div>
-
-								<div class="control-group">
-									<label class="control-label">产品价格:</label>
-									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
-											   validate="{required:true}" name="price"
-											   value="${obj.price }" />
+											   min="0"  max="1"
+											   validate="{required:true}"
+											name="rate" value="${obj.rate}" />
 									</div>
 								</div>
 								<div class="form-actions">

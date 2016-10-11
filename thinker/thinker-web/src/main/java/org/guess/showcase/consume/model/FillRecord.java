@@ -1,7 +1,5 @@
 package org.guess.showcase.consume.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +30,6 @@ public class FillRecord {
      * 日期
      */
     @Column(name = "create_time")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date createTime;
     /**
      * 充值金额

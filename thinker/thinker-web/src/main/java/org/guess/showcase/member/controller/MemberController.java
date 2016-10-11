@@ -2,6 +2,7 @@ package org.guess.showcase.member.controller;
 
 import com.google.gson.Gson;
 import org.guess.core.orm.Page;
+import org.guess.core.utils.security.Coder;
 import org.guess.core.web.BaseController;
 import org.guess.showcase.member.dto.MemberDto;
 import org.guess.showcase.member.dto.StoreMemberDto;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -123,13 +125,21 @@ public class MemberController extends BaseController<Member> {
         return modelAndView;
     }
 
-    @Override
+    @RequestMapping("/create")
     public String create(@Valid Member object) throws Exception {
+        System.out.println(object.getAvater());
+//        System.out.println(file.equals(null));
         List<Member> members = memberService.findBy("phone", object.getPhone());
         if(members.size()>1){
             logger.info("无法识别"+object.getPhone());
             return null;
         }
+        if(object.getLastLoginTime() == null){
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            object.setLastLoginTime(simpleDateFormat.parse("1999-01-01"));
+        }
+
+
         if(object.getAccount() == null){
             object.setAccount(new BigDecimal("0"));
         }
@@ -155,6 +165,14 @@ public class MemberController extends BaseController<Member> {
             object.setAvater("/assets/img/avatar.png");
         }else{
             System.out.println("上传图片");
+        }
+        String oldpwd = request.getParameter("oldpwd");
+        if (object.getId() != 0) {
+            if (!oldpwd.equals(object.getPassword())) {
+                object.setPassword(Coder.encryptMD5(object.getPhone() + object.getPassword()));
+            }
+        } else {
+            object.setPassword(Coder.encryptMD5(object.getPhone() + object.getPassword()));
         }
 
         return super.create(object);

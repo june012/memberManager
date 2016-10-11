@@ -10,8 +10,10 @@ import org.guess.sys.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by wan.peng on 2016/10/10.
@@ -33,6 +35,14 @@ public class ProductController extends BaseController<Product> {
 
 
     @Override
+    public ModelAndView create() throws Exception {
+        ModelAndView modelAndView = super.create();
+        List<ProductType> productTypes = productTypeService.getAll();
+        modelAndView.addObject("types",productTypes);
+        return modelAndView;
+    }
+
+    @Override
     public String create(@Valid Product object) throws Exception {
         if (object.getOaId()==0){
             User currentUser = UserUtil.getCurrentUser();
@@ -46,14 +56,37 @@ public class ProductController extends BaseController<Product> {
         return super.create(object);
     }
 
-
-    public String createType(){
-        return null;
+    @RequestMapping("typePage")
+    public ModelAndView createType(){
+        ModelAndView mav = new ModelAndView("/sys/product/typeEdit");
+        try {
+            List<ProductType> productTypes = productTypeService.getAll();
+            mav.addObject("types",productTypes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  mav;
     }
 
+    @RequestMapping("typeAdd")
     public String createType(ProductType productType){
-
-        return null;
+        System.out.println(productType.getTypeName());
+        User currentUser = UserUtil.getCurrentUser();
+        productType.setOaId(currentUser.getId());
+        try {
+            productTypeService.save(productType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/sys/product/list";
+    }
+    @RequestMapping("deleteType")
+    public void deleteType(long oldTypeId){
+        try {
+            productTypeService.removeById(oldTypeId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

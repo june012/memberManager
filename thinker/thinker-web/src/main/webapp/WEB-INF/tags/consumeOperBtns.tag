@@ -21,12 +21,4 @@
         </a>
     </shiro:hasPermission>
 
-    <shiro:hasPermission name="consume:interest:show">
-        <shiro:hasRole name="administrator">
-            <a class="btn blue" href="javascript:void(0);" onclick="Page.updateObj();">
-                修改利率<i class="icon-search"></i>
-            </a>
-        </shiro:hasRole>
-    </shiro:hasPermission>
-
 </div>

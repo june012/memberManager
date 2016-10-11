@@ -44,6 +44,7 @@ public class ExternalController {
     public void memberLogin(String phone,String password){
         Member member = memberService.findUniqueBy("phone", phone);
 
+
     }
 
     /**

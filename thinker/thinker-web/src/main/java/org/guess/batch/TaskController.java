@@ -5,14 +5,15 @@ import org.guess.showcase.consume.model.FillRecord;
 import org.guess.showcase.consume.model.InterestRecord;
 import org.guess.showcase.consume.service.FillService;
 import org.guess.showcase.consume.service.InterestService;
+import org.guess.showcase.consume.service.RateLogService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,8 +22,8 @@ import java.util.List;
 /**
  * Created by wan.peng on 2016/10/10.
  */
-@Controller
-@RequestMapping("/task")
+@Component
+@Lazy(value=false)
 public class TaskController {
 
     @Autowired
@@ -34,16 +35,22 @@ public class TaskController {
     @Autowired
     private FillService fillService;
 
+    @Autowired
+    private RateLogService rateLogService;
+
+
+    private final long rateId = Long.valueOf("1");
+
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     /**
      * 计算每日利息
-     * @param batchDate
-     * @param rate
      */
-    @RequestMapping("/batchInterest")
-    private void batchInterest(@DateTimeFormat(pattern = "yyyy-MM-dd") Date batchDate,
-                               double rate){
+    @Scheduled(cron = "0 0 1 * * ?")
+    private void batchInterest(){
+        Date batchDate = new Date();
+        double rate = rateLogService.findUniqueBy("id",rateId).getRate();
+
         try {
             List<Member> members = memberService.getAll();
             logger.info("定时任务-->生成利息 共{}个会员"+members.size());
@@ -56,7 +63,7 @@ public class TaskController {
                     continue;
                 }
                 InterestRecord interestRecord = new InterestRecord();
-                interestRecord.setDate(new Date());
+                interestRecord.setDate(batchDate);
                 interestRecord.setRate(rate);
                 interestRecord.setInterestAdd(member.getPrincipal().multiply(new BigDecimal(rate)));
                 member.setAccount(member.getAccount().add(interestRecord.getInterestAdd()));
@@ -75,10 +82,10 @@ public class TaskController {
 
     /**
      * 更新可消费金额
-     * @param batchDate
      */
-    @RequestMapping("/updateCanBeConsumed")
-    private void updateCanBeConsumed(@DateTimeFormat(pattern = "yyyy-MM-dd") Date batchDate){
+    @Scheduled(cron = "0 0 8 * * ?")
+    private void updateCanBeConsumed(){
+        Date batchDate = new Date();
         List<FillRecord> fillRecords = fillService.findBy("isHandled", DefinedConstant.FILL_HANDLE_NO);
         for(FillRecord fillRecord : fillRecords){
             if (fillRecord.getDrawTime().getTime()-batchDate.getTime()<=0){

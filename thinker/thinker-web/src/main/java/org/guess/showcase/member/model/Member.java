@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by wan.peng on 2016/9/11.
@@ -81,18 +82,19 @@ public class Member {
     /**
      * 级别
      */
-    private String level;
-//
-//    @Column(name = "last_login_time")
-//    private Data lastLoginTime;
+    private Long level;
 
-//    public Data getLastLoginTime() {
-//        return lastLoginTime;
-//    }
-//
-//    public void setLastLoginTime(Data lastLoginTime) {
-//        this.lastLoginTime = lastLoginTime;
-//    }
+    /**
+     * 上次登录时间
+     */
+    @Column(name = "last_login_time")
+    private Date lastLoginTime;
+
+    /**
+     * 设备id
+     */
+    @Column(name = "devices_id")
+    private String devicesId;
 
     /**
      * 门店编号
@@ -107,6 +109,23 @@ public class Member {
      * 备注
      */
     private String remark;
+
+
+    public String getDevicesId() {
+        return devicesId;
+    }
+
+    public void setDevicesId(String devicesId) {
+        this.devicesId = devicesId;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
     public Long getStoreId() {
         return storeId;
@@ -212,11 +231,11 @@ public class Member {
         this.award = award;
     }
 
-    public String getLevel() {
+    public Long getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Long level) {
         this.level = level;
     }
 

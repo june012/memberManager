@@ -3,7 +3,9 @@ package org.guess.showcase.consume.controller;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
 import org.guess.showcase.consume.model.InterestRecord;
+import org.guess.showcase.consume.model.RateLog;
 import org.guess.showcase.consume.service.InterestService;
+import org.guess.showcase.consume.service.RateLogService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
 import org.guess.sys.model.User;
@@ -13,8 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -34,6 +38,11 @@ public class InterestController extends BaseController<InterestRecord>{
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private RateLogService rateLogService;
+
+    private final long rateId = Long.valueOf("1");
 
     private static final Logger logger = LoggerFactory.getLogger(InterestController.class);
 
@@ -74,9 +83,30 @@ public class InterestController extends BaseController<InterestRecord>{
     }
 
 
-    public String updateRate(double rate){
+    @RequestMapping("/updatePage")
+    public ModelAndView updateRate(){
+        ModelAndView mav = new ModelAndView("/consume/interest/rateEdit");
+        try {
+            RateLog rateLog = rateLogService.findUniqueBy("id", rateId);
+            mav.addObject("obj",rateLog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  mav;
+    }
 
-        return null;
+
+    @RequestMapping("/updateRate")
+    public String updateRate(RateLog rateLog){
+        User currentUser = UserUtil.getCurrentUser();
+        rateLog.setCreateId(currentUser.getId());
+        rateLog.setCreateTime(new Date());
+        try {
+            rateLogService.save(rateLog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/consume/interest/list";
     }
 
 }

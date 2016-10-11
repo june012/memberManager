@@ -59,7 +59,13 @@
 							</form>
 							</shiro:hasPermission>
 							<tool:operBtns modelKey="store"></tool:operBtns>
-							<br/>
+							<div class="span4 pull-right">
+								<shiro:hasAnyRoles name="administrator,shopowner">
+									<a class="btn green" href="${ctx }/sys/product/typePage">
+										添加产品类型 <i class="icon-plus"></i>
+									</a>
+								</shiro:hasAnyRoles>
+							</div>
 						</div>
 						<table class="table table-striped table-bordered table-hover" id="sample_1">
 
@@ -98,7 +104,7 @@
 				null,
 				[{cName:"id",cValue:"产品编号"},
 					{cName:"productName",cValue:"产品名"},
-					{cName:"type_name",cValue:"产品类型"},
+					{cName:"typeName",cValue:"产品类型"},
 					{cName:"price",cValue:"产品价格"}
 				]
 		);

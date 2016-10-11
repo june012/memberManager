@@ -25,7 +25,7 @@
 							</div>
 						</div>
 						<div class="portlet-body form">
-							<form action="${ctx }/member/edit" class="form-horizontal form_sync"
+							<form action="${ctx }/member/create" class="form-horizontal form_sync" enctype="multipart/form-data"
 								method="post" id="form1">
 								<%--<!-- 用户创建日期 -->--%>
 								<c:if test="${not empty obj }">
@@ -47,6 +47,8 @@
 									<!-- 会员ID -->
 									<input type="hidden" value="${obj.id }" name="id">
 									<input type="hidden" value="${obj.status }" name="status">
+									<input type="hidden" value="${obj.lastLoginTime }"   name="principal">
+									<input type="hidden" value="${obj.devicesId }"   name="principal">
 								</c:if>
 								<div class="control-group">
 									<label class="control-label">登录账号(手机号):</label>
@@ -97,7 +99,7 @@
 									<label class="control-label">姓名:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:2,maxlength:10}"
+											validate="{required:true,minlength:1,maxlength:10}"
 											name="name" value="${obj.name }" />
 									</div>
 								</div>
@@ -111,7 +113,7 @@
 													</c:if>
 											>男</option>
 											<option value="female"
-													<c:if test="${obj.storeId eq female }">
+													<c:if test="${obj.gender eq female }">
 														selected="selected"
 													</c:if>
 											>女</option>
@@ -122,7 +124,7 @@
 								<label class="control-label">年龄:</label>
 								<div class="controls">
 									<input type="text" class="span6 m-wrap"
-										   validate="{required:true,minlength:1,maxlength:3}"
+										   validate="{required:false,minlength:1,maxlength:3}"
 										   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
 										   name="age" value="${obj.age }" />
 								</div>
@@ -131,22 +133,25 @@
 									<label class="control-label">微信号:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="openid"
+											   validate="{required:false}" name="openid"
 											   value="${obj.openid }" />
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">头像:</label>
 									<div class="controls">
-										<input type="file" class="span6 m-wrap"
+										<input type="text" class="span6 m-wrap"
 											   name="avater" value="${obj.avater}" />
+										<%--<input type="file" class="span6 m-wrap"--%>
+											   <%--name="file"/>--%>
+
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">地址:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="address"
+											   validate="{required:false}" name="address"
 											   value="${obj.address }" />
 									</div>
 								</div>
@@ -177,29 +182,11 @@
 										</shiro:lacksRole>
 									</div>
 								</div>
-
-								<%--<div class="control-group" type="hidden">--%>
-									<%--<label class="control-label">状态:</label>--%>
-									<%--<div class="controls">--%>
-										<%--<select data-placeholder=" " class="span6 chosen" tabindex="6" name="status">--%>
-											<%--<option value="A"--%>
-													<%--&lt;%&ndash;<c:if test="${obj.status eq A }">&ndash;%&gt;--%>
-														<%--selected="selected"--%>
-													<%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
-											<%-->已激活</option>--%>
-											<%--&lt;%&ndash;<option value="N"&ndash;%&gt;--%>
-													<%--&lt;%&ndash;&lt;%&ndash;<c:if test="${obj.status eq N }">&ndash;%&gt;&ndash;%&gt;--%>
-														<%--&lt;%&ndash;&lt;%&ndash;selected="selected"&ndash;%&gt;&ndash;%&gt;--%>
-													<%--&lt;%&ndash;&lt;%&ndash;</c:if>&ndash;%&gt;&ndash;%&gt;--%>
-											<%--&lt;%&ndash;>未激活</option>&ndash;%&gt;--%>
-										<%--</select>--%>
-									<%--</div>--%>
-								<%--</div>--%>
 								<div class="control-group">
 									<label class="control-label">备注:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="remark"
+											   validate="{required:false}" name="remark"
 											   value="${obj.remark }" />
 									</div>
 								</div>

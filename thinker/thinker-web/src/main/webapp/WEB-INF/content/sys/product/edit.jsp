@@ -53,7 +53,7 @@
 														<c:if test="${obj.typeId eq type.id }">
 															selected="selected"
 														</c:if>
-												>${store.typeName}</option>
+												>${type.typeName}</option>
 											</c:forEach>
 										</select>
 									</div>

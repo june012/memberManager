@@ -50,6 +50,7 @@
 													<c:otherwise>
 														placeholder="请选择会员" onclick="pop()"
 														validate="{required:true,
+														onsubmit: false,
 														remote:{type:'POST',
 														url:'${ctx }/consume/fill/isAvailable',
 														data:{}},
