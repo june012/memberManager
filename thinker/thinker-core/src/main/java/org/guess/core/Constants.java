@@ -101,21 +101,7 @@ public interface Constants {
     String TEMP_FOLDER_NAME = "temp";
 
 
-    //会员状态
-    /**已激活**/
-    String MEMBER_STATUS_ACTIVATION="A";
-    /**未激活**/
-    String MEMBER_STATUS_UNACTIVATED ="N";
-    /**已删除**/
-    String MEMBER_STATUS_DELETE="D";
 
-    //奖金类型
-    String AWARD_TYPR_RECOMMEND = "M";
-
-    //充值金额是否可提现
-    String FILL_HANDLE_YES = "Y";
-
-    String FILL_HANDLE_NO = "N";
 
 
 }

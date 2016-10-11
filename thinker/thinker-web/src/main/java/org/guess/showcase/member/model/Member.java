@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 
 /**
@@ -83,17 +82,17 @@ public class Member {
      * 级别
      */
     private String level;
+//
+//    @Column(name = "last_login_time")
+//    private Data lastLoginTime;
 
-    @Column(name = "last_login_time")
-    private Data lastLoginTime;
-
-    public Data getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Data lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
+//    public Data getLastLoginTime() {
+//        return lastLoginTime;
+//    }
+//
+//    public void setLastLoginTime(Data lastLoginTime) {
+//        this.lastLoginTime = lastLoginTime;
+//    }
 
     /**
      * 门店编号

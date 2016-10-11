@@ -1,8 +1,8 @@
 package org.guess.showcase.member.service.impl;
 
-import org.guess.core.Constants;
 import org.guess.core.orm.PropertyFilter;
 import org.guess.core.service.BaseServiceImpl;
+import org.guess.facility.DefinedConstant;
 import org.guess.showcase.consume.model.AwardRecord;
 import org.guess.showcase.consume.model.CashRecord;
 import org.guess.showcase.consume.model.DrawRecord;
@@ -46,7 +46,7 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, Long> implements 
     @Override
     public void deleteMember(Long id) throws Exception {
         Member member = findUniqueBy("id", id);
-        member.setStatus(Constants.MEMBER_STATUS_DELETE);
+        member.setStatus(DefinedConstant.MEMBER_STATUS_DELETE);
         save(member);
         List<AwardRecord> awardRecords = awardService.findBy("memberId", id);
         if(awardRecords!=null&&awardRecords.size()!=0){

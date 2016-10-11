@@ -1,6 +1,6 @@
 package org.guess.batch;
 
-import org.guess.core.Constants;
+import org.guess.facility.DefinedConstant;
 import org.guess.showcase.consume.model.FillRecord;
 import org.guess.showcase.consume.model.InterestRecord;
 import org.guess.showcase.consume.service.FillService;
@@ -49,7 +49,7 @@ public class TaskController {
             logger.info("定时任务-->生成利息 共{}个会员"+members.size());
             int count = 0;
             for(Member member:members){
-                if (member.getStatus().equals(Constants.MEMBER_STATUS_UNACTIVATED)||member.getStatus().equals(Constants.MEMBER_STATUS_DELETE)){
+                if (member.getStatus().equals(DefinedConstant.MEMBER_STATUS_UNACTIVATED)||member.getStatus().equals(DefinedConstant.MEMBER_STATUS_DELETE)){
                     continue;
                 }
                 if (null == member.getPrincipal()||member.getPrincipal().compareTo(new BigDecimal("0"))!=1){
@@ -79,7 +79,7 @@ public class TaskController {
      */
     @RequestMapping("/updateCanBeConsumed")
     private void updateCanBeConsumed(@DateTimeFormat(pattern = "yyyy-MM-dd") Date batchDate){
-        List<FillRecord> fillRecords = fillService.findBy("isHandled", Constants.FILL_HANDLE_NO);
+        List<FillRecord> fillRecords = fillService.findBy("isHandled", DefinedConstant.FILL_HANDLE_NO);
         for(FillRecord fillRecord : fillRecords){
             if (fillRecord.getDrawTime().getTime()-batchDate.getTime()<=0){
                 Member member = memberService.findUniqueBy("id",fillRecord.getUserid());
@@ -87,7 +87,7 @@ public class TaskController {
                 member.setAward(new BigDecimal("0"));
                 member.setPrincipal(member.getPrincipal().subtract(fillRecord.getMoney()));
                 member.setInterest(new BigDecimal("0"));
-                fillRecord.setIsHandled(Constants.FILL_HANDLE_YES);
+                fillRecord.setIsHandled(DefinedConstant.FILL_HANDLE_YES);
                 try {
                     memberService.save(member);
                     fillService.save(fillRecord);

@@ -1,9 +1,9 @@
 package org.guess.showcase.consume.controller;
 
 import org.apache.cxf.common.i18n.Exception;
-import org.guess.core.Constants;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
+import org.guess.facility.DefinedConstant;
 import org.guess.showcase.consume.model.FillRecord;
 import org.guess.showcase.consume.service.FillService;
 import org.guess.showcase.member.model.Member;
@@ -59,7 +59,7 @@ public class FillController extends BaseController<FillRecord>{
             System.out.println("无此会员");
         }
         if(object.getIsHandled()==null){
-            object.setIsHandled(Constants.FILL_HANDLE_NO);
+            object.setIsHandled(DefinedConstant.FILL_HANDLE_NO);
         }
 
         if(object.getId() == 0){
