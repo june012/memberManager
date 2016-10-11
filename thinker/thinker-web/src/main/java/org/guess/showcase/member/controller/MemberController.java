@@ -126,8 +126,8 @@ public class MemberController extends BaseController<Member> {
     @Override
     public String create(@Valid Member object) throws Exception {
         List<Member> members = memberService.findBy("phone", object.getPhone());
-        if(members.size()>0){
-            logger.info("该手机号{}已被注册"+object.getPhone());
+        if(members.size()>1){
+            logger.info("无法识别"+object.getPhone());
             return null;
         }
         if(object.getAccount() == null){
@@ -138,6 +138,23 @@ public class MemberController extends BaseController<Member> {
         }
         if(object.getPrincipal()==null){
             object.setPrincipal(new BigDecimal("0"));
+        }
+        if(object.getInterest()==null){
+            object.setInterest(new BigDecimal("0"));
+        }
+        if(object.getCanBeConsumed()==null){
+            object.setCanBeConsumed(new BigDecimal("0"));
+        }
+        if(object.getCredit()==null){
+            object.setCredit(Long.valueOf("0"));
+        }
+        if(object.getStatus()==null){
+            object.setStatus("A");
+        }
+        if(object.getAvater()==null){
+            object.setAvater("/assets/img/avatar.png");
+        }else{
+            System.out.println("上传图片");
         }
 
         return super.create(object);

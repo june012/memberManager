@@ -112,5 +112,10 @@ public interface Constants {
     //奖金类型
     String AWARD_TYPR_RECOMMEND = "M";
 
+    //充值金额是否可提现
+    String FILL_HANDLE_YES = "Y";
+
+    String FILL_HANDLE_NO = "N";
+
 
 }

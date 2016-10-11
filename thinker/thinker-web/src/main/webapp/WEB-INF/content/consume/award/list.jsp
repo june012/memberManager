@@ -48,6 +48,16 @@
 											</div>
 										</div>
 									</div>
+									<div class="span2">
+										<div class="control-group">
+											<div class="controls input-append date form_date"
+												 data-date-format="yyyy-mm-dd"
+												 id="time">
+												<input id="date" class="span10 m-wrap" type="text" readonly="readonly" placeholder="时间">
+												<span class="add-on"><i class="icon-th"></i></span>
+											</div>
+										</div>
+									</div>
 									<div class="span4">
 											奖金类型:<select id="awardType" class="span4">
 												<option value="M">推荐奖</option>
@@ -59,16 +69,7 @@
 										</select>
 									</div>
 
-									<div class="span2">
-										<div class="control-group">
-											<div class="controls input-append date form_date"
-												 data-date-format="yyyy-mm-dd"
-												 id="time">
-												<input id="date" class="span10 m-wrap" type="text" readonly="readonly" placeholder="时间">
-												<span class="add-on"><i class="icon-th"></i></span>
-											</div>
-										</div>
-									</div>
+
 
 									<div class="span4">
 										<div class="control-group">
