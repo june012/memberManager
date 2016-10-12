@@ -152,6 +152,7 @@ public class CashController extends BaseController<CashRecord>{
             productList = new ArrayList<Product>();
         }
         String s = new Gson().toJson(productList);
+        System.out.println(s);
         return s;
     }
 }

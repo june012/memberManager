@@ -9,6 +9,7 @@ import org.guess.sdk.dto.RespData;
 import org.guess.showcase.consume.service.CashService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,9 +70,11 @@ public class ExternalController {
             member.setLastLoginTime(loginTime);
             respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
             MemberLoginResp memberLoginResp = new MemberLoginResp();
+            memberLoginResp.setName(member.getName());
             memberLoginResp.setHomeUrl("url");
-            memberLoginResp.setInterestCount(member.getCredit());
+            memberLoginResp.setInterestCount(member.getAccount());
             memberLoginResp.setPhone(phone);
+            memberLoginResp.setUserLevel(member.getLevel());
             memberLoginResp.setUserImage(member.getAvater());
             memberLoginResp.setToken(Coder.encryptMD5(member.getPhone() + member.getLastLoginTime()));
             memberService.save(member);
@@ -89,7 +92,7 @@ public class ExternalController {
      */
     @RequestMapping("/register")
     @ResponseBody
-    public String memberRegister(String name,String phone,String password,String devicesId){
+    public String memberRegister(String name,String phone,String password,String devicesId) throws Exception {
         RespData respData = new RespData();
         Member member = memberService.findUniqueBy("phone", phone);
         if(member!=null){
@@ -98,21 +101,44 @@ public class ExternalController {
             return new Gson().toJson(respData);
         }
         Member newMember = new Member();
+        newMember.setName(name);
+        newMember.setPassword(Coder.encryptMD5(phone + password));
+        newMember.setDevicesId(devicesId);
+        newMember.setLastLoginTime(new Date());
+        memberService.save(newMember);
 
+        respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
+        MemberLoginResp memberLoginResp = new MemberLoginResp();
+        memberLoginResp.setName(newMember.getName());
+        memberLoginResp.setHomeUrl("url");
+        memberLoginResp.setInterestCount(newMember.getAccount());
+        memberLoginResp.setPhone(newMember.getPhone());
+        memberLoginResp.setUserLevel(newMember.getLevel());
+        memberLoginResp.setUserImage(newMember.getAvater());
+        memberLoginResp.setToken(Coder.encryptMD5(newMember.getPhone() + newMember.getLastLoginTime()));
+        respData.setData(memberLoginResp);
 
-        return null;
+        return new Gson().toJson(respData);
     }
 
     /**
      * 更改密码
      * @param phone
-     * @param oldPassword
      * @param newPassword
      * @return
      */
     @RequestMapping("/editMemberPas")
-    public boolean editMemberPas(String phone,String oldPassword,String newPassword){
-
+    @ResponseBody
+    public boolean editMemberPas(String phone,String newPassword,String token) throws Exception {
+        Member member = memberService.findUniqueBy("phone", phone);
+        if(member==null){
+            return false;
+        }
+        if(token.equals(Coder.encryptMD5(member.getPhone() + member.getLastLoginTime()))){
+            member.setPassword(Coder.encryptMD5(member.getPhone() + newPassword));
+            memberService.save(member);
+            return true;
+        }
         return false;
     }
 
@@ -121,17 +147,21 @@ public class ExternalController {
      * @param token
      */
     @RequestMapping("/findComsumeLog")
-    public void findComsumeLog(String token){
+    @ResponseBody
+    public String findComsumeLog(String phone,String token){
+        RespData respData = new RespData();
+        Member member = memberService.findUniqueBy("phone", phone);
+        if(member==null){
+            respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
+            respData.setData("没有此会员");
+            return new Gson().toJson(respData);
+        }
 
-    }
+        JSONObject jall = new JSONObject();
+        jall.put("data", "Hello Spring!");
 
-    /**
-     * 查找消费记录
-     * @param token
-     */
-    @RequestMapping("/findComsumeRecord")
-    public void findComsumeRecord(String token){
 
+        return jall.toString();
     }
 
     /**
@@ -141,8 +171,18 @@ public class ExternalController {
      * @return
      */
     @RequestMapping("/editPhone")
-    public Boolean editPhone(String oldphone,String newphone){
-
+    @ResponseBody
+    public Boolean editPhone(String oldphone,String newphone,String token) throws Exception {
+        Member member = memberService.findUniqueBy("phone", oldphone);
+        if(member==null){
+            return false;
+        }
+        if(token.equals(Coder.encryptMD5(member.getPhone() + member.getLastLoginTime()))){
+            member.setPhone(newphone);
+            member.setPassword(Coder.encryptMD5(member.getPhone() + member.getPassword()));
+            memberService.save(member);
+            return true;
+        }
         return false;
     }
 

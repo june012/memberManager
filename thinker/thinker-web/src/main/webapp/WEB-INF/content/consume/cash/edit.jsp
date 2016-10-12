@@ -49,17 +49,10 @@
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">产品名称:</label>
-									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:1,maxlength:20}"
-											name="productName" value="${obj.productName }" />
-									</div>
-								</div>
-								<div class="control-group">
 									<label class="control-label">产品类型:</label>
 									<div class="controls">
 										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="productType" id="productType" onchange="findProduct()">
+											<option value="">请选择</option>
 											<c:forEach items="${types}" var="type">
 												<option value="${type.id }"
 														<c:if test="${obj.typeId eq type.id }">
@@ -71,6 +64,14 @@
 									</div>
 								</div>
 
+								<div class="control-group">
+									<label class="control-label">产品名称:</label>
+									<div class="controls">
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="productName" id="product" ">
+											<option value="">请选择</option>
+										</select>
+									</div>
+								</div>
 								<div class="control-group">
 									<label class="control-label">产品价格:</label>
 									<div class="controls">

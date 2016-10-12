@@ -74,11 +74,10 @@
 					dataType:'json',
 					data:{'oldTypeId':oldTypeId},
 					success: function(){
-						alert("111");
-						window.location.href="/sys/product/typeEdit";
+						window.location.href="/sys/product/typePage";
 					},
 					error:function(){
-						alert("222");
+						window.location.href="/sys/product/typePage";
 					}
 				});
 		});

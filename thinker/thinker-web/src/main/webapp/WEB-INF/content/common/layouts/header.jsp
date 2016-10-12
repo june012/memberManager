@@ -61,14 +61,6 @@
 							<i class="icon-wrench"></i>&nbsp&nbsp&nbsp<span>修改密码</span>
 							</a>
 						</li>
-						<li><a href="javascript:void(0);" onclick="javascript:Header.tips();">
-							<i class="icon-calendar"></i>&nbsp&nbsp&nbsp<span>我的任务</span>
-							</a>
-						</li>
-						<li><a href="javascript:void(0);" onclick="javascript:Header.tips();">
-							<i class="icon-cog"></i>&nbsp&nbsp&nbsp<span>系统设置</span>
-							</a>
-						</li>
 						<li class="divider"></li>
 						<li><a href="${ctx }/logout/"><i class="icon-key"></i>退出</a></li>
 					</ul>

@@ -1,5 +1,7 @@
 package org.guess.sdk.dto;
 
+import java.math.BigDecimal;
+
 /**
  * Created by wan.peng on 2016/10/12.
  */
@@ -7,7 +9,7 @@ public class MemberLoginResp {
     private String name;//姓名
     private String phone;//电话
     private String userImage;//头像
-    private Long interestCount;//积分
+    private BigDecimal interestCount;//积分
     private Long userLevel;//等级
     private String homeUrl;//首页
     private String token;
@@ -36,11 +38,11 @@ public class MemberLoginResp {
         this.userImage = userImage;
     }
 
-    public Long getInterestCount() {
+    public BigDecimal getInterestCount() {
         return interestCount;
     }
 
-    public void setInterestCount(Long interestCount) {
+    public void setInterestCount(BigDecimal interestCount) {
         this.interestCount = interestCount;
     }
 
