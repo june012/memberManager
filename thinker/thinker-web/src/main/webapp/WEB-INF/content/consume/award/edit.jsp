@@ -63,9 +63,13 @@
 								<div class="control-group">
 									<label class="control-label">奖励类型:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											   validate="{required:true}" name="awardType"
-											   value="${obj.awardType}" />
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="awardType">
+											<option value="推荐奖"
+													<c:if test="${obj.awardType eq '推荐奖' }">
+														selected="selected"
+													</c:if>
+											>推荐奖</option>
+										</select>
 									</div>
 								</div>
 

@@ -1,8 +1,10 @@
 package org.guess.batch;
 
 import org.guess.facility.DefinedConstant;
+import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.model.FillRecord;
 import org.guess.showcase.consume.model.InterestRecord;
+import org.guess.showcase.consume.service.ConsumeLogService;
 import org.guess.showcase.consume.service.FillService;
 import org.guess.showcase.consume.service.InterestService;
 import org.guess.showcase.consume.service.RateLogService;
@@ -38,6 +40,9 @@ public class TaskController {
     @Autowired
     private RateLogService rateLogService;
 
+    @Autowired
+    private ConsumeLogService consumeLogService;
+
 
     private final long rateId = Long.valueOf("1");
 
@@ -72,6 +77,14 @@ public class TaskController {
                 interestRecord.setUserId(member.getId());
                 memberService.save(member);
                 interestService.save(interestRecord);
+                //生成操作日志
+                ConsumeLog consumeLog = new ConsumeLog();
+                consumeLog.setCreateTime(new Date());
+                consumeLog.setMemberId(member.getId());
+                consumeLog.setAccount(interestRecord.getInterestAdd());
+                consumeLog.setTypeId(interestRecord.getId());
+                consumeLog.setConsumeType(DefinedConstant.CONSUME_TYPE_INTEREST);
+                consumeLogService.save(consumeLog);
                 count++;
             }
             logger.info("共生成利息{}条,其中{}个会员失效(未激活,已删除,余额为0)",count,members.size()-count);

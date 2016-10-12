@@ -36,7 +36,7 @@
 												<option value="${type.id }">${type.typeName}</option>
 											</c:forEach>
 										</select>
-										<a class="btn blue" onclick="deleteType();">
+										<a class="btn blue" id="deleteType">
 											删除<i class="icon-pencil"></i>
 										</a>
 									</div>
@@ -65,18 +65,23 @@
 <script type="text/javascript">
 	$(function(){
 		App.activeMenu("sys/product/list");
-		function deleteType(){
-			var oldTypeId = $("#oldType").val();
-			$.ajax({
-				type: 'POST',
-				url: '/sys/product/deleteType',
-				dataType:'json',
-				data:{'oldTypeId',oldTypeId},
-				success: function(){
-					jQuery("#select_id option[selected='selected']").remove();
-				}
-			});
-		}
+
+		$('#deleteType').bind('click', function(){
+				var oldTypeId = $("#oldType").val();
+				$.ajax({
+					type: 'POST',
+					url: '/sys/product/deleteType',
+					dataType:'json',
+					data:{'oldTypeId':oldTypeId},
+					success: function(){
+						alert("111");
+						window.location.href="/sys/product/typeEdit";
+					},
+					error:function(){
+						alert("222");
+					}
+				});
+		});
 	});
 </script>
 </body>

@@ -2,7 +2,10 @@ package org.guess.showcase.consume.controller;
 
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
+import org.guess.facility.DefinedConstant;
+import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.model.DrawRecord;
+import org.guess.showcase.consume.service.ConsumeLogService;
 import org.guess.showcase.consume.service.DrawService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
@@ -38,11 +41,15 @@ public class DrawController extends BaseController<DrawRecord>{
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private ConsumeLogService consumeLogService;
+
     private static final Logger logger = LoggerFactory.getLogger(DrawController.class);
 
     @Override
     public String create(@Valid DrawRecord object) throws Exception {
         BigDecimal money = object.getMoney();
+        boolean log = false;
         Member member = memberService.findUniqueBy("id", object.getUserid());
         if(member == null){
             System.out.println("无此会员");
@@ -52,6 +59,7 @@ public class DrawController extends BaseController<DrawRecord>{
             return null;
         }
         if(object.getId() == 0){
+            log=true;
             if(member.getAccount().subtract(member.getPrincipal()).compareTo(money)>=0){
                 member.setAccount(member.getAccount().subtract(money));
             }else{
@@ -70,7 +78,17 @@ public class DrawController extends BaseController<DrawRecord>{
         }
         memberService.save(member);
         object.setAccountAfter(member.getAccount());
-        return super.create(object);
+        drawService.save(object);
+        if(log){//新建奖金记录则生成日志
+            ConsumeLog consumeLog = new ConsumeLog();
+            consumeLog.setCreateTime(new Date());
+            consumeLog.setAccount(object.getMoney());
+            consumeLog.setTypeId(object.getId());
+            consumeLog.setMemberId(member.getId());
+            consumeLog.setConsumeType(DefinedConstant.CONSUME_TYPE_DRAW);
+            consumeLogService.save(consumeLog);
+        }
+        return "redirect:/consume/draw/list";
     }
 
     @Override

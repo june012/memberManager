@@ -1,23 +1,35 @@
 package org.guess.showcase.consume.controller;
 
+import com.google.gson.Gson;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
+import org.guess.facility.DefinedConstant;
 import org.guess.showcase.consume.model.CashRecord;
+import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.service.CashService;
+import org.guess.showcase.consume.service.ConsumeLogService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
+import org.guess.sys.model.Product;
+import org.guess.sys.model.ProductType;
 import org.guess.sys.model.User;
+import org.guess.sys.service.ProductService;
+import org.guess.sys.service.ProductTypeService;
 import org.guess.sys.util.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,13 +49,22 @@ public class CashController extends BaseController<CashRecord>{
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private ConsumeLogService consumeLogService;
+
+    @Autowired
+    private ProductTypeService productTypeService;
+
+    @Autowired
+    private ProductService productService;
+
     private static final Logger logger = LoggerFactory.getLogger(CashController.class);
 
     @Override
     public String create(@Valid CashRecord object) throws Exception {
         BigDecimal money = object.getMoney();
-        System.out.println(money);
         Member member = memberService.findUniqueBy("id", object.getUserid());
+        boolean log = false;
         if(member == null){
             logger.error("无此会员");
             return null;
@@ -53,6 +74,7 @@ public class CashController extends BaseController<CashRecord>{
             return null;
         }
         if(object.getId() == 0){
+            log=true;
             member.setAccount(member.getAccount().subtract(money));
             member.setCanBeConsumed(member.getCanBeConsumed().subtract(money));
             object.setCreateTime(new Date());
@@ -62,7 +84,18 @@ public class CashController extends BaseController<CashRecord>{
             member.setAccount(member.getCanBeConsumed().add(cashRecord.getMoney()).subtract(money));
         }
         memberService.save(member);
-        return super.create(object);
+        cashService.save(object);
+
+        if(log){//新建奖金记录则生成日志
+            ConsumeLog consumeLog = new ConsumeLog();
+            consumeLog.setCreateTime(new Date());
+            consumeLog.setAccount(object.getMoney());
+            consumeLog.setTypeId(object.getId());
+            consumeLog.setMemberId(member.getId());
+            consumeLog.setConsumeType(DefinedConstant.CONSUME_TYPE_CASH);
+            consumeLogService.save(consumeLog);
+        }
+        return "redirect:/consume/cash/list";
     }
 
     @Override
@@ -98,5 +131,27 @@ public class CashController extends BaseController<CashRecord>{
             }
         }
         return cashService.findPage(page,hql).returnMap();
+    }
+
+    @Override
+    public ModelAndView create() throws Exception {
+        ModelAndView mav = new ModelAndView("/consume/cash/edit");
+        try {
+            List<ProductType> productTypes = productTypeService.getAll();
+            mav.addObject("types",productTypes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  mav;
+    }
+
+    @RequestMapping("findProduct")
+    public @ResponseBody String getProduct(long productTypeId) throws Exception {
+        List<Product> productList = productService.findBy("typeId", productTypeId);
+        if(productList==null){
+            productList = new ArrayList<Product>();
+        }
+        String s = new Gson().toJson(productList);
+        return s;
     }
 }

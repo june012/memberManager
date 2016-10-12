@@ -51,7 +51,7 @@
 									<input type="hidden" value="${obj.devicesId }"   name="principal">
 								</c:if>
 								<div class="control-group">
-									<label class="control-label">登录账号(手机号):</label>
+									<label class="control-label">*登录账号(手机号):</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
 											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
@@ -78,7 +78,7 @@
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">密码:</label>
+									<label class="control-label">*密码:</label>
 									<div class="controls">
 										<input type="hidden" value="${obj.password }" name="oldpwd">
 										<input type="password" id="passwd" class="span6 m-wrap"
@@ -87,7 +87,7 @@
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">重复密码:</label>
+									<label class="control-label">*重复密码:</label>
 									<div class="controls">
 										<input type="password" class="span6 m-wrap"
 											   validate="{required:true,isPasswd:true,equalTo:'#passwd'}"
@@ -99,21 +99,21 @@
 									<label class="control-label">姓名:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											validate="{required:true,minlength:1,maxlength:10}"
-											name="name" value="${obj.name }" />
+											   name="name"
+											   value="${obj.name }" />
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label">性别:</label>
 									<div class="controls">
 										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="gender">
-											<option value="male"
-													<c:if test="${obj.gender eq male }">
+											<option value="男"
+													<c:if test="${obj.gender eq '男' }">
 														selected="selected"
 													</c:if>
 											>男</option>
-											<option value="female"
-													<c:if test="${obj.gender eq female }">
+											<option value="女"
+													<c:if test="${obj.gender eq '女' }">
 														selected="selected"
 													</c:if>
 											>女</option>
@@ -124,7 +124,6 @@
 								<label class="control-label">年龄:</label>
 								<div class="controls">
 									<input type="text" class="span6 m-wrap"
-										   validate="{required:false,minlength:1,maxlength:3}"
 										   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
 										   name="age" value="${obj.age }" />
 								</div>
@@ -133,7 +132,7 @@
 									<label class="control-label">微信号:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:false}" name="openid"
+											   name="openid"
 											   value="${obj.openid }" />
 									</div>
 								</div>
@@ -151,7 +150,7 @@
 									<label class="control-label">地址:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:false}" name="address"
+											   name="address"
 											   value="${obj.address }" />
 									</div>
 								</div>
@@ -186,7 +185,7 @@
 									<label class="control-label">备注:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:false}" name="remark"
+											   name="remark"
 											   value="${obj.remark }" />
 									</div>
 								</div>

@@ -22,6 +22,9 @@ public class ConsumeLog {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "member_id")
+    private long memberId;
+
     /**
      * 金额
      */
@@ -34,10 +37,24 @@ public class ConsumeLog {
     private String consumeType;
 
     /**
+     * 类型id
+     */
+    @Column(name = "type_id")
+    private long typeId;
+
+    /**
      * 创建时间
      */
     @Column(name = "create_time")
     private Date createTime;
+
+    public long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(long typeId) {
+        this.typeId = typeId;
+    }
 
     public long getId() {
         return id;
@@ -69,5 +86,13 @@ public class ConsumeLog {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
     }
 }

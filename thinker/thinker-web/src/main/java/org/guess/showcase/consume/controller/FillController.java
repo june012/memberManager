@@ -1,10 +1,11 @@
 package org.guess.showcase.consume.controller;
 
-import org.apache.cxf.common.i18n.Exception;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
 import org.guess.facility.DefinedConstant;
+import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.model.FillRecord;
+import org.guess.showcase.consume.service.ConsumeLogService;
 import org.guess.showcase.consume.service.FillService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
@@ -43,6 +44,9 @@ public class FillController extends BaseController<FillRecord>{
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private ConsumeLogService consumeLogService;
+
     /**
      * 提现周期
      */
@@ -52,8 +56,9 @@ public class FillController extends BaseController<FillRecord>{
 
 
     @Override
-    public String create(@Valid FillRecord object) throws Exception {
+    public String create(@Valid FillRecord object) throws java.lang.Exception {
         BigDecimal money = object.getMoney();
+        boolean log = false;
         Member member = memberService.findUniqueBy("id", object.getUserid());
         if(member == null){
             System.out.println("无此会员");
@@ -63,6 +68,7 @@ public class FillController extends BaseController<FillRecord>{
         }
 
         if(object.getId() == 0){
+            log=true;
             member.setAccount(member.getAccount().add(money));
             member.setPrincipal(member.getPrincipal().add(money));
             object.setCreateTime(new Date());
@@ -77,16 +83,22 @@ public class FillController extends BaseController<FillRecord>{
             object.setDrawTime(fillRecord.getDrawTime());
             object.setCreateTime(fillRecord.getCreateTime());
         }
-        String returnUrl = null;
-        try {
-            memberService.save(member);
-            object.setAccountAfter(member.getAccount());
-            object.setPrincipalAfter(member.getPrincipal());
-            returnUrl = super.create(object);
-        } catch (java.lang.Exception e) {
-            e.printStackTrace();
+
+        memberService.save(member);
+        object.setAccountAfter(member.getAccount());
+        object.setPrincipalAfter(member.getPrincipal());
+        fillService.save(object);
+
+        if(log){//新建奖金记录则生成日志
+            ConsumeLog consumeLog = new ConsumeLog();
+            consumeLog.setCreateTime(new Date());
+            consumeLog.setAccount(object.getMoney());
+            consumeLog.setMemberId(member.getId());
+            consumeLog.setTypeId(object.getId());
+            consumeLog.setConsumeType(DefinedConstant.CONSUME_TYPE_FILL);
+            consumeLogService.save(consumeLog);
         }
-        return returnUrl;
+        return "redirect:/consume/fill/list";
     }
 
     @Override

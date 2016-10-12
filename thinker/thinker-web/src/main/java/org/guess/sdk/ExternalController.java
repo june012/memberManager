@@ -56,22 +56,16 @@ public class ExternalController {
         Calendar c = Calendar.getInstance();
         c.setTime(loginTime);
         c.add(Calendar.MONTH,1);
-        Gson gson = new Gson();
-        if (password==null){
-            if (devicesId!=null&&member.getDevicesId().equals(devicesId)&&(c.getTime().getTime()-member.getLastLoginTime().getTime())>0){
-                member.setLastLoginTime(loginTime);
-                respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
-                MemberLoginResp memberLoginResp = new MemberLoginResp();
-                memberLoginResp.setHomeUrl("url");
-                memberLoginResp.setInterestCount(member.getCredit());
-                memberLoginResp.setPhone(phone);
-                memberLoginResp.setUserImage(member.getAvater());
-                memberLoginResp.setToken(Coder.encryptMD5(member.getPhone() + member.getLastLoginTime()));
-                memberService.save(member);
+        boolean login = false;
+        if(password!= null){
+            if(member.getPassword().equals(Coder.encryptMD5(phone + password))){
+                login = true;
             }
-
+        }else if(devicesId!=null&&member.getDevicesId().equals(devicesId)&&(c.getTime().getTime()-member.getLastLoginTime().getTime())>0){
+            login = true;
         }
-        if(member.getPassword().equals(Coder.encryptMD5(phone + password))){
+
+        if(login){
             member.setLastLoginTime(loginTime);
             respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
             MemberLoginResp memberLoginResp = new MemberLoginResp();
@@ -81,10 +75,10 @@ public class ExternalController {
             memberLoginResp.setUserImage(member.getAvater());
             memberLoginResp.setToken(Coder.encryptMD5(member.getPhone() + member.getLastLoginTime()));
             memberService.save(member);
-        }else{
+        }else {
             respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
         }
-        return gson.toJson(respData);
+        return new Gson().toJson(respData);
     }
 
     /**
@@ -94,10 +88,19 @@ public class ExternalController {
      * @param password
      */
     @RequestMapping("/register")
-    public void memberRegister(String name,String phone,String password){
+    @ResponseBody
+    public String memberRegister(String name,String phone,String password,String devicesId){
+        RespData respData = new RespData();
+        Member member = memberService.findUniqueBy("phone", phone);
+        if(member!=null){
+            respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
+            respData.setData("该会员已经存在");
+            return new Gson().toJson(respData);
+        }
+        Member newMember = new Member();
 
 
-
+        return null;
     }
 
     /**

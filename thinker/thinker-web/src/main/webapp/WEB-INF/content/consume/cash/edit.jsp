@@ -57,13 +57,20 @@
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">产品类别:</label>
+									<label class="control-label">产品类型:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap"
-											   validate="{required:true,minlength:1,maxlength:10}"
-											   name="productType" value="${obj.productType }" />
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="productType" id="productType" onchange="findProduct()">
+											<c:forEach items="${types}" var="type">
+												<option value="${type.id }"
+														<c:if test="${obj.typeId eq type.id }">
+															selected="selected"
+														</c:if>
+												>${type.typeName}</option>
+											</c:forEach>
+										</select>
 									</div>
 								</div>
+
 								<div class="control-group">
 									<label class="control-label">产品价格:</label>
 									<div class="controls">
@@ -143,6 +150,7 @@
 	</div>
 	<%@ include file="/WEB-INF/content/common/plugins/choose.jsp"%>
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
+	<script src="${ctx}/assets/js/product.js" type="text/javascript" ></script>
 <script type="text/javascript">
 	$(function(){
 		App.activeMenu("consume/cash/list");

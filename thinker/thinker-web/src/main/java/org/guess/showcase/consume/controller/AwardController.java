@@ -3,8 +3,11 @@ package org.guess.showcase.consume.controller;
 import com.google.gson.Gson;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
+import org.guess.facility.DefinedConstant;
 import org.guess.showcase.consume.model.AwardRecord;
+import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.service.AwardService;
+import org.guess.showcase.consume.service.ConsumeLogService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
 import org.guess.sys.model.User;
@@ -38,14 +41,20 @@ public class AwardController extends BaseController<AwardRecord>{
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private ConsumeLogService consumeLogService;
+
     @Override
     public String create(@Valid AwardRecord object) throws Exception {
         BigDecimal awardMoney = object.getAwardMoney();
         Member member = memberService.findUniqueBy("id", object.getMemberId());
         if(member == null){
             System.out.println("无此会员");
+            return null;
         }
+        boolean log = false;
         if(object.getId() == 0){
+            log=true;
             member.setAward(member.getAward().add(awardMoney));
             member.setAccount(member.getAccount().add(awardMoney));
             object.setDate(new Date());
@@ -57,7 +66,18 @@ public class AwardController extends BaseController<AwardRecord>{
         }
         memberService.save(member);
         object.setAwardAfter(member.getAward());
-        return super.create(object);
+        awardService.save(object);
+        if(log){//新建奖金记录则生成日志
+            ConsumeLog consumeLog = new ConsumeLog();
+            consumeLog.setCreateTime(new Date());
+            consumeLog.setMemberId(member.getId());
+            consumeLog.setAccount(object.getAwardMoney());
+            consumeLog.setTypeId(object.getId());
+            consumeLog.setConsumeType(DefinedConstant.CONSUME_TYPE_AWARD);
+            new Gson().toJson(consumeLog);
+            consumeLogService.save(consumeLog);
+        }
+        return "redirect:/consume/award/list";
     }
 
 

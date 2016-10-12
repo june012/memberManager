@@ -126,9 +126,9 @@ public class MemberController extends BaseController<Member> {
     }
 
     @RequestMapping("/create")
-    public String create(@Valid Member object) throws Exception {
+    public String create(@Valid Member object,HttpServletRequest request) throws Exception {
+
         System.out.println(object.getAvater());
-//        System.out.println(file.equals(null));
         List<Member> members = memberService.findBy("phone", object.getPhone());
         if(members.size()>1){
             logger.info("无法识别"+object.getPhone());
@@ -138,7 +138,6 @@ public class MemberController extends BaseController<Member> {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             object.setLastLoginTime(simpleDateFormat.parse("1999-01-01"));
         }
-
 
         if(object.getAccount() == null){
             object.setAccount(new BigDecimal("0"));
@@ -161,13 +160,13 @@ public class MemberController extends BaseController<Member> {
         if(object.getStatus()==null){
             object.setStatus("A");
         }
-        if(object.getAvater()==null){
+        if(object.getAvater()==null||object.getAvater()==""){
             object.setAvater("/assets/img/avatar.png");
         }else{
             System.out.println("上传图片");
         }
-        String oldpwd = request.getParameter("oldpwd");
         if (object.getId() != 0) {
+            String oldpwd = request.getParameter("oldpwd");
             if (!oldpwd.equals(object.getPassword())) {
                 object.setPassword(Coder.encryptMD5(object.getPhone() + object.getPassword()));
             }
