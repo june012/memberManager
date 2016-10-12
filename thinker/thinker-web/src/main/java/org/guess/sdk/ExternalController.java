@@ -1,6 +1,11 @@
 package org.guess.sdk;
 
+import com.google.gson.Gson;
 import org.guess.core.utils.FileUtils;
+import org.guess.core.utils.security.Coder;
+import org.guess.facility.DefinedConstant;
+import org.guess.sdk.dto.MemberLoginResp;
+import org.guess.sdk.dto.RespData;
 import org.guess.showcase.consume.service.CashService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
@@ -15,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by wan.peng on 2016/10/11.
@@ -41,10 +48,43 @@ public class ExternalController {
      * @param password
      */
     @RequestMapping("/login")
-    public void memberLogin(String phone,String password){
+    @ResponseBody
+    public String memberLogin(String phone,String password,String devicesId) throws Exception {
         Member member = memberService.findUniqueBy("phone", phone);
+        RespData respData = new RespData();
+        Date loginTime = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(loginTime);
+        c.add(Calendar.MONTH,1);
+        Gson gson = new Gson();
+        if (password==null){
+            if (devicesId!=null&&member.getDevicesId().equals(devicesId)&&(c.getTime().getTime()-member.getLastLoginTime().getTime())>0){
+                member.setLastLoginTime(loginTime);
+                respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
+                MemberLoginResp memberLoginResp = new MemberLoginResp();
+                memberLoginResp.setHomeUrl("url");
+                memberLoginResp.setInterestCount(member.getCredit());
+                memberLoginResp.setPhone(phone);
+                memberLoginResp.setUserImage(member.getAvater());
+                memberLoginResp.setToken(Coder.encryptMD5(member.getPhone() + member.getLastLoginTime()));
+                memberService.save(member);
+            }
 
-
+        }
+        if(member.getPassword().equals(Coder.encryptMD5(phone + password))){
+            member.setLastLoginTime(loginTime);
+            respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
+            MemberLoginResp memberLoginResp = new MemberLoginResp();
+            memberLoginResp.setHomeUrl("url");
+            memberLoginResp.setInterestCount(member.getCredit());
+            memberLoginResp.setPhone(phone);
+            memberLoginResp.setUserImage(member.getAvater());
+            memberLoginResp.setToken(Coder.encryptMD5(member.getPhone() + member.getLastLoginTime()));
+            memberService.save(member);
+        }else{
+            respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
+        }
+        return gson.toJson(respData);
     }
 
     /**
@@ -55,6 +95,8 @@ public class ExternalController {
      */
     @RequestMapping("/register")
     public void memberRegister(String name,String phone,String password){
+
+
 
     }
 

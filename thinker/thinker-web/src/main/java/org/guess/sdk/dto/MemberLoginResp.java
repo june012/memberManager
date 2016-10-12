@@ -4,12 +4,12 @@ package org.guess.sdk.dto;
  * Created by wan.peng on 2016/10/12.
  */
 public class MemberLoginResp {
-    private String name;
-    private String phone;
-    private String userImage;
-    private Long interestCount;
-    private Long userLevel;
-    private String homeUrl;
+    private String name;//姓名
+    private String phone;//电话
+    private String userImage;//头像
+    private Long interestCount;//积分
+    private Long userLevel;//等级
+    private String homeUrl;//首页
     private String token;
 
     public String getName() {
