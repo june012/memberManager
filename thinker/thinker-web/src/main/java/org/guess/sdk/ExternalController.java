@@ -3,10 +3,14 @@ package org.guess.sdk;
 import com.google.gson.Gson;
 import org.guess.core.utils.FileUtils;
 import org.guess.core.utils.security.Coder;
+import org.guess.facility.CalendarUtils;
 import org.guess.facility.DefinedConstant;
+import org.guess.sdk.dto.ConsumeInfo;
+import org.guess.sdk.dto.ConsumeRespData;
 import org.guess.sdk.dto.MemberLoginResp;
 import org.guess.sdk.dto.RespData;
-import org.guess.showcase.consume.service.CashService;
+import org.guess.showcase.consume.model.ConsumeLog;
+import org.guess.showcase.consume.service.ConsumeLogService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
 import org.json.JSONObject;
@@ -21,21 +25,30 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by wan.peng on 2016/10/11.
  */
 @Controller
-@RequestMapping("/services")
-public class ExternalController {
+@RequestMapping("/remote/")
+public class ExternalController{
 
     @Autowired
     private MemberService memberService;
 
     @Autowired
-    private CashService cashService;
+    private ConsumeLogService consumeLogService;
+
+
 
     private final String localFileUrl="thinker/avater/";
 
@@ -92,13 +105,13 @@ public class ExternalController {
      */
     @RequestMapping("/register")
     @ResponseBody
-    public String memberRegister(String name,String phone,String password,String devicesId) throws Exception {
+    public RespData memberRegister(String name,String phone,String password,String devicesId) throws Exception {
         RespData respData = new RespData();
         Member member = memberService.findUniqueBy("phone", phone);
         if(member!=null){
             respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
             respData.setData("该会员已经存在");
-            return new Gson().toJson(respData);
+            return respData;
         }
         Member newMember = new Member();
         newMember.setName(name);
@@ -118,7 +131,7 @@ public class ExternalController {
         memberLoginResp.setToken(Coder.encryptMD5(newMember.getPhone() + newMember.getLastLoginTime()));
         respData.setData(memberLoginResp);
 
-        return new Gson().toJson(respData);
+        return respData;
     }
 
     /**
@@ -148,20 +161,46 @@ public class ExternalController {
      */
     @RequestMapping("/findComsumeLog")
     @ResponseBody
-    public String findComsumeLog(String phone,String token){
+    public List<ConsumeRespData> findComsumeLog(String phone,String token){
+        List<ConsumeRespData> consumeRespDatas = new ArrayList<ConsumeRespData>();
         RespData respData = new RespData();
         Member member = memberService.findUniqueBy("phone", phone);
         if(member==null){
-            respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
-            respData.setData("没有此会员");
-            return new Gson().toJson(respData);
+            return consumeRespDatas;
+        }
+        if(!token.equals(Coder.encryptMD5(member.getPhone() + member.getLastLoginTime()))){
+            return consumeRespDatas;
+        }
+        List<ConsumeLog> consumeLogs = consumeLogService.findBy("memberId", member.getId());
+        Map<String,List<ConsumeInfo>> stringListMap = new HashMap<String, List<ConsumeInfo>>();
+        DateFormat dateFormat = new SimpleDateFormat("yy-MM");
+
+        for(ConsumeLog consumeLog : consumeLogs){
+            Date createTime = consumeLog.getCreateTime();
+
+            String format = dateFormat.format(createTime);
+            ConsumeInfo consumeInfo = new ConsumeInfo();
+            consumeInfo.setWeek(CalendarUtils.getWeek(createTime));
+            consumeInfo.setBillAmount(consumeLog.getAccount());
+            consumeInfo.setBillId(String.valueOf(consumeLog.getId()));
+
+            if(stringListMap.get(format)==null){
+                List<ConsumeInfo> consumeInfos = new ArrayList<ConsumeInfo>();
+                consumeInfos.add(consumeInfo);
+                stringListMap.put(format,consumeInfos);
+            }else{
+                stringListMap.get(format).add(consumeInfo);
+            }
+        }
+        Set<String> strings = stringListMap.keySet();
+        for(String time:strings){
+            ConsumeRespData consumeRespData = new ConsumeRespData();
+            consumeRespData.setMonth(time);
+            consumeRespData.setItemList(stringListMap.get(time));
+            consumeRespDatas.add(consumeRespData);
         }
 
-        JSONObject jall = new JSONObject();
-        jall.put("data", "Hello Spring!");
-
-
-        return jall.toString();
+        return consumeRespDatas;
     }
 
     /**
@@ -188,9 +227,36 @@ public class ExternalController {
 
     @RequestMapping("/editAvater")
     @ResponseBody
-    public String editAvater(@RequestParam(value = "file", required = false) MultipartFile file,String phone,String token) throws IOException {
-        FileUtils.copyInputStreamToFile(file.getInputStream(),new File(localFileUrl+"phone"));
-        return  null;
+    public RespData editAvater(@RequestParam(value = "file", required = false) MultipartFile file,String phone,String token) throws IOException {
+        RespData respData = new RespData();
+        Member member = memberService.findUniqueBy("phone", phone);
+        if(member==null){
+            respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
+            respData.setData("没有此会员");
+            return respData;
+        }
+        String iconUrl = localFileUrl+phone;
+        FileUtils.copyInputStreamToFile(file.getInputStream(),new File(iconUrl));
+        member.setAvater("http://localhost:9999/"+iconUrl);
+        try {
+            memberService.save(member);
+            respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
+            JSONObject jall = new JSONObject();
+            jall.put("userImage", member.getAvater());
+            respData.setData(jall.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return  respData;
+    }
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test(){
+        System.out.println("11111111111111111");
+
+        return "113242";
     }
 
 

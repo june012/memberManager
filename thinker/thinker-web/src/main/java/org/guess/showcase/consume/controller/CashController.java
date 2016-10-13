@@ -84,6 +84,7 @@ public class CashController extends BaseController<CashRecord>{
             member.setAccount(member.getCanBeConsumed().add(cashRecord.getMoney()).subtract(money));
         }
         memberService.save(member);
+        object.setMoney(new BigDecimal("0").subtract(money));
         cashService.save(object);
 
         if(log){//新建奖金记录则生成日志

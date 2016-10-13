@@ -35,6 +35,11 @@ public class FillRecord {
      * 充值金额
      */
     private BigDecimal money;
+
+    /**
+     * 产生利息
+     */
+    private BigDecimal intertest;
     /**
      * 充值后钱包余额
      */
@@ -50,7 +55,9 @@ public class FillRecord {
      */
     @Column(name = "draw_time")
     private Date drawTime;
-
+    /**
+     * 是否到期
+     */
     @Column(name = "is_handled")
     private String isHandled;
 
@@ -116,5 +123,13 @@ public class FillRecord {
 
     public void setDrawTime(Date drawTime) {
         this.drawTime = drawTime;
+    }
+
+    public BigDecimal getIntertest() {
+        return intertest;
+    }
+
+    public void setIntertest(BigDecimal intertest) {
+        this.intertest = intertest;
     }
 }
