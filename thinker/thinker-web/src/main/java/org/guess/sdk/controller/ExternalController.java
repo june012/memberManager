@@ -1,4 +1,4 @@
-package org.guess.sdk;
+package org.guess.sdk.controller;
 
 import com.google.gson.Gson;
 import org.guess.core.utils.FileUtils;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -50,7 +51,7 @@ public class ExternalController{
 
 
 
-    private final String localFileUrl="thinker/avater/";
+    private final String localFileUrl="";
 
 
 
@@ -227,7 +228,7 @@ public class ExternalController{
 
     @RequestMapping("/editAvater")
     @ResponseBody
-    public RespData editAvater(@RequestParam(value = "file", required = false) MultipartFile file,String phone,String token) throws IOException {
+    public RespData editAvater(@RequestParam(value = "file", required = false) MultipartFile file, String phone, String token, HttpServletRequest request) throws IOException {
         RespData respData = new RespData();
         Member member = memberService.findUniqueBy("phone", phone);
         if(member==null){
@@ -235,9 +236,9 @@ public class ExternalController{
             respData.setData("没有此会员");
             return respData;
         }
-        String iconUrl = localFileUrl+phone;
-        FileUtils.copyInputStreamToFile(file.getInputStream(),new File(iconUrl));
-        member.setAvater("http://localhost:9999/"+iconUrl);
+        String realPath = request.getSession().getServletContext().getRealPath("\\assets\\img/temp\\");
+        FileUtils.copyInputStreamToFile(file.getInputStream(),new File(realPath+file.getOriginalFilename()));
+        member.setAvater(localFileUrl+realPath);
         try {
             memberService.save(member);
             respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
