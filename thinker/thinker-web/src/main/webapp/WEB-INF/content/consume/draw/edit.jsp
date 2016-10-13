@@ -54,9 +54,9 @@
 								<div class="control-group">
 									<label class="control-label">提现金额:</label>
 									<div class="controls">
-										<input type="text" class="span6 m-wrap"
+										<input type="text" class="span6 m-wrap" id="money"
 											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
-											   validate="{required:true}" name="money"
+											   name="money"
 											   value="${obj.money }" />
 									</div>
 								</div>
@@ -101,6 +101,22 @@
 <script type="text/javascript">
 	$(function(){
 		App.activeMenu("consume/draw/list");
+
+		$('#money').validate({
+			submitHandler: function (form) {
+				var $form = $(form),
+						data = $form.serialize();     //序列化表单数据
+				//这里是jquery表单验证通过的时候执行的操作，比如这里，表单验证通过的时候执行了jquery的ajax的post操作
+				$.post('member/canBeUsedAccount',{data:data},function(d){
+					if(d.Flag){
+						alert("如果返回为真，将执行这里代码")
+					}else{
+
+					}
+				},'json');
+			}
+		});
+
 	});
 </script>
 </body>

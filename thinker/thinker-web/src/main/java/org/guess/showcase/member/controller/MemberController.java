@@ -270,4 +270,21 @@ public class MemberController extends BaseController<Member> {
         storeMemberDto.setMemberDtos(memberDtos);
         return gson.toJson(storeMemberDto);
     }
+    @ResponseBody
+    @RequestMapping("/canBeUsedAccount")
+    public boolean canBeUsedAccount(HttpServletRequest request){
+        String userid = request.getParameter("userid");
+        String money = request.getParameter("money");
+        Member member = memberService.findUniqueBy("id", Long.valueOf(userid));
+        BigDecimal consumeAccount = new BigDecimal(money);
+        if(member==null){
+            logger.info("该会员不存在:"+userid);
+            return false;
+        }
+        if(member.getCanBeConsumed().compareTo(consumeAccount)==1){
+            return true;
+        }
+        return false;
+    }
+
 }

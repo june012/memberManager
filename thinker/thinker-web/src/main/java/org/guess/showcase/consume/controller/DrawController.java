@@ -52,7 +52,7 @@ public class DrawController extends BaseController<DrawRecord>{
         boolean log = false;
         Member member = memberService.findUniqueBy("id", object.getUserid());
         if(member == null){
-            System.out.println("无此会员");
+            logger.info("无此会员");
         }
         if(member.getAccount().compareTo(money)==-1){
             logger.info("余额不足");
@@ -60,21 +60,14 @@ public class DrawController extends BaseController<DrawRecord>{
         }
         if(object.getId() == 0){
             log=true;
-            if(member.getAccount().subtract(member.getPrincipal()).compareTo(money)>=0){
-                member.setAccount(member.getAccount().subtract(money));
-            }else{
-                member.setAccount(member.getAccount().subtract(money));
-                member.setPrincipal(member.getAccount());
-            }
+            member.setCanBeConsumed(member.getCanBeConsumed().subtract(object.getMoney()));
+            member.setAccount(member.getAccount().subtract(object.getMoney()));
             object.setCreateTime(new Date());
         }else{
             DrawRecord drawRecord = drawService.findUniqueBy("id", object.getId());
-            if(member.getAccount().add(drawRecord.getMoney()).compareTo(object.getMoney()) == -1){
-                logger.info("余额不足");
-                return null;
-            }
-            object.setCreateTime(drawRecord.getCreateTime());
+            member.setCanBeConsumed(member.getCanBeConsumed().add(drawRecord.getMoney()).subtract(object.getMoney()));
             member.setAccount(member.getAccount().add(drawRecord.getMoney()).subtract(money));
+            object.setCreateTime(drawRecord.getCreateTime());
         }
         memberService.save(member);
         object.setAccountAfter(member.getAccount());

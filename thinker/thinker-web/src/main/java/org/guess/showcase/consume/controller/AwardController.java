@@ -12,6 +12,8 @@ import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
 import org.guess.sys.model.User;
 import org.guess.sys.util.UserUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,12 +46,15 @@ public class AwardController extends BaseController<AwardRecord>{
     @Autowired
     private ConsumeLogService consumeLogService;
 
+
+    private static final Logger logger = LoggerFactory.getLogger(AwardController.class);
+
     @Override
     public String create(@Valid AwardRecord object) throws Exception {
         BigDecimal awardMoney = object.getAwardMoney();
         Member member = memberService.findUniqueBy("id", object.getMemberId());
         if(member == null){
-            System.out.println("无此会员");
+            logger.info("无此会员");
             return null;
         }
         boolean log = false;
@@ -126,4 +131,6 @@ public class AwardController extends BaseController<AwardRecord>{
         }
         return awardService.findPage(page,hql).returnMap();
     }
+
+
 }

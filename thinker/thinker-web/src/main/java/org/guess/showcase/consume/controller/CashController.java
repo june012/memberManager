@@ -69,7 +69,7 @@ public class CashController extends BaseController<CashRecord>{
             logger.error("无此会员");
             return null;
         }
-        if(member.getAccount().compareTo(money)==-1){
+        if(member.getCanBeConsumed().compareTo(money)==-1){
             logger.info("余额不足");
             return null;
         }

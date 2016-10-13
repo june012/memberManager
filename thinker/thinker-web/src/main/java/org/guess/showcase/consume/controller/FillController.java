@@ -61,7 +61,8 @@ public class FillController extends BaseController<FillRecord>{
         boolean log = false;
         Member member = memberService.findUniqueBy("id", object.getUserid());
         if(member == null){
-            System.out.println("无此会员");
+            logger.info("无此会员");
+            return null;
         }
         if(object.getIsHandled()==null){
             object.setIsHandled(DefinedConstant.FILL_HANDLE_NO);
