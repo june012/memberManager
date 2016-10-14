@@ -10,7 +10,6 @@ public class MemberLoginResp {
     private String phone;//电话
     private String userImage;//头像
     private BigDecimal interestCount;//积分
-    private Long userLevel;//等级
     private String homeUrl;//首页
     private String token;
 
@@ -44,14 +43,6 @@ public class MemberLoginResp {
 
     public void setInterestCount(BigDecimal interestCount) {
         this.interestCount = interestCount;
-    }
-
-    public Long getUserLevel() {
-        return userLevel;
-    }
-
-    public void setUserLevel(Long userLevel) {
-        this.userLevel = userLevel;
     }
 
     public String getHomeUrl() {

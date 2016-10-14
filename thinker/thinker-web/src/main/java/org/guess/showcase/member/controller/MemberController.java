@@ -12,6 +12,7 @@ import org.guess.sys.model.Store;
 import org.guess.sys.model.User;
 import org.guess.sys.service.StoreService;
 import org.guess.sys.util.UserUtil;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -272,19 +273,22 @@ public class MemberController extends BaseController<Member> {
     }
     @ResponseBody
     @RequestMapping("/canBeUsedAccount")
-    public boolean canBeUsedAccount(HttpServletRequest request){
-        String userid = request.getParameter("userid");
-        String money = request.getParameter("money");
-        Member member = memberService.findUniqueBy("id", Long.valueOf(userid));
+    public String canBeUsedAccount(String memberid,String money){
+        Member member = memberService.findUniqueBy("id", Long.valueOf(memberid));
         BigDecimal consumeAccount = new BigDecimal(money);
+        JSONObject jall = new JSONObject();
         if(member==null){
-            logger.info("该会员不存在:"+userid);
-            return false;
+            jall.put("status",false);
+            jall.put("message","该会员不存在");
+            return jall.toString();
         }
         if(member.getCanBeConsumed().compareTo(consumeAccount)==1){
-            return true;
+            jall.put("status",false);
+            jall.put("message","余额不足,当前可用余额为:"+member.getCanBeConsumed());
+            return jall.toString();
         }
-        return false;
+        jall.put("status",true);
+        return jall.toString();
     }
 
 }
