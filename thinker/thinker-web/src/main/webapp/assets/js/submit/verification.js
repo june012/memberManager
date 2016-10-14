@@ -5,10 +5,12 @@ function verification(){
     $.ajax({
         type: "POST",
         url:'/member/canBeUsedAccount',
-        data:{'memberid':$('#memberid').val(),
+        data:{'memberid':$('#member-name').val(),
             'money':$('#money').val()
         },
         success:function(data){
+            alert(data);
+            alert(data.status+"-"+data.message);
             if(data.status){
                 submitForm();
             }else{

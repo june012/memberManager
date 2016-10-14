@@ -69,7 +69,7 @@
 									</div>
 								</div>
 								<div class="form-actions">
-									<button type="submit" class="btn blue">提交</button>
+									<button onclick="verification()" class="btn blue">提交</button>
 									<a class='btn' href="${header.Referer }">返回</a>
 								</div>
 							</form>
@@ -98,25 +98,10 @@
 	</div>
 	<%@ include file="/WEB-INF/content/common/plugins/choose.jsp"%>
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
+	<%@ include file="/WEB-INF/content/common/plugins/submit-verification.jsp"%>
 <script type="text/javascript">
 	$(function(){
 		App.activeMenu("consume/draw/list");
-
-		$('#money').validate({
-			submitHandler: function (form) {
-				var $form = $(form),
-						data = $form.serialize();     //序列化表单数据
-				//这里是jquery表单验证通过的时候执行的操作，比如这里，表单验证通过的时候执行了jquery的ajax的post操作
-				$.post('member/canBeUsedAccount',{data:data},function(d){
-					if(d.Flag){
-						alert("如果返回为真，将执行这里代码")
-					}else{
-
-					}
-				},'json');
-			}
-		});
-
 	});
 </script>
 </body>

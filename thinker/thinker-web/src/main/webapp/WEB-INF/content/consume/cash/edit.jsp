@@ -122,7 +122,7 @@
 
 
 								<div class="form-actions">
-									<button type="submit" class="btn blue">提交</button>
+									<button onclick="verification()" class="btn blue">提交</button>
 									<a class='btn' href="${header.Referer }">返回</a>
 								</div>
 							</form>
@@ -151,6 +151,7 @@
 	</div>
 	<%@ include file="/WEB-INF/content/common/plugins/choose.jsp"%>
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
+	<%@ include file="/WEB-INF/content/common/plugins/submit-verification.jsp"%>
 	<script src="${ctx}/assets/js/product.js" type="text/javascript" ></script>
 <script type="text/javascript">
 	$(function(){

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
 import org.guess.facility.DefinedConstant;
+import org.guess.facility.Exception.DefinedException;
+import org.guess.facility.Exception.ErrorCode;
 import org.guess.showcase.consume.model.AwardRecord;
 import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.service.AwardService;
@@ -54,8 +56,7 @@ public class AwardController extends BaseController<AwardRecord>{
         BigDecimal awardMoney = object.getAwardMoney();
         Member member = memberService.findUniqueBy("id", object.getMemberId());
         if(member == null){
-            logger.info("无此会员");
-            return null;
+           throw new DefinedException(ErrorCode.NOT_EXSIST_THIS_MEMBER.getCode(),ErrorCode.NOT_EXSIST_THIS_MEMBER.getMessage());
         }
         boolean log = false;
         if(object.getId() == 0){
@@ -116,7 +117,6 @@ public class AwardController extends BaseController<AwardRecord>{
             String search_eql_storeId = request.getParameter("search_EQL_storeId");
             if(search_eql_storeId != null){
                 List<Member> members = memberService.findBy("storeId", Long.valueOf(search_eql_storeId));
-                System.out.println(new Gson().toJson(members));
                 String memberIds="";
                 for(Member m :members){
                     memberIds+=m.getId()+",";
