@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -138,18 +136,20 @@ public class FillController extends BaseController<FillRecord>{
         }
         return fillService.findPage(page,hql).returnMap();
     }
-
-    @RequestMapping("isAvailable")
-    public @ResponseBody
-    boolean isLoginIdAvailable(@RequestParam("userid") String userid) {
-        Member member = memberService.findUniqueBy("id", Long.valueOf(userid));
-        if(member==null){
-            logger.info("该会员不存在:"+userid);
-            return false;
-        }
-        if(member.getPrincipal()==new BigDecimal("0")){
-            return true;
-        }
-        return false;
-    }
+///**
+// * 强制只能充值一次
+// */
+//    @RequestMapping("isAvailable")
+//    public @ResponseBody
+//    boolean isLoginIdAvailable(@RequestParam("userid") String userid) {
+//        Member member = memberService.findUniqueBy("id", Long.valueOf(userid));
+//        if(member==null){
+//            logger.info("该会员不存在:"+userid);
+//            return false;
+//        }
+//        if(member.getPrincipal()==new BigDecimal("0")){
+//            return true;
+//        }
+//        return false;
+//    }
 }

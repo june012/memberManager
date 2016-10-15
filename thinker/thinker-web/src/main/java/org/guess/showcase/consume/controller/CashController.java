@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
 import org.guess.facility.DefinedConstant;
+import org.guess.facility.Exception.DefinedException;
+import org.guess.facility.Exception.ErrorCode;
 import org.guess.showcase.consume.model.CashRecord;
 import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.service.CashService;
@@ -66,12 +68,10 @@ public class CashController extends BaseController<CashRecord>{
         Member member = memberService.findUniqueBy("id", object.getUserid());
         boolean log = false;
         if(member == null){
-            logger.error("无此会员");
-            return null;
+            throw new DefinedException(ErrorCode.NOT_EXSIST_THIS_MEMBER.getCode(),ErrorCode.NOT_EXSIST_THIS_MEMBER.getMessage());
         }
         if(member.getCanBeConsumed().compareTo(money)==-1){
-            logger.info("余额不足");
-            return null;
+            throw new DefinedException(ErrorCode.ACCOUNT_IS_NOT_ENOUGH.getCode(),ErrorCode.ACCOUNT_IS_NOT_ENOUGH.getMessage());
         }
         if(object.getId() == 0){
             log=true;
@@ -162,7 +162,6 @@ public class CashController extends BaseController<CashRecord>{
     @RequestMapping("/findPrice")
     public @ResponseBody String findPrice(long productId) throws Exception {
         Product product = productService.findUniqueBy("id", productId);
-        System.out.println(product);
         if(product==null){
             return "";
         }

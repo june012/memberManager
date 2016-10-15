@@ -45,6 +45,7 @@ public class MemberController extends BaseController<Member> {
         showView = "/member/show";
     }
 
+    private final  String localUrl = "localhost:8080";
     @Autowired
     private MemberService memberService;
 
@@ -162,7 +163,7 @@ public class MemberController extends BaseController<Member> {
             object.setStatus("A");
         }
         if(object.getAvater()==null||object.getAvater()==""){
-            object.setAvater("/assets/img/avatar.png");
+            object.setAvater(localUrl+"/assets/img/avatar.png");
         }else{
             System.out.println("上传图片");
         }

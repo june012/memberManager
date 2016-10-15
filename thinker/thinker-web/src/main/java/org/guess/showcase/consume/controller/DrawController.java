@@ -3,6 +3,8 @@ package org.guess.showcase.consume.controller;
 import org.guess.core.orm.Page;
 import org.guess.core.web.BaseController;
 import org.guess.facility.DefinedConstant;
+import org.guess.facility.Exception.DefinedException;
+import org.guess.facility.Exception.ErrorCode;
 import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.model.DrawRecord;
 import org.guess.showcase.consume.service.ConsumeLogService;
@@ -52,11 +54,10 @@ public class DrawController extends BaseController<DrawRecord>{
         boolean log = false;
         Member member = memberService.findUniqueBy("id", object.getUserid());
         if(member == null){
-            logger.info("无此会员");
+            throw new DefinedException(ErrorCode.NOT_EXSIST_THIS_MEMBER.getCode(),ErrorCode.NOT_EXSIST_THIS_MEMBER.getMessage());
         }
         if(member.getAccount().compareTo(money)==-1){
-            logger.info("余额不足");
-            return null;
+            throw new DefinedException(ErrorCode.ACCOUNT_IS_NOT_ENOUGH.getCode(),ErrorCode.ACCOUNT_IS_NOT_ENOUGH.getMessage());
         }
         if(object.getId() == 0){
             log=true;
