@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +95,7 @@ public class StoreController extends BaseController<Store>{
             }
             stores.add(store0);
         }else{
+            stores= new ArrayList<Store>();
             Store store = storeService.findUniqueBy("id", currentUser.getStoreId());
             stores.add(store);
         }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,11 +69,26 @@ public class SysManagerController extends BaseController<User> {
     @Override
     public ModelAndView update(@PathVariable("id") Long id) throws Exception {
         ModelAndView mav = super.update(id);
+        User currentUser = UserUtil.getCurrentUser();
         List<Role> roles = roleService.getAll();
         mav.addObject("roles", roles);
-        List<Store> stores = storeService.getAll();
+        List<Store> stores = null;
+        if(currentUser.getStoreId() == 0){
+            Store store0 = new Store();
+            store0.setId(Long.valueOf("0"));
+            store0.setStoreName("总店");
+            try {
+                stores = storeService.getAll();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            stores.add(store0);
+        }else{
+            stores= new ArrayList<Store>();
+            Store store = storeService.findUniqueBy("id", currentUser.getStoreId());
+            stores.add(store);
+        }
         mav.addObject("stores", stores);
-        User currentUser = UserUtil.getCurrentUser();
         mav.addObject("currentUser", currentUser);
         return mav;
     }
@@ -88,7 +104,22 @@ public class SysManagerController extends BaseController<User> {
         ModelAndView mav = super.update(currentUser.getId());
         List<Role> roles = roleService.getAll();
         mav.addObject("roles", roles);
-        List<Store> stores = storeService.getAll();
+        List<Store> stores = null;
+        if(currentUser.getStoreId() == 0){
+            Store store0 = new Store();
+            store0.setId(Long.valueOf("0"));
+            store0.setStoreName("总店");
+            try {
+                stores = storeService.getAll();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            stores.add(store0);
+        }else{
+            stores= new ArrayList<Store>();
+            Store store = storeService.findUniqueBy("id", currentUser.getStoreId());
+            stores.add(store);
+        }
         mav.addObject("stores", stores);
         mav.addObject("currentUser", currentUser);
         return mav;
