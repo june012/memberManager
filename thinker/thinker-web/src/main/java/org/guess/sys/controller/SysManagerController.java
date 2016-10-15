@@ -99,20 +99,24 @@ public class SysManagerController extends BaseController<User> {
     public Map<String, Object> page(Page<User> page, HttpServletRequest request) {
         User currentUser = UserUtil.getCurrentUser();
         request.getSession().setAttribute("currentUser", currentUser);
-        if(currentUser.getStoreId()==0){
-            return super.page(page, request);
-        }
         String name = request.getParameter("search_LIKES_name");
-        String storeName = request.getParameter("search_LIKES_storeName");
-        String hql = "from User user where user.storeId =" + currentUser.getStoreId();
+        String storeId = request.getParameter("search_LIKES_storeId");
+        String hql = "from User user where ";
+        if(currentUser.getStoreId()==0){
+            hql+="1=1 ";
+        }else{
+            hql +="user.storeId =" + currentUser.getStoreId();
+        }
         if(name != null){
             hql+=" and user.name like '%"+name+"%'";
         }
-        if(storeName!=null){
-            hql+= " and user.storeName like'%"+storeName+"%'";
+        if(storeId!=null){
+            hql+= " and user.storeId ="+storeId;
         }
         Page<User> page1 = userService.findPage(page, hql);
         return page1.returnMap();
     }
+
+
 
 }

@@ -6,7 +6,8 @@ package org.guess.facility.Exception;
 public enum ErrorCode {
 
     NOT_EXSIST_THIS_MEMBER(0x80003301, "该会员不存在"),
-    ACCOUNT_IS_NOT_ENOUGH(0x80003302, "余额不足");
+    ACCOUNT_IS_NOT_ENOUGH(0x80003302, "余额不足"),
+    FIND_ONEMORE_MEMBER(0x80003303, "用户信息错误出现一个以上相同手机号会员");
 
     private final int value;
 

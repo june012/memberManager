@@ -128,6 +128,8 @@ public class CashController extends BaseController<CashRecord>{
                 String memberIds = memberService.findMemberIds(search_eql_storeId);
                 if (memberIds!=null){
                     hql+=" and a.userid in("+memberIds+")";
+                }else{
+                    hql+=" and 1=2";
                 }
             }
         }
@@ -146,7 +148,7 @@ public class CashController extends BaseController<CashRecord>{
         return  mav;
     }
 
-    @RequestMapping("findProduct")
+    @RequestMapping("/findProduct")
     public @ResponseBody String getProduct(long productTypeId) throws Exception {
         List<Product> productList = productService.findBy("typeId", productTypeId);
         if(productList==null){
@@ -154,6 +156,17 @@ public class CashController extends BaseController<CashRecord>{
         }
         String s = new Gson().toJson(productList);
         System.out.println(s);
+        return s;
+    }
+
+    @RequestMapping("/findPrice")
+    public @ResponseBody String findPrice(long productId) throws Exception {
+        Product product = productService.findUniqueBy("id", productId);
+        System.out.println(product);
+        if(product==null){
+            return "";
+        }
+        String s = new Gson().toJson(product.getPrice());
         return s;
     }
 }

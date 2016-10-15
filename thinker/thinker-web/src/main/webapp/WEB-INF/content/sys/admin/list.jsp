@@ -42,12 +42,10 @@
 										</div>
 									</div>
 
-									<div class="span2">
-										<div class="control-group">
-											<div class="controls">
-												<input type="text" id="storeName" class="m-wrap span12" placeholder="所属门店">
-											</div>
-										</div>
+									<div class="span4">
+										<select id="storeId" class="span4">
+											<option value="">全部</option>
+										</select>
 									</div>
 
 									<div class="span5">
@@ -82,6 +80,18 @@
 	$(document).ready(function() {
 		//高亮左侧菜单
 		App.activeMenu("sys/admin/list");
+		$.ajax({
+			type: 'POST',
+			url: '/sys/store/getStores',
+			dataType:'json',
+			success: function(data){
+				for(i=0;i<data.length;i++){
+					$('#storeId').append('<option value="'+data[i].id+'">'+data[i].storeName+'</option>');
+				}
+
+			}
+		});
+
 		Page.initData(
 				{
 					url:"${ctx}/sys/admin/page",
@@ -100,7 +110,7 @@
 	function doQuery(){
 		var queryObj = {
 			search_LIKES_name : App.isEqPlacehoder($("#name")),
-			search_LIKES_storeName : App.isEqPlacehoder($("#storeName")),
+			search_LIKES_storeId : App.isEqPlacehoder($("#storeId")),
 
 		};
 		Page.doQuery(queryObj);

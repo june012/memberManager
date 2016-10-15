@@ -126,6 +126,8 @@ public class AwardController extends BaseController<AwardRecord>{
                     substring = memberIds.substring(0, memberIds.length() - 1);
                     System.out.println(substring);
                     hql+=" and a.memberId in("+substring+")";
+                }else{
+                    hql+=" and 1=2";
                 }
             }
         }

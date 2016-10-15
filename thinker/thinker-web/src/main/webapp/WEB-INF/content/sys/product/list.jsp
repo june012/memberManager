@@ -25,7 +25,6 @@
 					<div class="portlet-body">
 						<div class="row-fluid">
 
-							<shiro:hasPermission name="sys:store:add">
 							<form class="queryForm span8">
 								<div class="row-fluid">
 
@@ -38,7 +37,7 @@
 										</div>
 
 									<div class="span4">
-										<select id="typeId" class="span4" >
+										<select id="typeId" class="span4">
 											<option value="">全部</option>
 										</select>
 									</div>
@@ -57,7 +56,6 @@
 									</div>
 								</div>
 							</form>
-							</shiro:hasPermission>
 							<tool:operBtns modelKey="store"></tool:operBtns>
 							<div class="span4 pull-right">
 								<shiro:hasAnyRoles name="administrator,shopowner">
@@ -88,7 +86,7 @@
 			url: '/sys/product/getTypes',
 			dataType:'json',
 			success: function(data){
-				for(i=0;i<data.length;i++){
+				for(var i=0;i<data.length;i++){
 					$('#typeId').append('<option value="'+data[i].id+'">'+data[i].typeName+'</option>');
 				}
 

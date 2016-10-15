@@ -76,6 +76,8 @@ public class InterestController extends BaseController<InterestRecord>{
                 String memberIds = memberService.findMemberIds(search_eql_storeId);
                 if (memberIds!=null){
                     hql+=" and a.userId in("+memberIds+")";
+                }else{
+                    hql+=" and 1=2";
                 }
             }
         }

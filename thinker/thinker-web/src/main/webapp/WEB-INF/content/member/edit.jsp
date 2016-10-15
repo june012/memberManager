@@ -55,9 +55,9 @@
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
 											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
-												<c:if test="${not empty obj }">
-											   		readonly
-												</c:if>
+												<%--<c:if test="${not empty obj }">--%>
+											   		<%--readonly--%>
+												<%--</c:if>--%>
 												<c:choose>
 													<c:when test="${not empty obj }">
 														readonly

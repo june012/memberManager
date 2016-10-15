@@ -1,5 +1,6 @@
 package org.guess.sys.controller;
 
+import com.google.gson.Gson;
 import org.guess.core.web.BaseController;
 import org.guess.sys.model.Product;
 import org.guess.sys.model.ProductType;
@@ -55,6 +56,13 @@ public class ProductController extends BaseController<Product> {
         }
 
         return super.create(object);
+    }
+
+    @ResponseBody
+    @RequestMapping("/getTypes")
+    public String getTypes() throws Exception {
+        List<ProductType> types = productTypeService.getAll();
+        return new Gson().toJson(types);
     }
 
     @RequestMapping("typePage")

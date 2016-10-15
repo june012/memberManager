@@ -67,7 +67,7 @@
 								<div class="control-group">
 									<label class="control-label">产品名称:</label>
 									<div class="controls">
-										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="productName" id="product" ">
+										<select data-placeholder=" " class="span6 chosen" tabindex="6" name="productName" id="product" onchange="findPrice()">
 											<option value="">请选择</option>
 										</select>
 									</div>
@@ -76,7 +76,7 @@
 									<label class="control-label">产品价格:</label>
 									<div class="controls">
 										<input type="text" class="span6 m-wrap"
-											   validate="{required:true,minlength:1,maxlength:10}" id="productPrice"
+											   validate="{required:true,minlength:1,maxlength:10}" id="productPrice" readonly
 											   onkeyup="this.value=this.value.replace(/[^\d]/ig,'')"
 											   name="productPrice" value="${obj.productPrice }" />
 									</div>
@@ -151,13 +151,12 @@
 	</div>
 	<%@ include file="/WEB-INF/content/common/plugins/choose.jsp"%>
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
-	<script src="${ctx}/assets/js/product.js" type="text/javascript" ></script>
 <script type="text/javascript">
 	$(function(){
 		App.activeMenu("consume/cash/list");
 		$('#count').change(function(){totalPrice();});
 		$('#discount').change(function(){totalPrice();});
-		$('#productPrice').change(function(){totalPrice();});
+		$('#product').change(function(){totalPrice();});
 	function totalPrice() {
 			var productPrice = $('#productPrice').val();
 			var count = $('#count').val();

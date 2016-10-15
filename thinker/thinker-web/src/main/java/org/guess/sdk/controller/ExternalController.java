@@ -13,6 +13,8 @@ import org.guess.showcase.consume.model.ConsumeLog;
 import org.guess.showcase.consume.service.ConsumeLogService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
+import org.guess.sys.model.SuggestionLog;
+import org.guess.sys.service.SuggestionLogService;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +51,8 @@ public class ExternalController{
     @Autowired
     private ConsumeLogService consumeLogService;
 
-
+    @Autowired
+    private SuggestionLogService suggestionLogService;
 
     private final String localFileUrl="";
 
@@ -286,6 +289,15 @@ public class ExternalController{
         return respData;
     }
 
+    /**
+     * 修改头像
+     * @param file
+     * @param phone
+     * @param token
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/editAvater",method = RequestMethod.POST)
     @ResponseBody
     public RespData editAvater(@RequestParam(value = "file", required = false) MultipartFile file, String phone, String token, HttpServletRequest request) throws Exception {
@@ -314,5 +326,37 @@ public class ExternalController{
         return  respData;
     }
 
+    /**
+     * 添加意见
+     * @param phone
+     * @param token
+     * @param content
+     * @return
+     */
+    @RequestMapping(value = "/addSuggestion",method = RequestMethod.POST)
+    @ResponseBody
+    public RespData addSuggestion(String phone, String token,String content) throws Exception {
+        RespData respData = new RespData();
+        Member member = memberService.findUniqueBy("phone", phone);
+        if(member==null){
+            respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
+            respData.setData("没有此会员");
+            return respData;
+        }
+        DateFormat dateFormat1 = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+        String code = Coder.encryptMD5(member.getPhone()+dateFormat1.format(member.getLastLoginTime()));
+        if(token.equals(code)){
+            SuggestionLog suggestionLog = new SuggestionLog();
+            suggestionLog.setMemberId(member.getId());
+            suggestionLog.setContent(content);
+            suggestionLog.setCreateTime(new Date());
+            suggestionLogService.save(suggestionLog);
+            respData.setCode(DefinedConstant.RESPONSE_CODE_SUCCESS);
+        }else{
+            respData.setCode(DefinedConstant.RESPONSE_CODE_ERROR);
+            respData.setData("签名过期 请重新登录");
+        }
+        return respData;
+    }
 
 }

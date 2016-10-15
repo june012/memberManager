@@ -41,10 +41,22 @@ public class StoreController extends BaseController<Store>{
     @Override
     public Map<String, Object> page(Page<Store> page, HttpServletRequest request) {
         User currentUser = UserUtil.getCurrentUser();
-        if(currentUser.getStoreId()==0){
-            return super.page(page, request);
+        String storeName = request.getParameter("search_LIKES_storeName");
+        String id = request.getParameter("search_EQL_id");
+        String hql ="from Store store where";
+        if (currentUser.getStoreId()==0){
+            hql+=" 1=1 ";
+        }else{
+            hql+=" store.id ="+currentUser.getStoreId();
         }
-        Page<Store> page1 = storeService.findPage(page, "from Store store where store.id="+currentUser.getStoreId());
+        if(id!=null){
+            hql+=" and store.id="+id;
+        }
+        if(storeName!=null){
+            hql+=" and store.storeName like '%"+storeName+"%'";
+
+        }
+        Page<Store> page1 = storeService.findPage(page, hql);
         return page1.returnMap();
     }
 

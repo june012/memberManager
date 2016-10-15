@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import org.guess.core.orm.Page;
 import org.guess.core.utils.security.Coder;
 import org.guess.core.web.BaseController;
+import org.guess.facility.Exception.DefinedException;
+import org.guess.facility.Exception.ErrorCode;
 import org.guess.showcase.member.dto.MemberDto;
 import org.guess.showcase.member.dto.StoreMemberDto;
 import org.guess.showcase.member.model.Member;
@@ -12,7 +14,6 @@ import org.guess.sys.model.Store;
 import org.guess.sys.model.User;
 import org.guess.sys.service.StoreService;
 import org.guess.sys.util.UserUtil;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -132,8 +133,7 @@ public class MemberController extends BaseController<Member> {
         System.out.println(object.getAvater());
         List<Member> members = memberService.findBy("phone", object.getPhone());
         if(members.size()>1){
-            logger.info("无法识别"+object.getPhone());
-            return null;
+            throw new DefinedException(ErrorCode.NOT_EXSIST_THIS_MEMBER.getCode(),ErrorCode.NOT_EXSIST_THIS_MEMBER.getMessage());
         }
         if(object.getLastLoginTime() == null){
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -255,7 +255,7 @@ public class MemberController extends BaseController<Member> {
         }
         System.out.println(gson.toJson(members));
         if(members.size()>1){
-            logger.info("用户信息错误 出现一个以上相同手机号会员");
+            throw new DefinedException(ErrorCode.FIND_ONEMORE_MEMBER.getCode(),ErrorCode.FIND_ONEMORE_MEMBER.getMessage());
         }
         List<StoreMemberDto> storeMemberDtos = new ArrayList<StoreMemberDto>();
         if(members.size()>1||members == null||members.size()==0){
@@ -271,24 +271,24 @@ public class MemberController extends BaseController<Member> {
         storeMemberDto.setMemberDtos(memberDtos);
         return gson.toJson(storeMemberDto);
     }
-    @ResponseBody
-    @RequestMapping("/canBeUsedAccount")
-    public String canBeUsedAccount(String memberid,String money){
-        Member member = memberService.findUniqueBy("id", Long.valueOf(memberid));
-        BigDecimal consumeAccount = new BigDecimal(money);
-        JSONObject jall = new JSONObject();
-        if(member==null){
-            jall.put("status",false);
-            jall.put("message","该会员不存在");
-            return jall.toString();
-        }
-        if(member.getCanBeConsumed().compareTo(consumeAccount)==1){
-            jall.put("status",false);
-            jall.put("message","余额不足,当前可用余额为:"+member.getCanBeConsumed());
-            return jall.toString();
-        }
-        jall.put("status",true);
-        return jall.toString();
-    }
+//    @ResponseBody
+//    @RequestMapping("/canBeUsedAccount")
+//    public String canBeUsedAccount(String memberid,String money){
+//        Member member = memberService.findUniqueBy("id", Long.valueOf(memberid));
+//        BigDecimal consumeAccount = new BigDecimal(money);
+//        JSONObject jall = new JSONObject();
+//        if(member==null){
+//            jall.put("status",false);
+//            jall.put("message","该会员不存在");
+//            return jall.toString();
+//        }
+//        if(member.getCanBeConsumed().compareTo(consumeAccount)==1){
+//            jall.put("status",false);
+//            jall.put("message","余额不足,当前可用余额为:"+member.getCanBeConsumed());
+//            return jall.toString();
+//        }
+//        jall.put("status",true);
+//        return jall.toString();
+//    }
 
 }

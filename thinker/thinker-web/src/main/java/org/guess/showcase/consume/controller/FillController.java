@@ -131,6 +131,8 @@ public class FillController extends BaseController<FillRecord>{
                 String memberIds = memberService.findMemberIds(search_eql_storeId);
                 if (memberIds!=null){
                     hql+=" and a.userid in("+memberIds+")";
+                }else{
+                    hql+=" and 1=2";
                 }
             }
         }

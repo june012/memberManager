@@ -110,7 +110,6 @@
 					{cName:"phone",cValue:"手机号"},
 					{cName:"openid",cValue:"微信号"},
 					{cName:"credit",cValue:"积分"},
-					{cName:"level",cValue:"等级"},
 					{cName:"canBeConsumed",cValue:"可消费金额"},
 					{cName:"account",cValue:"钱包余额"},
 					{cName:"principal",cValue:"本金"},

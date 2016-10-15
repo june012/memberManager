@@ -58,11 +58,11 @@
 											</div>
 										</div>
 									</div>
-									<div class="span4">
-											奖金类型:<select id="awardType" class="span4">
-												<option value="M">推荐奖</option>
-											</select>
-									</div>
+									<%--<div class="span4">--%>
+											<%--奖金类型:<select id="awardType" class="span4">--%>
+												<%--<option value="M">推荐奖</option>--%>
+											<%--</select>--%>
+									<%--</div>--%>
 									<div class="span4">
 										<select id="storeId" class="span4" >
 											<option value="">全部</option>
@@ -139,7 +139,7 @@
 	function doQuery(){
 		var queryObj = {
 			search_EQL_memberId : App.isEqPlacehoder($("#memberId")),
-			search_EQS_awardType : App.isEqPlacehoder($("#awardType")),
+//			search_EQS_awardType : App.isEqPlacehoder($("#awardType")),
 			search_EQS_phone:App.isEqPlacehoder($("#phone")),
 			search_EQD_date : App.isEqPlacehoder($("#date")),
 			search_EQL_storeId: App.isEqPlacehoder($("#storeId"))
