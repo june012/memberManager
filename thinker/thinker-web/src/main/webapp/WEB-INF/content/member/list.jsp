@@ -48,7 +48,7 @@
 									</div>
 
 
-									<div class="span5">
+									<div class="span3">
 										<div class="control-group">
 											<div class="controls">
 												<a class="btn blue" href="javascript:void(0)" onclick="javascript:doQuery();">

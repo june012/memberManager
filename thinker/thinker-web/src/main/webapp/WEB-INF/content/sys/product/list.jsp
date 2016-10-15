@@ -57,7 +57,7 @@
 								</div>
 							</form>
 							<tool:operBtns modelKey="store"></tool:operBtns>
-							<div class="span4 pull-right">
+							<div class="span4 pull-right" style="margin:5px 0px">
 								<shiro:hasAnyRoles name="administrator,shopowner">
 									<a class="btn green" href="${ctx }/sys/product/typePage">
 										添加产品类型 <i class="icon-plus"></i>

@@ -63,8 +63,8 @@
 												<%--<option value="M">推荐奖</option>--%>
 											<%--</select>--%>
 									<%--</div>--%>
-									<div class="span4">
-										<select id="storeId" class="span4" >
+									<div class="span2">
+										<select id="storeId" style="width:100%;" >
 											<option value="">全部</option>
 										</select>
 									</div>
