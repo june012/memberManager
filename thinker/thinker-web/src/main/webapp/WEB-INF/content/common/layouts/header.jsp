@@ -53,12 +53,8 @@
 							<i class="icon-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="javascript:void(0);" onclick="javascript:Header.tips();">
-							<i class="icon-user"></i>&nbsp&nbsp&nbsp<span>个人信息</span>
-							</a>
-						</li>
-						<li><a href="javascript:void(0);" onclick="javascript:Header.tips();">
-							<i class="icon-wrench"></i>&nbsp&nbsp&nbsp<span>修改密码</span>
+						<li><a href="${ctx}/sys/admin/updateMyself" >
+							<i class="icon-user"></i>&nbsp&nbsp&nbsp<span>修改个人信息</span>
 							</a>
 						</li>
 						<li class="divider"></li>

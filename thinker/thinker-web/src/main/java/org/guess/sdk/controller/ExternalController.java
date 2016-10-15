@@ -5,11 +5,14 @@ import org.guess.core.utils.FileUtils;
 import org.guess.core.utils.security.Coder;
 import org.guess.facility.CalendarUtils;
 import org.guess.facility.DefinedConstant;
+import org.guess.sdk.Comparator.ConsumeInfoComparator;
 import org.guess.sdk.dto.ConsumeInfo;
 import org.guess.sdk.dto.ConsumeRespData;
 import org.guess.sdk.dto.MemberLoginResp;
 import org.guess.sdk.dto.RespData;
+import org.guess.showcase.consume.model.CashRecord;
 import org.guess.showcase.consume.model.ConsumeLog;
+import org.guess.showcase.consume.service.CashService;
 import org.guess.showcase.consume.service.ConsumeLogService;
 import org.guess.showcase.member.model.Member;
 import org.guess.showcase.member.service.MemberService;
@@ -32,6 +35,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +57,9 @@ public class ExternalController{
 
     @Autowired
     private SuggestionLogService suggestionLogService;
+
+    @Autowired
+    private CashService cashService;
 
     private final String localFileUrl="";
 
@@ -226,13 +233,31 @@ public class ExternalController{
 
         for(ConsumeLog consumeLog : consumeLogs){
             Date createTime = consumeLog.getCreateTime();
-
             String format = dateFormat.format(createTime);
             ConsumeInfo consumeInfo = new ConsumeInfo();
             consumeInfo.setWeek(CalendarUtils.getWeek(createTime));
             consumeInfo.setBillAmount(consumeLog.getAccount());
             consumeInfo.setBillId(String.valueOf(consumeLog.getId()));
-
+            consumeInfo.setDate(dateFormat1.format(consumeLog.getCreateTime()));
+            String consumeType = consumeLog.getConsumeType();
+            if(consumeType.equals(DefinedConstant.CONSUME_TYPE_AWARD)){
+                consumeInfo.setBillType("award");
+                consumeInfo.setBillTitle("奖金");
+            }else if(consumeType.equals(DefinedConstant.CONSUME_TYPE_CASH)){
+                consumeInfo.setBillType("cash");
+                CashRecord cashRecord = cashService.findUniqueBy("id", consumeLog.getTypeId());
+                consumeInfo.setBillMsg(cashRecord.getProductName());
+                consumeInfo.setBillTitle("消费");
+            }else if(consumeType.equals(DefinedConstant.CONSUME_TYPE_DRAW)){
+                consumeInfo.setBillType("draw");
+                consumeInfo.setBillTitle("提现");
+            }else if(consumeType.equals(DefinedConstant.CONSUME_TYPE_FILL)){
+                consumeInfo.setBillType("fill");
+                consumeInfo.setBillTitle("充值");
+            }else if(consumeType.equals(DefinedConstant.CONSUME_TYPE_INTEREST)){
+                consumeInfo.setBillType("interest");
+                consumeInfo.setBillTitle("利息");
+            }
             if(stringListMap.get(format)==null){
                 List<ConsumeInfo> consumeInfos = new ArrayList<ConsumeInfo>();
                 consumeInfos.add(consumeInfo);
@@ -245,6 +270,7 @@ public class ExternalController{
         for(String time:strings){
             ConsumeRespData consumeRespData = new ConsumeRespData();
             consumeRespData.setMonth(time);
+            Collections.sort(stringListMap.get(time),new ConsumeInfoComparator());
             consumeRespData.setItemList(stringListMap.get(time));
             consumeRespDatas.add(consumeRespData);
         }

@@ -8,9 +8,6 @@
 <body>
 <div class="page-content">
     <div class="container-fluid" style="padding-top: 25px">
-        <div class="alert alert-error">
-            <button class="close" data-dismiss="alert"></button>
-        </div>
     </div>
 </div>
 <script type="text/javascript">

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,6 +73,23 @@ public class SysManagerController extends BaseController<User> {
         List<Store> stores = storeService.getAll();
         mav.addObject("stores", stores);
         User currentUser = UserUtil.getCurrentUser();
+        mav.addObject("currentUser", currentUser);
+        return mav;
+    }
+
+    /**
+     * 修改个人信息
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/updateMyself")
+    public ModelAndView updateMyself() throws Exception {
+        User currentUser = UserUtil.getCurrentUser();
+        ModelAndView mav = super.update(currentUser.getId());
+        List<Role> roles = roleService.getAll();
+        mav.addObject("roles", roles);
+        List<Store> stores = storeService.getAll();
+        mav.addObject("stores", stores);
         mav.addObject("currentUser", currentUser);
         return mav;
     }

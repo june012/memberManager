@@ -42,7 +42,7 @@
 														value="${obj.userid }"
 													</c:when>
 													<c:otherwise>
-														value="请选择会员" onclick="pop()"
+														placeholder="请选择会员" onclick="pop()"
 													</c:otherwise>
 												</c:choose>
 										/>
