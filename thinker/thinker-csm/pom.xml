@@ -16,7 +16,7 @@
     <artifactId>thinker-csm</artifactId>
 
     <properties>
-        <thinker-version>0.0.1-SNAPSHOT</thinker-version>
+        <thinker-version>2.0.0-SNAPSHOT</thinker-version>
     </properties>
 
     <dependencies>

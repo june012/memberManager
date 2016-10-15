@@ -17,7 +17,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <thinker-version>0.0.1-SNAPSHOT</thinker-version>
+        <thinker-version>2.0.0-SNAPSHOT</thinker-version>
         <jetty.version>9.0.4.v20130625</jetty.version>
         <webserver.port>9999</webserver.port>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

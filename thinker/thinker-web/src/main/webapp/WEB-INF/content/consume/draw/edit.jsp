@@ -84,7 +84,7 @@
 	<div id="choose-box-wrapper">
 		<div id="choose-box">
 			<div id="choose-box-title">
-				<span>选择学校</span>
+				<span>选择学校11111</span>
 			</div>
 			<div id="choose-a-province">
 			</div>
@@ -98,7 +98,6 @@
 	</div>
 	<%@ include file="/WEB-INF/content/common/plugins/choose.jsp"%>
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
-	<%@ include file="/WEB-INF/content/common/plugins/submit-verification.jsp"%>
 <script type="text/javascript">
 	$(function(){
 		App.activeMenu("consume/draw/list");

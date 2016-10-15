@@ -101,7 +101,6 @@
 	</div>
 	<%@ include file="/WEB-INF/content/common/plugins/choose.jsp"%>
 <%@ include file="/WEB-INF/content/common/plugins/jquery-validation.jsp"%>
-
 <script type="text/javascript">
 	$(function(){
 		App.activeMenu("consume/award/list");
